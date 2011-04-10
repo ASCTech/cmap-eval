@@ -5,7 +5,7 @@
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${ruby_path}/bin/cucumber.bat"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${ruby_path}/bin/${cucumber_executable}"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-f html&#13;&#10;-o cukes.html"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/cmap-eval}"/>
 </launchConfiguration>
