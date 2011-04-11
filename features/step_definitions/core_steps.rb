@@ -5,6 +5,12 @@ Given /^the input file is "([^"]*)"$/ do |file_name|
   end
 end
 
+Given /^an input file that does not exist$/ do
+  @input_file_name = "features/input_files/does_not_exist.cxl"
+  if File.readable? @input_file_name
+    pending "File #{@input_file_name} does exist, but should not!"
+  end
+end
 
 When /^cmap-eval is executed$/ do
   # Get a string containing the output of cmap-eval, separated by new-lines.

@@ -30,10 +30,10 @@ Feature: Story 6: "Parse name blocks"
 			| Bob Dylan |
 			| Bono      |
 	Scenario: File does not exist.
-		Given the input file is "does_not_exist.cxl"
+		Given an input file that does not exist
 		When cmap-eval is executed
 		Then the notification should read:
-			| Error: The provided file does not exist |
+			| Error: The provided file does not exist. |
 	Scenario: CXL file is malformed.
 		Given the input file is "malformed_file.cxl"
 		When cmap-eval is executed

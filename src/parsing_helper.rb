@@ -8,7 +8,11 @@ module ParsingHelper
 
   # Return the document with the given file name.
   def document_at(file_name)
-    return REXML::Document.new(File.read(file_name))
+    if File.readable? file_name      
+      return REXML::Document.new(File.read(file_name))
+    else
+      raise Error, "Error: The provided file does not exist."
+    end
   end
   
   # Return the name block, if there is a valid one, or raise an exception.
