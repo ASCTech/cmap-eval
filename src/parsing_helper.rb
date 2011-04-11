@@ -13,16 +13,17 @@ module ParseHelper
   
   # Return the name block, if there is a valid one, or nil.
   def name_block_of(document)
-    name_block = nil
-    
     # Find the concept that resembles a name block.
     document.elements.each(XPATH_TO_CONCEPT) do |concept|
       label = concept.attributes[LABEL_ATTRIBUTE]
+      
+      # If the concept resembles a name block, we're home-free.
       if label.start_with? NAME_BLOCK_PREFIX
-        name_block = label
+        return label
       end
     end
     
-    return name_block
+    #We couldn't find a name block in the file.
+    return nil
   end
 end

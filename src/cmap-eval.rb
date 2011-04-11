@@ -1,3 +1,4 @@
+# TODO: We need to figure out a more sane build mechanism.
 require "./src/parsing_helper.rb"
 
 include ParseHelper
