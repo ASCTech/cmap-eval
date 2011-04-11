@@ -22,3 +22,10 @@ Feature: Story 6: "Parse name blocks"
 			| Names: |
 			| name1	 |
 			| name2  |
+	Scenario: Names with non-name concepts.
+		Given the input file is "names_with_non_names.cxl"
+		When cmap-eval is executed
+		Then the notification should read:
+			| Names:    |
+			| Bob Dylan |
+			| Bono      |
