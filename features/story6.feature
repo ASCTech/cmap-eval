@@ -3,12 +3,12 @@ Feature: Story 6: "Parse name blocks"
 		Given the input file is "missing_name_block.cxl"
 		When cmap-eval is executed
 		Then the notification should read:
-			| ERROR! |
+			| ERROR: Provided file is missing a name block. |
 	Scenario: 0 names in the name block.
 		Given the input file is "0_names_in_block.cxl"
 		When cmap-eval is executed
 		Then the notification should read:
-			| Names: |
+			| ERROR: There are no names in the name block. |
 	Scenario: 1 name in the name block.
 		Given the input file is "1_name_in_block.cxl"
 		When cmap-eval is executed
@@ -29,3 +29,13 @@ Feature: Story 6: "Parse name blocks"
 			| Names:    |
 			| Bob Dylan |
 			| Bono      |
+	Scenario: File does not exist.
+		Given the input file is "does_not_exist.cxl"
+		When cmap-eval is executed
+		Then the notification should read:
+			| Error: The provided file does not exist |
+	Scenario: CXL file is malformed.
+		Given the input file is "malformed_file.cxl"
+		When cmap-eval is executed
+		Then the notification should read:
+			| ERROR: The provided file is malformed. |
