@@ -26,8 +26,9 @@ module ParsingHelper
         # If the label only contains the name block prefix, return error
         if label.strip == NAME_BLOCK_PREFIX
           raise Error, "ERROR: There are no names in the name block."
+        else
+          return label
         end
-        return label
       end
     end
     

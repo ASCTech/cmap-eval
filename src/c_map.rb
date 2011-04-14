@@ -12,7 +12,7 @@ class CMap
       label = concept.attributes[LABEL_ATTRIBUTE]
       
       # If the concept resembles a name block, we're home-free.
-      if label =~ /^Names:\n/
+      if label.start_with? NAME_BLOCK_PREFIX
         # If the label only contains the name block prefix, return error
         if label.strip == NAME_BLOCK_PREFIX
           raise Error, "ERROR: There are no names in the name block."
