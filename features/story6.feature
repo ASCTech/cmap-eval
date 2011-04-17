@@ -38,4 +38,4 @@ Feature: Story 6: "Parse name blocks"
 		Given the input file is "malformed_file.cxl"
 		When cmap-eval is executed
 		Then the notification should read:
-			| ERROR: The provided file is malformed. |
+			| ERROR: Provided file is missing a name block. |

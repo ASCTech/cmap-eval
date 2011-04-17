@@ -1,46 +1,146 @@
 require "test/unit"
-require "rexml/document"
 require "src/c_map"
+require "rubygems"
+require "nokogiri"
+require "pp"
 
-require "rexml/attribute"
+include Nokogiri::XML
 
 class CMapTest < Test::Unit::TestCase
-  XML_NEW_LINE = "&#xa;"
+  def test_missing_name_block_in_empty_map
+    test = Builder.new do |xml|
+      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+        # Fix the namespace.  Necessary because the root is in the namespace.
+        xml.parent.namespace = xml.parent.namespace_definitions.first
+        
+        xml.map {
+          xml.send(:"concept-list")
+        }
+      }
+    end
+    
+    c_map = CMap::CMap.new(test.doc)
+    
+    assert_raise(CMap::Error) {
+      puts c_map.name_block.class
+    }
+    
+    begin
+      c_map.name_block
+    rescue CMap::Error => error
+      assert_equal "ERROR: Provided file is missing a name block.", error.message
+    end
+  end
   
-  # Generate the XML document of a map with nothing in it.
-  def get_empty_map
-    raw_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+  def test_missing_name_block_in_normal_map
+    test = Builder.new do |xml|
+      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+        # Fix the namespace.  Necessary because the root is in the namespace.
+        xml.parent.namespace = xml.parent.namespace_definitions.first
+        
+        xml.map {
+          xml.send(:"concept-list") {
+            xml.concept("label" => "Node1")
+          }
+        }
+      }
+    end
     
-    raw_xml << "<cmap xmlns:dcterms=\"http://purl.org/dc/terms/\" "
-    raw_xml << "xmlns=\"http://cmap.ihmc.us/xml/cmap/\" "
-    raw_xml << "xmlns:dc=\"http://purl.org/dc/elements/1.1/\" "
-    raw_xml << "xmlns:vcard=\"http://www.w3.org/2001/vcard-rdf/3.0#\">\n"
+    c_map = CMap::CMap.new(test.doc)
     
-    raw_xml << "<map>\n"
+    assert_raise(CMap::Error) {
+      puts c_map.name_block.class
+    }
     
-    raw_xml << "</map>\n"
-    raw_xml << "</cmap>\n"
+    begin
+      c_map.name_block
+    rescue CMap::Error => error
+      assert_equal "ERROR: Provided file is missing a name block.", error.message
+    end
+  end
+  
+  def test_empty_name_block
+    test = Builder.new do |xml|
+      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+        # Fix the namespace.  Necessary because the root is in the namespace.
+        xml.parent.namespace = xml.parent.namespace_definitions.first
+        
+        xml.map {
+          xml.send(:"concept-list") {
+            xml.concept("label" => "Names:\n")
+          }
+        }
+      }
+    end
     
-    return REXML::Document.new raw_xml
+    c_map = CMap::CMap.new(test.doc)
+    
+    begin
+      c_map.name_block
+    rescue CMap::Error => error
+      assert_equal "ERROR: There are no names in the name block.", error.message
+    end
+    
+    assert_raise(CMap::Error) {
+      c_map.name_block
+    }
   end
   
   def test_1_name_block
-    raw_map = get_empty_map
-    raw_map.elements["cmap/map"].add_element "concept-list"
-    raw_map.elements["cmap/map/concept-list"].add_element "concept", {"label" => %{Names:#{XML_NEW_LINE}name1}}
+    test = Builder.new do |xml|
+      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+        # Fix the namespace.  Necessary because the root is in the namespace.
+        xml.parent.namespace = xml.parent.namespace_definitions.first
+        
+        xml.map {
+          xml.send(:"concept-list") {
+            xml.concept("label" => "Names:\nname1")
+          }
+        }
+      }
+    end
     
-    c_map = CMap.new raw_map
+    c_map = CMap::CMap.new(test.doc)
     
-    assert_equal "Names:\nname1", c_map.name_block
+    assert_equal(["name1"], c_map.name_block)
   end
   
   def test_2_name_block
-    raw_map = get_empty_map
-    raw_map.elements["cmap/map"].add_element "concept-list"
-    raw_map.elements["cmap/map/concept-list"].add_element "concept", {"label" => %{Names:#{XML_NEW_LINE}name1#{XML_NEW_LINE}name2}}
+    test = Builder.new do |xml|
+      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+        # Fix the namespace.  Necessary because the root is in the namespace.
+        xml.parent.namespace = xml.parent.namespace_definitions.first
+        
+        xml.map {
+          xml.send(:"concept-list") {
+            xml.concept("label" => "Names:\nname1\nname2")
+          }
+        }
+      }
+    end
     
-    c_map = CMap.new raw_map
+    c_map = CMap::CMap.new test.doc
     
-    assert_equal "Names:\nname1\nname2", c_map.name_block
+    assert_equal(["name1", "name2"], c_map.name_block)
+  end
+  
+  def test_name_block_with_other_node
+    test = Builder.new do |xml|
+      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+        # Fix the namespace.  Necessary because the root is in the namespace.
+        xml.parent.namespace = xml.parent.namespace_definitions.first
+        
+        xml.map {
+          xml.send(:"concept-list") {
+            xml.concept("label" => "Node1")
+            xml.concept("label" => "Names:\nname1")
+          }
+        }
+      }
+    end
+    
+    c_map = CMap::CMap.new(test.doc)
+    
+    assert_equal(["name1"], c_map.name_block)
   end
 end
