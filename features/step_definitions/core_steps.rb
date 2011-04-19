@@ -48,7 +48,7 @@ Then /^the notification should contain:$/ do |notification_table|
   
   notification_table.raw.each do |expected|
     if !actual_table.include? expected
-      raise %{Notification did not contain "#{expected}".}
+      raise %{Notification \n "#{actual_table}"\n did not contain \n"#{expected}".}
     end
   end
 end

@@ -10,7 +10,7 @@ Feature: Story 2: "identical map" checker.
 		Then the notification should contain:
 		| COMPARISON: Identical. |
 	Scenario: maps differ by nodes.
-		Given key "map_with_two_nodes.cxl" and input "map_with_two_nodes_2.cxl"
+		Given key "map_with_2_nodes.cxl" and input "map_with_2_nodes_2.cxl"
 		When cmap-eval is executed
 		Then the notification should contain:
 		| COMPARISON: Not identical. |
