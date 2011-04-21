@@ -9,7 +9,7 @@ Feature: Story 11: "mark missing edges"
 		When cmap-eval is executed in debug mode
 		Then the notification should contain:
 			| Missing edge between: "node1" and "node2" |
-	Scenario: Complex input file
+	Scenario: Big input file
 		Given key "big_key.cxl" and input "big_missing_edges.cxl"
 		When cmap-eval is executed in debug mode
 		Then the notification should contain:
