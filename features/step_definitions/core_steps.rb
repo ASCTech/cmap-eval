@@ -1,35 +1,30 @@
-INPUT_PATH = "features/input_files/"
+Given /^no command-line arguments$/ do
+  # Do nothing; there are no command-line arguments!
+end
 
 Given /^key "([^"]*)" and input "([^"]*)"$/ do |key, input|
   @key_file_name = INPUT_PATH + key
-  original_input_file_name = INPUT_PATH + input
-  @sandbox_file_name = "sandbox/" + input
+  @input_file_name = SANDBOX_PATH + input
   
-  # Sanity-check the tests.
-  if !File.readable? @key_file_name
-    pending "File #{@key_file_name} does not exist!"
-  elsif !File.readable? original_input_file_name
-    pending "File #{original_input_file_name} does not exist!"
-  end
+  # Sanity-check the test files, so we're not mistakenly testing with invalid input.
+  input_check key
+  input_check input
   
-  # Copy out the input file so we don't do any damage.
-  begin
-    FileUtils.cp(original_input_file_name, @sandbox_file_name)
-  rescue Exception => error
-    pending "Could not copy file #{@sandbox_file_name} to sandbox!"
-  end
+  prep_sandbox_for input
 end
 
-Given /^the input file is "([^"]*)"$/ do |file_name|
-  @input_file_name = INPUT_PATH + file_name
+Given /^the input file is "([^"]*)"$/ do |input|
+  @input_file_name = SANDBOX_PATH + input
   
-  if !File.readable? @input_file_name
-    pending "File #{@input_file_name} does not exist!"
-  end
+  input_check input
+  
+  prep_sandbox_for input
 end
 
 Given /^an input file that does not exist$/ do
   @input_file_name = INPUT_PATH + "does_not_exist.cxl"
+  
+  # Make sure the file DOESN'T exist.
   if File.readable? @input_file_name
     pending "File #{@input_file_name} does exist, but should not!"
   end
@@ -38,11 +33,12 @@ end
 When /^cmap-eval is executed$/ do
   # Get a string containing the output of cmap-eval, separated by new-lines.
   @output = `ruby src/cmap-eval.rb #{@key_file_name} #{@input_file_name}`
+  @output = output_from_execution "", @key_file_name, @input_file_name
 end
 
 When /^cmap-eval is executed in debug mode$/ do
   # Get a string containing the output of cmap-eval
-  @output = `ruby src/cmap-eval.rb -d #{@key_file_name} #{@sandbox_file_name}`
+  @output = output_from_execution "", @key_file_name, @input_file_name
 end
 
 Then /^it will display "([^"]*)"$/ do |expected_output|
