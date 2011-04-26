@@ -32,8 +32,7 @@ Feature: Story 6: "Parse name blocks"
 	Scenario: File does not exist.
 		Given an input file that does not exist
 		When cmap-eval is executed
-		Then the notification should read:
-			| Error: The provided file does not exist. |
+		Then the notification should show the missing-file error
 	Scenario: CXL file is malformed.
 		Given the input file is "malformed_file.cxl"
 		When cmap-eval is executed
