@@ -4,6 +4,7 @@ Feature: Story 11: "mark missing edges"
 		When cmap-eval is executed in debug mode
 		Then the notification should contain:
 			| There are no missing edges. |
+	@trebor
 	Scenario: One edge one missing edge
 		Given key "simple_key.cxl" and input "simple_wrong_input.cxl"
 		When cmap-eval is executed in debug mode
