@@ -66,10 +66,11 @@ Then /^the notification should contain:$/ do |notification_table|
 end
 
 Then /^the marked up file should look like "([^"]*)"$/ do |correct_file_name|
+  correct_file_name = INPUT_PATH + correct_file_name
   if !File.readable? correct_file_name
     raise "File #{correct_file_name} does not exist!"
   else
-    pending "Check file #{correct_file_name}."
+    pending "Check file #{SANDBOX_PATH + @input_file_name}."
   end
 end
 
