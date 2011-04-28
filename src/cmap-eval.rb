@@ -15,7 +15,7 @@ def mark_missing_edges key, input
   concepts.each do |elem1|
     concepts.each do |elem2|
       if elem1 != elem2
-        if key.edges_between(elem1, elem2).size > 0
+        if key.edges_between(elem1, elem2).size > 0 and input.edges_between(elem1, elem2).size == 0
           missing_found = true
           Debug.missing_edge_between elem1, elem2
         end
