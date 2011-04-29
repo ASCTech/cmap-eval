@@ -2,6 +2,7 @@ module CMap
   CONCEPT_XPATH = "/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept"
   CONNECTION_XPATH = "/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection"
   LINKING_PHRASE_XPATH = "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list/xmlns:linking-phrase"
+  
   class CMap
     def initialize(raw_xml)
       @xml = raw_xml
@@ -14,12 +15,9 @@ module CMap
         if concept["label"].start_with? "Names:"
           names = concept["label"].gsub(/^Names:/, "").strip.split("\n")
           
-          if names.size > 0
-            return names
-          else
-            raise Error, "There are no names in the name block."
-          end
+          raise Error, "There are no names in the name block." unless names.size > 0
           
+          return names        
         end
       end
       
@@ -27,67 +25,41 @@ module CMap
     end
     
     def concepts_in_map
-      raw_concepts = @xml.xpath(CONCEPT_XPATH)
-      
       concepts = []
       
       # Parse out the labels, ignoring the Names block.
-      raw_concepts.each do |concept|
-        if !concept["label"].start_with? "Names:"
-          concepts << concept["label"]
-        end
+      @xml.xpath(CONCEPT_XPATH).each do |concept|
+        concepts << concept["label"] unless concept["label"].start_with? "Names:"
       end
       
       return concepts
     end
     
     def edges_between node1, node2
-      concepts = @xml.xpath(CONCEPT_XPATH)
       connections = @xml.xpath(CONNECTION_XPATH)
       
       # Find the unique ids associated with node1 and node2.
-      node1_id = unique_id_of node1, concepts
-      node2_id = unique_id_of node2, concepts
+      node1_id = unique_id_of_node node1
+      node2_id = unique_id_of_node node2
       
       # Find the connections that start with node1.
-      beginnings = Nokogiri::XML::NodeSet.new @xml
-      connections.each do |connection|
-        if connection["from-id"] == node1_id
-          beginnings << connection
-        end
-      end
+      beginnings = @xml.xpath(CONNECTION_XPATH + %{[@from-id='#{node1_id}']})
+      beginnings = beginnings.xpath(%{@to-id})
+      beginnings = beginnings.to_a.map! {|elem| elem.to_s}
       
-      # Find the edge label that we're going to.
-      edge_ids_pointed_to = []
-      beginnings.each do |beginning|
-        edge_ids_pointed_to << beginning["to-id"]
-      end
+      # Find the connections that end with node2.
+      endings = @xml.xpath(CONNECTION_XPATH + %{[@to-id='#{node2_id}']})
+      endings = endings.xpath(%{@from-id})
+      endings = endings.to_a.map! {|elem| elem.to_s}
       
-      correct_edge_ids = []
-      
-      connections.each do |connection|
-        if edge_ids_pointed_to.include? connection["from-id"]
-          if connection["to-id"] == node2_id
-            correct_edge_ids << connection["from-id"]
-          end
-        end
-      end
-      
-      edges = []
-      
-      linking_phrases = @xml.xpath(LINKING_PHRASE_XPATH)
-      
-      linking_phrases.each do |phrase|
-        if correct_edge_ids.include? phrase["id"]
-          edges << phrase["label"]
-        end
-      end
+      # Their intersections are the ids of the nodes that we want.
+      edges = beginnings & endings
       
       return edges
     end
     
-    def unique_id_of node, concepts
-      concepts.each do |concept|
+    def unique_id_of_node node
+      @xml.xpath(CONCEPT_XPATH).each do |concept|
         if concept["label"] == node
           return concept["id"]
         end

@@ -28,7 +28,7 @@ class CMapTest < Test::Unit::TestCase
     begin
       c_map.name_block
     rescue CMap::Error => error
-      assert_equal "ERROR: Provided file is missing a name block.", error.message
+      assert_equal "Provided file is missing a name block.", error.message
     end
   end
   
@@ -55,7 +55,7 @@ class CMapTest < Test::Unit::TestCase
     begin
       c_map.name_block
     rescue CMap::Error => error
-      assert_equal "ERROR: Provided file is missing a name block.", error.message
+      assert_equal "Provided file is missing a name block.", error.message
     end
   end
   
@@ -78,7 +78,7 @@ class CMapTest < Test::Unit::TestCase
     begin
       c_map.name_block
     rescue CMap::Error => error
-      assert_equal "ERROR: There are no names in the name block.", error.message
+      assert_equal "There are no names in the name block.", error.message
     end
     
     assert_raise(CMap::Error) {
