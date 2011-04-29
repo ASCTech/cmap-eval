@@ -7,20 +7,6 @@ require "rubygems"
 require "nokogiri"
 
 # TODO: this needs significant cleanup.
-def mark_missing_edges key, input
-  missing_found = false
-  
-  key.each_unique_pair do |concept1, concept2|
-    if key.edges_between(concept1, concept2).size > 0 and input.edges_between(concept1, concept2).size == 0
-      missing_found = true
-      Debug.missing_edge_between concept1, concept2
-    end
-  end
-  
-  if !missing_found
-    Debug.no_missing_edges
-  end
-end
 
 def check_inputs args
   key_file_name = nil
@@ -65,10 +51,9 @@ key_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
 input_map = CMap::CMap.new Nokogiri::XML File.read input_file_name
 
 begin
-  # Output the name block on the input map.
-  Output.names_block(input_map.name_block)
+  Output.names_block input_map.name_block
 rescue CMap::Error => error
   Output.exception error
 end
 
-mark_missing_edges key_map, input_map
+input_map.grade_using key_map
