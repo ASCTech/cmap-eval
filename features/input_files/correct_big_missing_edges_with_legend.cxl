@@ -29,8 +29,8 @@
     </res-meta>
     <map width="2505" height="2015">
         <concept-list>
-            <concept id="1JDB880H9-B2YPD9-HG" label="Legend"/>
-            <concept id="1JDB880H9-RCB838-HC" label="Legend"/>
+            <concept id="1JDB880H9-B2YPD9-HG" label="Legend2"/>
+            <concept id="1JDB880H9-RCB838-HC" label="Legend1"/>
             <concept id="1JD9NQBR1-18PZ691-BF" label="node2"/>
             <concept id="1JD9NPN4C-VPMK4W-9M" label="node1"/>
             <concept id="1JD9NR2TP-1N8XTM7-C2" label="Names:&#xa;name1&#xa;name2"/>
