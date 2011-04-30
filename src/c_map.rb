@@ -3,6 +3,11 @@ module CMap
   CONNECTION_XPATH = "/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection"
   LINKING_PHRASE_XPATH = "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list/xmlns:linking-phrase"
   
+  LEGEND_NODE_WIDTH = 60
+  LEGEND_NODE_HEIGHT = 28
+  LEGEND_LABEL_WIDTH = 46
+  LEDGEND_LABEL_HEIGHT = 13
+  
   NAME_BLOCK_PREFIX = "Names:"
   
   class CMap
@@ -72,6 +77,7 @@ module CMap
     
     def grade_using key
       mark_missing_edges key
+      generate_legend
     end
     
     def write_to_file file_name
@@ -113,6 +119,96 @@ module CMap
     
     def create_unique_id
       return @previous_safe_id.succ!
+    end
+    
+    def generate_legend
+      max_x = find_right_of_map
+      max_y = find_bottom_of_map
+     
+      #create id's for the 2 nodes of the legend and the edge labels
+      legend1_id = create_unique_id
+      legend2_id = create_unique_id
+      missing_id = create_unique_id
+      extra_id = create_unique_id
+      wrong_id = create_unique_id
+      
+      #add legend node 1
+      phrase_fragment = Nokogiri::XML::DocumentFragment.new @xml
+      Nokogiri::XML::Builder.with phrase_fragment do |doc|
+        doc.send :"concept", "id" => legend1_id, "label" => "Legend1"
+      end
+      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-list").add_child phrase_fragment
+      
+      #Add Legend1 appearance
+      phrase_appearance_fragment = Nokogiri::XML::DocumentFragment.new @xml
+      Nokogiri::XML::Builder.with phrase_appearance_fragment do |doc|
+        doc.send :"concept-appearance", 
+          "id" => legend1_id, 
+          "x" => "#{max_x + LEGEND_NODE_WIDTH/2}", 
+          "y" => "#{max_y + LEGEND_NODE_HEIGHT/2}",
+          "width" => LEGEND_NODE_WIDTH,
+          "height" => LEGEND_NODE_HEIGHT
+      end
+      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child phrase_appearance_fragment
+       
+      #add legend2 node
+
+      #add missing linking phrase
+      
+      #add extra linking phrase
+      
+      #add non-vocabulary linking phrase
+      
+      #add connection node 1 -> missing
+      
+      #add connection node 1 -> extra
+      
+      #add connection node 1 -> non-vocabulary
+      
+      #add connection missing -> node 2
+      
+      #add connection extra -> node 2
+      
+      #add connection non-vocabulary -> node 2
+      
+      #add 2 concept appearances
+      
+      #add 3 linking phrase appearances
+      
+      #add 6 connection appearances
+      
+      
+      
+    end
+    
+    #Get the max X value of all the nodes or edge labels on the input map
+    def find_right_of_map
+      max_x = 0
+      @xml.at_xpath("//xmlns:linking-phrase-appearance-list | //xmlns:concept-appearance-list").children.each do |node|
+        x = node["x"].to_s.to_i
+        width = node["width"].to_s.to_i
+        
+        if x + width/2 > max_x
+          max_x = x + width/2
+        end
+      end
+      
+      return max_x
+    end
+    
+    #Get the max Y value of all the nodes or edge labels on the input map
+    def find_bottom_of_map 
+      max_y = 0
+      @xml.at_xpath("//xmlns:linking-phrase-appearance-list | //xmlns:concept-appearance-list").children.each do |node|
+        y = node["y"].to_s.to_i
+        height = node["height"].to_s.to_i
+        
+        if y + height/2 > max_y
+          max_y = y + height/2
+        end
+      end
+
+      return max_y
     end
     
     def make_missing_edge concept1, concept2
