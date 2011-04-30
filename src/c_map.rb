@@ -16,7 +16,7 @@ module CMap
       concepts.each do |concept|
         label = concept["label"]
         
-        if label.start_with? "NAME_BLOCK_PREFIX"
+        if label.start_with? NAME_BLOCK_PREFIX
           names = label.gsub(/^#{NAME_BLOCK_PREFIX}/, "").strip.split "\n"
           
           return names unless names.size == 0
@@ -64,24 +64,11 @@ module CMap
       return edges
     end
     
-    def has_edges_between node1, node2
-      edges = edges_between node1, node2
-      
-      return edges.size > 0
+    def grade_using key
+      mark_missing key
     end
     
-    def grade_using key
-      missing_found = false
-      
-      key.each_unique_pair do |concept1, concept2|
-        if key.has_edges_between concept1, concept2 and !self.has_edges_between concept1, concept2
-          Debug.missing_edge_between concept1, concept2
-          missing_found = true
-        end
-      end
-      
-      Debug.no_missing_edges unless missing_found
-    end
+    protected
     
     def each_unique_pair
       concepts = concepts_in_map
@@ -95,7 +82,21 @@ module CMap
       end
     end
     
-    private
+    def mark_missing key
+      missing_found = false
+      
+      key.each_unique_pair do |concept1, concept2|
+        good_edges = key.edges_between(concept1, concept2)
+        local_edges = self.edges_between(concept1, concept2)
+        
+        if !good_edges.empty? and (good_edges & local_edges).empty?
+          Debug.missing_edge_between concept1, concept2
+          missing_found = true
+        end
+      end
+      
+      Debug.no_missing_edges unless missing_found      
+    end
     
     def id_of_concept node
       @xml.xpath(CONCEPT_XPATH).each do |concept|
