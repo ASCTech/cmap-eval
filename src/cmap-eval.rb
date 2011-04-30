@@ -57,3 +57,4 @@ rescue CMap::Error => error
 end
 
 input_map.grade_using key_map
+input_map.write_to_file input_file_name
