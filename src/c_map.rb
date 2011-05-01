@@ -77,6 +77,7 @@ module CMap
     
     def grade_using key
       mark_missing_edges key
+      mark_extra_edges key
       generate_legend
     end
     
@@ -183,6 +184,24 @@ module CMap
       
     end
     
+    
+    def mark_extra_edges key
+      extra_found = false
+      
+      self.each_unique_pair do |concept1, concept2|
+        key_edges = key.edges_between(concept1, concept2)
+        if key_edges.empty?
+          make_extra_edge concept1, concept2
+          Debug.extra_edge_between concept1, concept2
+          missing_found = true
+        end
+      end
+      
+      if !extra_found
+        Debug.no_extra_edges
+      end
+    end
+    
     #Get the max X value of all the nodes or edge labels on the input map
     def find_right_of_map
       max_x = 0
@@ -275,6 +294,37 @@ module CMap
     
     def label_of id
       return @xml.xpath(%{//*[@id='#{id}']})[0]["label"]
+    end
+  
+    def make_extra_edge concept1, concept2
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list"
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-list"
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list"
+      
+      first_node = id_of_concept concept1
+      middle_node = 0
+      second_node = id_of_concept concept2
+      
+      #find the correct middle node
+      connections = @xml.xpath(CONNECTION_XPATH)
+      connections.each do |connection1|
+        if connection1["from-id"] == first_node
+          mid_id = connection1["to-id"]
+          connections.each do |connection2|
+            if (connection2["to-id"] == second_node) && (connection2["from-id"] == mid_id)
+              middle_node = mid_id
+            end
+          end
+        end
+      end
+      
+      #now change the color
+      appearance = @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list")
+      appearance.each do |appearance|
+        if appearance["id"] == middle_node
+          appearance["font-color"] == "255,0,0,255"
+        end
+      end
     end
   end
   
