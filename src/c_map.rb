@@ -124,8 +124,7 @@ module CMap
     def generate_legend
       max_x = find_right_of_map
       max_y = find_bottom_of_map
-     
-      #create id's for the 2 nodes of the legend and the edge labels
+      
       legend1_id = create_unique_id
       legend2_id = create_unique_id
       missing_id = create_unique_id
@@ -150,9 +149,9 @@ module CMap
           "height" => LEGEND_NODE_HEIGHT
       end
       @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child phrase_appearance_fragment
-       
+      
       #add legend2 node
-
+      
       #add missing linking phrase
       
       #add extra linking phrase
@@ -184,7 +183,7 @@ module CMap
     #Get the max X value of all the nodes or edge labels on the input map
     def find_right_of_map
       max_x = 0
-      @xml.at_xpath("//xmlns:linking-phrase-appearance-list | //xmlns:concept-appearance-list").children.each do |node|
+      @xml.xpath("//*[@x and @width]").each do |node|
         x = node["x"].to_s.to_i
         width = node["width"].to_s.to_i
         
@@ -199,7 +198,7 @@ module CMap
     #Get the max Y value of all the nodes or edge labels on the input map
     def find_bottom_of_map 
       max_y = 0
-      @xml.at_xpath("//xmlns:linking-phrase-appearance-list | //xmlns:concept-appearance-list").children.each do |node|
+      @xml.xpath("//*[@y and @height]").each do |node|
         y = node["y"].to_s.to_i
         height = node["height"].to_s.to_i
         
@@ -207,7 +206,7 @@ module CMap
           max_y = y + height/2
         end
       end
-
+      
       return max_y
     end
     

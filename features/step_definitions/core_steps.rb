@@ -34,7 +34,6 @@ end
 
 When /^cmap-eval is executed$/ do
 # Get a string containing the output of cmap-eval, separated by new-lines.
-  @output = `ruby src/cmap-eval.rb #{@key_file_name} #{@input_file_name}`
   @output = output_from_execution @options, @key_file_name, @input_file_name
 end
 
