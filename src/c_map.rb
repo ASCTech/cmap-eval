@@ -136,6 +136,7 @@ module CMap
       Nokogiri::XML::Builder.with phrase_fragment do |doc|
         doc.send :"concept", "id" => legend1_id, "label" => "Legend1"
       end
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
       @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-list").add_child phrase_fragment
       
       #Add Legend1 appearance
@@ -148,6 +149,8 @@ module CMap
           "width" => LEGEND_NODE_WIDTH,
           "height" => LEGEND_NODE_HEIGHT
       end
+      
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
       @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child phrase_appearance_fragment
       
       #add legend2 node
