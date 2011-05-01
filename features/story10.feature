@@ -17,6 +17,6 @@ Feature: Story 10: "mark extraneous edges"
 			| Extra edge between: "node1" and "node2" |
 			| Extra edge between: "node3" and "node4" |
 	Scenario: Manual check
-		Given key "extra_key_big.cxl" and input "extra_edge_big.cxl"
+		Given key "extra_key.cxl" and input "extra_edge_multiple.cxl"
 		When cmap-eval is executed
-		Then the marked up file should look like "correct_extra_big.cxl"
+		Then the marked up file should look like "correct_extra_multiple.cxl"
