@@ -87,8 +87,8 @@ module CMap
     end
     
     def grade_using key
-      mark_missing_edges key
       mark_extra_edges key
+      mark_missing_edges key
       generate_legend
     end
     
@@ -133,6 +133,7 @@ module CMap
       @previous_safe_id = @previous_safe_id.succ
       return @previous_safe_id
     end
+    
     # TODO: This needs some major refactoring
     def add_concept id, label
       concept_fragment = Nokogiri::XML::DocumentFragment.new @xml
@@ -254,20 +255,62 @@ module CMap
     
     
     def mark_extra_edges key
+      vocab = key.vocabulary
+      
       extra_found = false
       
-      self.each_unique_pair do |concept1, concept2|
+      each_unique_pair do |concept1, concept2|
+        local_edges = edges_between(concept1, concept2)
         key_edges = key.edges_between(concept1, concept2)
-        if key_edges.empty?
-          make_extra_edge concept1, concept2
-          Debug.extra_edge_between concept1, concept2
-          missing_found = true
+        
+        # Edges that may be extraneous.
+        extra_candidates = local_edges - key_edges
+        
+        extra_candidates.each do |candidate|
+          #The edge is extraneous if it's in the vocab.
+          if vocab.index candidate
+            mark_edge_extra concept1, concept2, candidate
+            Debug.extra_edge_between concept1, concept2, candidate
+            extra_found = true
+          end
         end
       end
       
       if !extra_found
         Debug.no_extra_edges
       end
+    end
+    
+    def mark_edge_extra concept1, concept2, edge
+      # TODO: Finish
+      
+      start_id = @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept[@label='#{concept1}']})["id"]
+      end_id = @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept[@label='#{concept2}']})["id"]
+      
+      # Find the connections that start with node1.
+      beginnings = @xml.xpath(CONNECTION_XPATH + %{[@from-id='#{start_id}']/@to-id})
+      beginnings = beginnings.to_a.map! {|elem| elem.to_s}
+      
+      # Find the connections that end with node2.
+      endings = @xml.xpath(CONNECTION_XPATH + %{[@to-id='#{end_id}']/@from-id})
+      endings = endings.to_a.map! {|elem| elem.to_s}
+      
+      # Their intersections are the ids of the nodes that we want.
+      possible_ids = beginnings & endings
+      
+      # Check the name to find the unique id of our candidate.
+      edge_id = possible_ids.select { |id| edge == label_of(id)}
+      
+      # Mark the appearance.
+      appearance = @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@id='#{edge_id}']})
+      appearance["font-color"] = "255,0,0,255"
+    end
+    
+    def vocabulary
+      # Find all of the edge labels.
+      phrase_nodes = @xml.xpath(LINKING_PHRASE_XPATH + "/@label")
+      
+      return phrase_nodes.to_a.map {|elem| elem.to_s}
     end
     
     #Get the max X value of all the nodes or edge labels on the input map
@@ -360,34 +403,6 @@ module CMap
     
     def label_of id
       return @xml.xpath(%{//*[@id='#{id}']})[0]["label"]
-    end
-    
-    def make_extra_edge concept1, concept2
-      
-      first_node = id_of_concept concept1
-      middle_node = 0
-      second_node = id_of_concept concept2
-      
-      #find the correct middle node
-      connections = @xml.xpath(CONNECTION_XPATH)
-      connections.each do |connection1|
-        if connection1["from-id"] == first_node
-          mid_id = connection1["to-id"]
-          connections.each do |connection2|
-            if (connection2["to-id"] == second_node) && (connection2["from-id"] == mid_id)
-              middle_node = mid_id
-            end
-          end
-        end
-      end
-      
-      #now change the color
-      appearance = @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list")
-      appearance.each do |appearance|
-        if appearance["id"] == middle_node
-          appearance["font-color"] == "255,0,0,255"
-        end
-      end
     end
   end
   
