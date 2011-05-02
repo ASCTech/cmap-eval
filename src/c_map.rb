@@ -119,7 +119,41 @@ module CMap
     end
     
     def create_unique_id
-      return @previous_safe_id.succ!
+      @previous_safe_id = @previous_safe_id.succ
+      return @previous_safe_id
+    end
+    
+    def add_concept id, label
+      phrase_fragment = Nokogiri::XML::DocumentFragment.new @xml
+      Nokogiri::XML::Builder.with phrase_fragment do |doc|
+        doc.send :"concept", "id" => id, "label" => label
+      end
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
+      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-list").add_child phrase_fragment
+    end
+    
+    def add_concept_appearance id, x, y
+      phrase_appearance_fragment = Nokogiri::XML::DocumentFragment.new @xml
+      Nokogiri::XML::Builder.with phrase_appearance_fragment do |doc|
+        doc.send :"concept-appearance", 
+          "id" => id, 
+          "x" => x, 
+          "y" => y,
+          "width" => LEGEND_NODE_WIDTH,
+          "height" => LEGEND_NODE_HEIGHT
+      end
+      
+      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
+      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child phrase_appearance_fragment
+      
+    end
+    
+    def add_linking_phrase_appearance id, x, y, font_color
+      # TODO: implement
+    end
+    
+    def add_edge node1_id, node2_id, label
+      # TODO: implement
     end
     
     def generate_legend
@@ -133,28 +167,13 @@ module CMap
       wrong_id = create_unique_id
       
       #add legend node 1
-      phrase_fragment = Nokogiri::XML::DocumentFragment.new @xml
-      Nokogiri::XML::Builder.with phrase_fragment do |doc|
-        doc.send :"concept", "id" => legend1_id, "label" => "Legend1"
-      end
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
-      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-list").add_child phrase_fragment
+      add_concept legend1_id, "Legend1"
+      add_concept_appearance legend1_id, max_x + LEGEND_NODE_WIDTH/2, max_y + LEGEND_NODE_HEIGHT/2    
       
-      #Add Legend1 appearance
-      phrase_appearance_fragment = Nokogiri::XML::DocumentFragment.new @xml
-      Nokogiri::XML::Builder.with phrase_appearance_fragment do |doc|
-        doc.send :"concept-appearance", 
-          "id" => legend1_id, 
-          "x" => "#{max_x + LEGEND_NODE_WIDTH/2}", 
-          "y" => "#{max_y + LEGEND_NODE_HEIGHT/2}",
-          "width" => LEGEND_NODE_WIDTH,
-          "height" => LEGEND_NODE_HEIGHT
-      end
+      #add legend node 2
+      add_concept legend2_id, "Legend2"
+      add_concept_appearance legend2_id, max_x + LEGEND_NODE_WIDTH/2, max_y + LEGEND_NODE_HEIGHT/2 + 70   
       
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
-      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child phrase_appearance_fragment
-      
-      #add legend2 node
       
       #add missing linking phrase
       
@@ -295,7 +314,7 @@ module CMap
     def label_of id
       return @xml.xpath(%{//*[@id='#{id}']})[0]["label"]
     end
-  
+    
     def make_extra_edge concept1, concept2
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-list"
