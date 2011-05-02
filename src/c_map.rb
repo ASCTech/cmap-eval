@@ -9,7 +9,7 @@ module CMap
   LEDGEND_LABEL_HEIGHT = 13
   
   MISSING_EDGE_COLOR = "0,0,255,255"
-  WRONG_EDGE_COLOR = "255,0,0,255"
+  MISPLACED_EDGE_COLOR = "255,0,0,255"
   EXTRA_EDGE_COLOR = "128,0,128,255"
   
   
@@ -225,7 +225,7 @@ module CMap
       legend2_id = create_unique_id
       missing_id = create_unique_id
       extra_id = create_unique_id
-      wrong_id = create_unique_id
+      misplaced_id = create_unique_id
       start_legend_x = max_x + LEGEND_NODE_WIDTH/2
       start_legend_y = max_y + LEGEND_NODE_HEIGHT/2
       
@@ -248,9 +248,9 @@ module CMap
       add_connection_edge legend1_id, extra_id, legend2_id, EXTRA_EDGE_COLOR
       
       #add wrong linking phrase
-      add_linking_phrase wrong_id, "Wrong"
-      add_linking_phrase_appearance wrong_id, start_legend_x - 45, start_legend_y + 35, WRONG_EDGE_COLOR
-      add_connection_edge legend1_id, wrong_id, legend2_id, WRONG_EDGE_COLOR    
+      add_linking_phrase misplaced_id, "Misplaced"
+      add_linking_phrase_appearance misplaced_id, start_legend_x - 55, start_legend_y + 35, MISPLACED_EDGE_COLOR
+      add_connection_edge legend1_id, misplaced_id, legend2_id, MISPLACED_EDGE_COLOR    
     end
     
     
