@@ -11,8 +11,16 @@ module Debug
     debug %{Missing edge between: "#{node1}" and "#{node2}"}
   end
   
+  def Debug.misplaced_edge_between node1, node2, edge
+    debug %{Misplaced edge "#{edge}" between: "#{node1}" and "#{node2}"}
+  end
+  
   def Debug.extra_edge_between node1, node2, edge
     debug %{Extra edge "#{edge}" between: "#{node1}" and "#{node2}"}
+  end
+  
+  def Debug.no_misplaced_edges
+    debug "There are no misplaced edges."
   end
   
   def Debug.no_extra_edges

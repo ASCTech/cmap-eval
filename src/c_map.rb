@@ -1,6 +1,7 @@
 module CMap
   CONCEPT_XPATH = "/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept"
   CONNECTION_XPATH = "/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection"
+  CONNECTION_APPEARANCE_XPATH = "/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list/xmlns:connection-appearance"
   LINKING_PHRASE_XPATH = "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list/xmlns:linking-phrase"
   
   LEGEND_NODE_WIDTH = 60
@@ -26,12 +27,31 @@ module CMap
       else
         @previous_safe_id = ids.max
       end
+      
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
+      
+      # Create an appearance for every connection.
+      @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection").each do |connection|
+        if !@xml.xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list/xmlns:connection-appearance[@id='#{connection["id"]}']")
+          node = Nokogiri::XML::Node.new "connection-appearance", @xml
+          node["id"] = connection["id"]
+          @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list").add_child node
+        end
+      end
+      
+      # Create an appearance for every concept.
+      @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept").each do |concept|
+        if !@xml.xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list/xmlns:concept-appearance[@id='#{concept["id"]}']")
+          node = Nokogiri::XML::Node.new "connection-appearance", @xml
+          node["id"] = concept["id"]
+          @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child node
+        end
+      end
     end
     
     def name_block
@@ -87,7 +107,7 @@ module CMap
     end
     
     def grade_using key
-      mark_extra_edges key
+      mark_misplaced_and_extra_edges key
       mark_missing_edges key
       generate_legend
     end
@@ -254,21 +274,26 @@ module CMap
     end
     
     
-    def mark_extra_edges key
+    def mark_misplaced_and_extra_edges key
       vocab = key.vocabulary
       
+      misplaced_found = false
       extra_found = false
       
       each_unique_pair do |concept1, concept2|
         local_edges = edges_between(concept1, concept2)
         key_edges = key.edges_between(concept1, concept2)
         
-        # Edges that may be extraneous.
+        # Edges that are either misplaced or extraneous.
         extra_candidates = local_edges - key_edges
         
         extra_candidates.each do |candidate|
-          #The edge is extraneous if it's in the vocab.
+          #The edge is misplaced if it's in the vocab.
           if vocab.index candidate
+            mark_edge_misplaced concept1, concept2, candidate
+            Debug.misplaced_edge_between concept1, concept2, candidate
+            misplaced_found = true
+          else
             mark_edge_extra concept1, concept2, candidate
             Debug.extra_edge_between concept1, concept2, candidate
             extra_found = true
@@ -276,13 +301,19 @@ module CMap
         end
       end
       
-      if !extra_found
-        Debug.no_extra_edges
-      end
+      Debug.no_misplaced_edges unless misplaced_found
+      Debug.no_extra_edges unless extra_found
     end
     
     def mark_edge_extra concept1, concept2, edge
-      # TODO: Finish
+      mark_edge concept1, concept2, edge, EXTRA_EDGE_COLOR
+    end
+    
+    def mark_edge_misplaced concept1, concept2, edge
+      mark_edge concept1, concept2, edge, MISPLACED_EDGE_COLOR
+    end
+    
+    def mark_edge concept1, concept2, edge, color
       
       start_id = @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept[@label='#{concept1}']})["id"]
       end_id = @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept[@label='#{concept2}']})["id"]
@@ -301,9 +332,16 @@ module CMap
       # Check the name to find the unique id of our candidate.
       edge_id = possible_ids.select { |id| edge == label_of(id)}
       
-      # Mark the appearance.
-      appearance = @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@id='#{edge_id}']})
-      appearance["font-color"] = "255,0,0,255"
+      # Mark the first connection.
+      connection1_id = @xml.at_xpath(CONNECTION_XPATH + %{[@from-id='#{start_id}' and @to-id='#{edge_id}']})["id"]
+      @xml.at_xpath(%{//xmlns:connection-appearance[@id='#{connection1_id}']})["color"] = color
+      
+      # Mark the second connection.
+      connection2_id = @xml.at_xpath(CONNECTION_XPATH + %{[@from-id='#{edge_id}' and @to-id='#{end_id}']})["id"]
+      @xml.at_xpath(%{//xmlns:connection-appearance[@id='#{connection2_id}']})["color"] = color
+      
+      # Mark the edge itself.
+      @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@id='#{edge_id}']})["font-color"] = color
     end
     
     def vocabulary
@@ -347,7 +385,9 @@ module CMap
       
       
       start_id = id_of_concept concept1
+      connection1_id = create_unique_id
       middle = create_unique_id
+      connection2_id = create_unique_id
       end_id = id_of_concept concept2
       
       # Add the linking-phrase.
@@ -374,15 +414,27 @@ module CMap
           "x" => "#{(startx + finishx) / 2}", 
           "y" => "#{(starty + finishy) / 2}"
       end
-      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list").add_child phrase_appearance_fragment
+      @xml.at_xpath(%{/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list}).add_child phrase_appearance_fragment
       
       # Add the connections.
       connection_fragment = Nokogiri::XML::DocumentFragment.new @xml
       Nokogiri::XML::Builder.with connection_fragment do |doc|
-        doc.connection "from-id" => start_id, "to-id" => middle
-        doc.connection "from-id" => middle, "to-id" => end_id
+        doc.connection "id" => connection1_id, "from-id" => start_id, "to-id" => middle
+        doc.connection "id" => connection2_id, "from-id" => middle, "to-id" => end_id
       end
       @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:connection-list").add_child connection_fragment
+      
+      # Add the connection appearances.
+      connection_appearance_fragment = Nokogiri::XML::DocumentFragment.new @xml
+      Nokogiri::XML::Builder.with connection_appearance_fragment do |doc|
+        doc.send :"connection-appearance", 
+          "id" => connection1_id,
+          "color" => MISSING_EDGE_COLOR
+        doc.send :"connection-appearance",
+          "id" => connection2_id,
+          "color" => MISSING_EDGE_COLOR
+      end
+      @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list").add_child connection_appearance_fragment
     end
     
     def fill_doc_path doc, path
