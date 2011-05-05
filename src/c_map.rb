@@ -246,8 +246,8 @@ module CMap
       missing_id = create_unique_id
       extra_id = create_unique_id
       misplaced_id = create_unique_id
-      start_legend_x = max_x + LEGEND_NODE_WIDTH/2
-      start_legend_y = max_y + LEGEND_NODE_HEIGHT/2
+      start_legend_x = max_x + LEGEND_NODE_WIDTH/2 + 50
+      start_legend_y = max_y + LEGEND_NODE_HEIGHT/2 + 50
       
       #add legend node 1
       add_concept legend1_id, "Legend1"
@@ -255,21 +255,21 @@ module CMap
       
       #add legend node 2
       add_concept legend2_id, "Legend2"
-      add_concept_appearance legend2_id, start_legend_x, start_legend_y + 70   
+      add_concept_appearance legend2_id, start_legend_x, start_legend_y + 100   
       
       #add *missing* linking phrase and connections
       add_linking_phrase missing_id, "Missing"
-      add_linking_phrase_appearance missing_id, start_legend_x, start_legend_y + 35, MISSING_EDGE_COLOR
+      add_linking_phrase_appearance missing_id, start_legend_x, start_legend_y + 50, MISSING_EDGE_COLOR
       add_connection_edge legend1_id, missing_id, legend2_id, MISSING_EDGE_COLOR
       
       #add *extra* linking phrase and connections
       add_linking_phrase extra_id, "Extra"
-      add_linking_phrase_appearance extra_id, start_legend_x + 45, start_legend_y + 35, EXTRA_EDGE_COLOR
+      add_linking_phrase_appearance extra_id, start_legend_x + 55, start_legend_y + 50, EXTRA_EDGE_COLOR
       add_connection_edge legend1_id, extra_id, legend2_id, EXTRA_EDGE_COLOR
       
       #add wrong linking phrase
       add_linking_phrase misplaced_id, "Misplaced"
-      add_linking_phrase_appearance misplaced_id, start_legend_x - 55, start_legend_y + 35, MISPLACED_EDGE_COLOR
+      add_linking_phrase_appearance misplaced_id, start_legend_x - 65, start_legend_y + 50, MISPLACED_EDGE_COLOR
       add_connection_edge legend1_id, misplaced_id, legend2_id, MISPLACED_EDGE_COLOR    
     end
     
