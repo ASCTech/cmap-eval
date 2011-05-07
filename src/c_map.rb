@@ -1,8 +1,17 @@
+require "src/cxl_helper"
+
+include CxlHelper
+
 module CMap
-  CONCEPT_XPATH = "/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept"
-  CONNECTION_XPATH = "/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection"
-  CONNECTION_APPEARANCE_XPATH = "/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list/xmlns:connection-appearance"
-  LINKING_PHRASE_XPATH = "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list/xmlns:linking-phrase"
+  ROOT_XPATH = CxlHelper.create_path "cmap", "map"
+  CONCEPT_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-list"
+  CONCEPT_XPATH = CxlHelper.append_xpath CONCEPT_LIST_XPATH, "concept"
+  CONNECTION_LIST_XPATH = CxlHelper.create_path  ROOT_XPATH, "connection-list"
+  CONNECTION_XPATH = CxlHelper.create_path CONNECTION_LIST_XPATH, "connection"
+  CONNECTION_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "connection-appearance-list"
+  CONNECTION_APPEARANCE_XPATH = CxlHelper.create_path CONNECTION_APPEARANCE_LIST_XPATH, "connection-appearance"
+  LINKING_PHRASE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-list"
+  LINKING_PHRASE_XPATH = CxlHelper.create_path LINKING_PHRASE_LIST_XPATH, "linking-phrase"
   
   LEGEND_NODE_WIDTH = 60
   LEGEND_NODE_HEIGHT = 28
@@ -17,25 +26,26 @@ module CMap
   NAME_BLOCK_PREFIX = "Names:"
   
   class CMap
-    def initialize(raw_xml)
-      @xml = raw_xml
-      
+    def prepare_unique_ids
       # Find the first free id.
-      ids = @xml.xpath("//xmlns:concept | //xmlns:linking-phrase").xpath("@id").to_a.map {|elem| elem.to_s}
+      ids = @xml.xpath("//*[@id]/@id").to_a.map {|elem| elem.to_s}
       if ids.empty?
         @previous_safe_id = "0"
       else
         @previous_safe_id = ids.max
       end
-      
+    end
+    
+    def fill_all_doc_paths
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
       fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
-      
-      # Create an appearance for every connection.
+    end
+    
+    def create_appearances_for_connections
       @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection").each do |connection|
         if !@xml.xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list/xmlns:connection-appearance[@id='#{connection["id"]}']")
           node = Nokogiri::XML::Node.new "connection-appearance", @xml
@@ -43,8 +53,9 @@ module CMap
           @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list").add_child node
         end
       end
-      
-      # Create an appearance for every concept.
+    end
+    
+    def create_appearances_for_concepts
       @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:concept-list/xmlns:concept").each do |concept|
         if !@xml.xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list/xmlns:concept-appearance[@id='#{concept["id"]}']")
           node = Nokogiri::XML::Node.new "connection-appearance", @xml
@@ -52,6 +63,18 @@ module CMap
           @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list").add_child node
         end
       end
+    end
+    
+    def initialize(raw_xml)
+      @xml = raw_xml
+      
+      prepare_unique_ids
+      
+      fill_all_doc_paths
+      
+      create_appearances_for_connections
+      
+      create_appearances_for_concepts
     end
     
     def name_block
