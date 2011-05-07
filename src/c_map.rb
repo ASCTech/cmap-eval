@@ -28,21 +28,12 @@ module CMap
   class CMap
     def prepare_unique_ids
       # Find the first free id.
-      ids = @xml.xpath("//*[@id]/@id").to_a.map {|elem| elem.to_s}
+      ids = CxlHelper.attribute_from_any_node @xml, "id"
       if ids.empty?
         @previous_safe_id = "0"
       else
         @previous_safe_id = ids.max
       end
-    end
-    
-    def fill_all_doc_paths
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list"
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-list"
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list"
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list"
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
-      fill_doc_path @xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
     end
     
     def create_appearances_for_connections
@@ -70,7 +61,7 @@ module CMap
       
       prepare_unique_ids
       
-      fill_all_doc_paths
+      CxlHelper.fill_paths @xml
       
       create_appearances_for_connections
       
@@ -405,8 +396,6 @@ module CMap
     end
     
     def make_missing_edge concept1, concept2
-      
-      
       start_id = id_of_concept concept1
       connection1_id = create_unique_id
       middle = create_unique_id
@@ -458,14 +447,6 @@ module CMap
           "color" => MISSING_EDGE_COLOR
       end
       @xml.at_xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list").add_child connection_appearance_fragment
-    end
-    
-    def fill_doc_path doc, path
-      if doc.xpath(path).size == 0
-        fill_doc_path doc, path[/.*(?=\/.*)/]
-        fill_node = Nokogiri::XML::Node.new((path[/(?!.*:.*).*/]), doc)
-        doc.at_xpath(path[/.*(?=\/.*)/]).add_child fill_node
-      end
     end
     
     def id_of_concept node
