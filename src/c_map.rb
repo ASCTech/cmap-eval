@@ -3,16 +3,6 @@ require "src/cxl_helper"
 include CxlHelper
 
 module CMap
-  ROOT_XPATH = CxlHelper.create_path "cmap", "map"
-  CONCEPT_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-list"
-  CONCEPT_XPATH = CxlHelper.append_xpath CONCEPT_LIST_XPATH, "concept"
-  CONNECTION_LIST_XPATH = CxlHelper.create_path  ROOT_XPATH, "connection-list"
-  CONNECTION_XPATH = CxlHelper.create_path CONNECTION_LIST_XPATH, "connection"
-  CONNECTION_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "connection-appearance-list"
-  CONNECTION_APPEARANCE_XPATH = CxlHelper.create_path CONNECTION_APPEARANCE_LIST_XPATH, "connection-appearance"
-  LINKING_PHRASE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-list"
-  LINKING_PHRASE_XPATH = CxlHelper.create_path LINKING_PHRASE_LIST_XPATH, "linking-phrase"
-  
   LEGEND_NODE_WIDTH = 60
   LEGEND_NODE_HEIGHT = 28
   LEGEND_LABEL_WIDTH = 46
@@ -37,7 +27,7 @@ module CMap
     end
     
     def create_appearances_for_connections
-      @xml.xpath("/xmlns:cmap/xmlns:map/xmlns:connection-list/xmlns:connection").each do |connection|
+      @xml.xpath(CONNECTION_XPATH).each do |connection|
         if !@xml.xpath("/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list/xmlns:connection-appearance[@id='#{connection["id"]}']")
           node = Nokogiri::XML::Node.new "connection-appearance", @xml
           node["id"] = connection["id"]

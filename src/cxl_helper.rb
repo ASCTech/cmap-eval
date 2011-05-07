@@ -32,23 +32,50 @@ module CxlHelper
   
   # Return an array of the attribute values for all nodes with the given attribute.
   def CxlHelper.attribute_from_any_node xml, attr
-    return xml.xpath("//*[#{attr}]/@#{attr}").to_a.map{|elem| elem.to_s}
+    return CxlHelper.array_of_string xml.xpath("//*[#{attr}]/@#{attr}")
+  end
+  
+  # Return an array of the attribute values for the nodes along the path with the given attribute.
+  def CxlHelper.attribute_from xml, path, attr
+    predicate = "[@#{attr}]/@{#{attr}}"
+    
+    return CxlHelper.array_of_string xml.xpath path + predicate
   end
   
   def CxlHelper.fill_paths xml
-    fill_doc_path xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-list"
-    fill_doc_path xml, "/xmlns:cmap/xmlns:map/xmlns:connection-list"
-    fill_doc_path xml, "/xmlns:cmap/xmlns:map/xmlns:linking-phrase-appearance-list"
-    fill_doc_path xml, "/xmlns:cmap/xmlns:map/xmlns:connection-appearance-list"
-    fill_doc_path xml, "/xmlns:cmap/xmlns:map/xmlns:concept-appearance-list"
-    fill_doc_path xml, "/xmlns:cmap/xmlns:map/xmlns:concept-list"
+    fill_doc_path xml, CONCEPT_LIST_XPATH
+    fill_doc_path xml, CONNECTION_LIST_XPATH
+    fill_doc_path xml, LINKING_PHRASE_LIST_XPATH
+    
+    fill_doc_path xml, CONCEPT_APPEARANCE_LIST_XPATH
+    fill_doc_path xml, CONNECTION_APPEARANCE_LIST_XPATH
+    fill_doc_path xml, LINKING_PHRASE_APPEARANCE_LIST_XPATH
   end
   
   def CxlHelper.fill_doc_path doc, path
-      if doc.xpath(path).size == 0
-        CxlHelper.fill_doc_path doc, path[/.*(?=\/.*)/]
-        fill_node = Nokogiri::XML::Node.new((path[/(?!.*:.*).*/]), doc)
-        doc.at_xpath(path[/.*(?=\/.*)/]).add_child fill_node
-      end
+    if doc.xpath(path).size == 0
+      CxlHelper.fill_doc_path doc, path[/.*(?=\/.*)/]
+      fill_node = Nokogiri::XML::Node.new((path[/(?!.*:.*).*/]), doc)
+      doc.at_xpath(path[/.*(?=\/.*)/]).add_child fill_node
     end
+  end
+  
+  def CxlHelper.array_of_string nodes
+    return nodes.to_a.map{|elem| elem.to_s}
+  end
+  
+  ROOT_XPATH = CxlHelper.create_path "cmap", "map"
+  CONCEPT_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-list"
+  CONNECTION_LIST_XPATH = CxlHelper.create_path  ROOT_XPATH, "connection-list"
+  LINKING_PHRASE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-list"
+  
+  CONCEPT_XPATH = CxlHelper.append_xpath CONCEPT_LIST_XPATH, "concept"
+  CONNECTION_XPATH = CxlHelper.create_path CONNECTION_LIST_XPATH, "connection"
+  LINKING_PHRASE_XPATH = CxlHelper.create_path LINKING_PHRASE_LIST_XPATH, "linking-phrase"
+  
+  CONCEPT_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-appearance-list"
+  CONNECTION_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "connection-appearance-list"
+  LINKING_PHRASE_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-appearance-list"
+  
+  CONNECTION_APPEARANCE_XPATH = CxlHelper.create_path CONNECTION_APPEARANCE_LIST_XPATH, "connection-appearance"
 end
