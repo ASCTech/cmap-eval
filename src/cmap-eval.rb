@@ -58,3 +58,5 @@ end
 
 input_map.grade_using key_map
 input_map.write_to_file input_file_name
+problem_map = key_map.generate_problem_statement
+#TODO: Need problem_map.write_to_file file_name (what should file_name be?)
