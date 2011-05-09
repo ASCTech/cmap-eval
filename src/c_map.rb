@@ -330,6 +330,11 @@ module CMap
       return CxlHelper.normalize_attributes PHRASE_PATH.value("label").apply(@xml)
     end
 
+    def node_vocabulary
+      # Find all of the node labels
+      return CxlHelper.normalize_attributes CONCEPT_PATH.value("label").apply(@xml)
+    end
+
     def find_right_of_map
       find_max_of_map "x", "width"
     end

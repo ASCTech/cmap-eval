@@ -73,6 +73,11 @@ Then /^the marked up file should look like "([^"]*)"$/ do |correct_file_name|
   end
 end
 
+#TODO:this needs to be fixed I think
+Then /^the problem statement cmap file should look like "([^"]*)"$/ do |correct_file_name|
+  pending "Check file #{SANDBOX_PATH + correct_file_name}."
+end
+
 Then /^the notification should show the command\-line arguments error message$/ do
   Then "the notification should contain:", table(%{
     | ERROR: malformed arguments. |
