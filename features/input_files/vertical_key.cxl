@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmap xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://cmap.ihmc.us/xml/cmap/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <res-meta>
+        <dc:title>Untitled 1</dc:title>
+        <dc:creator>
+            <vcard:FN>Trebor Shankle</vcard:FN>
+            <vcard:EMAIL>shankle.10@osu.edu</vcard:EMAIL>
+            <vcard:ORG>
+                <vcard:Orgname>OSU</vcard:Orgname>
+            </vcard:ORG>
+        </dc:creator>
+        <dc:contributor>
+            <vcard:FN>Trebor Shankle</vcard:FN>
+            <vcard:EMAIL>shankle.10@osu.edu</vcard:EMAIL>
+            <vcard:ORG>
+                <vcard:Orgname>OSU</vcard:Orgname>
+            </vcard:ORG>
+        </dc:contributor>
+        <dcterms:rightsHolder>
+            <vcard:FN>Trebor Shankle</vcard:FN>
+            <vcard:EMAIL>shankle.10@osu.edu</vcard:EMAIL>
+            <vcard:ORG>
+                <vcard:Orgname>OSU</vcard:Orgname>
+            </vcard:ORG>
+        </dcterms:rightsHolder>
+        <dc:language>en</dc:language>
+        <dc:format>x-cmap/x-storable</dc:format>
+        <dc:publisher>FIHMC CmapTools 5.04 Lite</dc:publisher>
+        <dc:source>cmap:1JDQ9J9L7-266Y24V-1:1JDQ9JK32-22L3P3C-X:1JFCY18J3-W11WTM-4P</dc:source>
+    </res-meta>
+    <map width="305" height="352">
+        <concept-list>
+            <concept id="1JFCY1RWS-BRD668-5H" label="node1"/>
+            <concept id="1JFCY24XD-1XM855W-5Y" label="node2"/>
+        </concept-list>
+        <linking-phrase-list>
+            <linking-phrase id="1JFCY2YNG-78Y80G-7G" label="edge2"/>
+            <linking-phrase id="1JFCY2G70-10RDT6Z-6F" label="edge1"/>
+        </linking-phrase-list>
+        <connection-list>
+            <connection id="1JFCY2YNR-1GHLYJ7-7K" from-id="1JFCY24XD-1XM855W-5Y" to-id="1JFCY2YNG-78Y80G-7G"/>
+            <connection id="1JFCY2G7C-271D3P7-6K" from-id="1JFCY1RWS-BRD668-5H" to-id="1JFCY2G70-10RDT6Z-6F"/>
+            <connection id="1JFCY2YP8-WDG4W5-7R" from-id="1JFCY2YNG-78Y80G-7G" to-id="1JFCY1RWS-BRD668-5H"/>
+            <connection id="1JFCY2G7G-J1JNY4-6R" from-id="1JFCY2G70-10RDT6Z-6F" to-id="1JFCY24XD-1XM855W-5Y"/>
+        </connection-list>
+        <concept-appearance-list>
+            <concept-appearance id="1JFCY1RWS-BRD668-5H" x="219" y="92" width="53" height="25"/>
+            <concept-appearance id="1JFCY24XD-1XM855W-5Y" x="223" y="293" width="53" height="25"/>
+        </concept-appearance-list>
+        <linking-phrase-appearance-list>
+            <linking-phrase-appearance id="1JFCY2YNG-78Y80G-7G" x="241" y="191" width="39" height="14"/>
+            <linking-phrase-appearance id="1JFCY2G70-10RDT6Z-6F" x="194" y="191" width="39" height="14"/>
+        </linking-phrase-appearance-list>
+        <connection-appearance-list>
+            <connection-appearance id="1JFCY2YNR-1GHLYJ7-7K" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JFCY2G7C-271D3P7-6K" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JFCY2YP8-WDG4W5-7R" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JFCY2G7G-J1JNY4-6R" from-pos="center" to-pos="center"/>
+        </connection-appearance-list>
+        <style-sheet-list>
+            <style-sheet id="_Default_">
+                <map-style background-color="255,255,255,0" image-style="full" image-top-left="0,0"/>
+                <concept-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="4" background-color="237,244,246,255" background-image-style="full" border-color="0,0,0,255" border-style="solid" border-thickness="1"
+                    border-shape="rounded-rectangle" text-alignment="center" shadow-color="none"/>
+                <linking-phrase-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="1" background-color="0,0,255,0" background-image-style="full" border-color="0,0,0,0" border-style="solid" border-thickness="1"
+                    border-shape="rectangle" text-alignment="center" shadow-color="none"/>
+                <connection-style color="0,0,0,255" style="solid" thickness="1" type="straight" arrowhead="if-to-concept-and-slopes-up"/>
+                <resource-style font-name="SanSerif" font-size="12" font-style="plain" font-color="0,0,0,255" background-color="192,192,192,255"/>
+            </style-sheet>
+        </style-sheet-list>
+        <extra-graphical-properties-list>
+            <properties-list id="1JFCY18J3-W11WTM-4P">
+                <property key="StyleSheetGroup_0" value="//*@!#$%%^&amp;*()() No Grouped StyleSheets @"/>
+            </properties-list>
+        </extra-graphical-properties-list>
+    </map>
+</cmap>
