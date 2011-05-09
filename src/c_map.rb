@@ -6,7 +6,7 @@ module CMap
   LEGEND_NODE_WIDTH = 60
   LEGEND_NODE_HEIGHT = 28
   LEGEND_LABEL_WIDTH = 46
-  LEDGEND_LABEL_HEIGHT = 13
+  LEGEND_LABEL_HEIGHT = 13
   
   MISSING_EDGE_COLOR = "0,0,255,255"
   MISPLACED_EDGE_COLOR = "255,0,0,255"
@@ -16,7 +16,7 @@ module CMap
   class CMap
     def prepare_unique_ids
       # Find the first free id.
-      ids = CxlHelper.attribute_from_any_node @xml, "id"
+      ids = CxlHelper.value CxlHelper.builder.anything.with("id").value("id").apply(@xml)
       if ids.empty?
         @previous_safe_id = "0"
       else
@@ -87,6 +87,13 @@ module CMap
       node1_id = id_of_concept node1
       node2_id = id_of_concept node2
       
+      edge_ids = edge_ids_between node1_id, node2_id
+      
+      # Look up their names.
+      return edge_ids.map { |id| label_of id}
+    end
+    
+    def edge_ids_between node1_id, node2_id
       # Find the connections that start with node1.
       beginnings = CONNECTION_PATH.with_values("from-id" => node1_id).value("to-id").apply(@xml)
       beginnings = CxlHelper.normalize_attributes beginnings
@@ -96,12 +103,7 @@ module CMap
       endings = CxlHelper.normalize_attributes endings
       
       # Their intersections are the ids of the nodes that we want.
-      edge_ids = beginnings & endings
-      
-      # Look up their names.
-      edges = edge_ids.map { |id| label_of id}
-      
-      return edges
+      return beginnings & endings
     end
     
     def grade_using key
@@ -114,6 +116,24 @@ module CMap
       File.open file_name, "w" do |file|
         file.print @xml.to_xml
       end
+    end
+    
+    #TODO: This probably needs fixed
+    def generate_problem_statement
+      vocab = self.node_vocabulary
+      problem_map = CMap.new Nokogiri::XML::Document.new
+      x = 5
+      y = 0
+      
+      #add each node to the problem statement map
+      vocab.each do |node_label|
+        id = create_unique_id
+        problem_map.add_concept id, node_label
+        problem_map.add_concept_appearance id, x, y
+        y = y + 10
+      end
+      # TODO: add a model name_block
+      return problem_map
     end
     
     protected
@@ -355,6 +375,8 @@ module CMap
           furthest = displacement
         end
       end
+      
+      return furthest
     end
     
     
@@ -373,21 +395,17 @@ module CMap
       
       PHRASE_LIST_PATH.apply(@xml)[0].add_child phrase
       
-      # Find the positions of the phrases, so we can center the "missing" between them.
-      start = CONCEPT_APPEARANCE_PATH.with_values("id" => start_id).apply(@xml)[0]
-      startx = start["x"].to_i
-      starty = start["y"].to_i
-      finish = CONCEPT_APPEARANCE_PATH.with_values("id" => end_id).apply(@xml)[0]
-      finishx = finish["x"].to_i
-      finishy = finish["y"].to_i
+      posx, posy = new_edge_position start_id, end_id
       
       # Add its appearance.
       phrase_appearance = CxlHelper.create_node @xml,
       "linking-phrase-appearance",
       "id" => middle,
       "font-color" => MISSING_EDGE_COLOR,
-      "x" => ((startx + finishx) / 2).to_s,
-      "y" => ((starty + finishy) / 2).to_s
+      "x" => posx.to_s,
+      "y" => posy.to_s,
+      "width" => LEGEND_LABEL_WIDTH.to_s,
+      "height" => LEGEND_LABEL_HEIGHT.to_s
       
       PHRASE_APPEARANCE_LIST_PATH.apply(@xml)[0].add_child phrase_appearance
       
@@ -421,22 +439,45 @@ module CMap
       CONNECTION_APPEARANCE_LIST_PATH.apply(@xml)[0].add_child second_half_appearance
     end
     
-    #TODO: This probably needs fixed
-    def generate_problem_statement
-      vocab = self.node_vocabulary
-      problem_map = CMap.new Nokogiri::XML::Document.new
-      x = 5
-      y = 0
+    # Find a good position for a new node between the two ids.
+    def new_edge_position concept1_id, concept2_id
+      startx = CxlHelper.value(CONCEPT_APPEARANCE_PATH.with_values("id" => concept1_id).value("x").apply(@xml)).to_i
+      starty = CxlHelper.value(CONCEPT_APPEARANCE_PATH.with_values("id" => concept1_id).value("y").apply(@xml)).to_i
+      endx = CxlHelper.value(CONCEPT_APPEARANCE_PATH.with_values("id" => concept2_id).value("x").apply(@xml)).to_i
+      endy = CxlHelper.value(CONCEPT_APPEARANCE_PATH.with_values("id" => concept2_id).value("y").apply(@xml)).to_i
       
-      #add each node to the problem statement map
-      vocab.each do |node_label|
-        id = create_unique_id
-        problem_map.add_concept id, node_label
-        problem_map.add_concept_appearance id, x, y
-        y = y + 10
+      # Find the edges between the two, ignoring direction.
+      edge_ids = edge_ids_between(concept1_id, concept2_id)
+      edge_ids << edge_ids_between(concept2_id, concept1_id)
+      
+      # Find the safe position for the top-left of the new edge.
+      # If there are no edges, we'll place the top-left such that the missing will be centered.
+      left = (startx + endx - LEGEND_NODE_WIDTH) / 2
+      bottom = (starty + endy - LEGEND_NODE_WIDTH) / 2
+      edge_ids.each do |edge_id|
+        x, y, width, height = location_info edge_id
+        new_left = x + width/2
+        new_bottom = y + height/2
+        
+        if (new_left > left)
+          left = new_left
+        end
+        
+        if (new_bottom > bottom)
+          bottom = new_bottom
+        end
       end
-      # TODO: add a model name_block
-      return problem_map
+      
+      return left + LEGEND_NODE_WIDTH/2, bottom + LEGEND_NODE_HEIGHT/2
+    end
+    
+    def location_info id
+      x = CxlHelper.value(CxlHelper.builder.anything.with("id", "x").with_values("id" => id).value("x").apply(@xml)).to_i
+      y = CxlHelper.value(CxlHelper.builder.anything.with("id", "y").with_values("id" => id).value("y").apply(@xml)).to_i
+      width = CxlHelper.value(CxlHelper.builder.anything.with("id", "width").with_values("id" => id).value("width").apply(@xml)).to_i
+      height = CxlHelper.value(CxlHelper.builder.anything.with("id", "height").with_values("id" => id).value("height").apply(@xml)).to_i
+      
+      return x, y, width, height
     end
     
     def id_of_concept node

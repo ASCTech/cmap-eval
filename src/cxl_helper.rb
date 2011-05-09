@@ -33,11 +33,6 @@ module CxlHelper
     return xml.xpath "//*[#{predicate}]"
   end
 
-  # Return an array of the attribute values for all nodes with the given attribute.
-  def CxlHelper.attribute_from_any_node xml, attr
-    return CxlHelper.normalize_attributes xml.xpath("//*[#{attr}]/@#{attr}")
-  end
-
   def CxlHelper.fill_paths xml
     fill_doc_path xml, CONCEPT_LIST_XPATH
     fill_doc_path xml, CONNECTION_LIST_XPATH
