@@ -128,14 +128,73 @@ module CMap
       end
     end
     
-    #TODO: This probably needs fixed
+    #TODO: Keys should not have name blocks, inputs need fixed, and this needs refactored
     def transform_into_problem_statement_map
       # Clear connections, connection appearances, linking_phrases, linking phrase appearance
+      CONNECTION_LIST_PATH.apply(@xml)[0].remove
+      PHRASE_LIST_PATH.apply(@xml)[0].remove
+      CONNECTION_APPEARANCE_LIST_PATH.apply(@xml)[0].remove
+      PHRASE_APPEARANCE_LIST_PATH.apply(@xml)[0].remove
       
+      # remove the name block if it exists
+      CxlHelper.builder.anything.with("id", "label").apply(@xml).each do |concept|
+        label = concept["label"]
+        if label.start_with? "Names:"
+          name_id = concept["id"]
+          # remove the name block
+          concept.remove
+          #remove the name block appearance
+          CxlHelper.builder.anything.with("x", "y", "width", "height").apply(@xml).each do |concept_appearance|
+            id = concept_appearance["id"]
+            if id == name_id
+              concept_appearance.remove
+            end
+          end
+        end
+      end
+      # get the maximum node width and node height in key
+      max_width = self.get_max_node_width
+      max_height = self.get_max_node_height
       
+      # change the x and y positions of each node 
+      x = max_width/2 + 5
+      y = max_height/2 + 5
+      CxlHelper.builder.anything.with("x", "y", "width", "height").apply(@xml).each do |concept_appearance|
+        concept_appearance["x"] = x.to_s
+        concept_appearance["y"] = y.to_s
+        y = y + max_height + 10
+      end
+      
+      # Add the sample name block
+      name_id = create_unique_id
+      add_concept name_id, "Names:\nname1\nname2"
+      add_concept_appearance name_id, 37, (y - max_height/2 + 27)
     end
     
     protected
+    
+    def get_max_node_width
+      max_width = 0
+      CxlHelper.builder.anything.with("x", "width").apply(@xml).each do |node|
+        width = node["width"].to_i
+        if width > max_width
+          max_width = width 
+        end
+      end
+      
+      return max_width
+    end
+    
+    def get_max_node_height
+      max_height = 0
+      CxlHelper.builder.anything.with("y", "height").apply(@xml).each do |node|
+        height = node["height"].to_i
+        if height > max_height
+          max_height = height 
+        end
+      end
+      return max_height
+    end
     
     def each_unique_pair
       concepts = concepts_in_map
@@ -182,9 +241,9 @@ module CMap
       "concept-appearance",
       "id" => id,
       "x" => x.to_s,
-      "y" => y.to_s,
-      "width" => LEGEND_NODE_WIDTH.to_s,
-      "height" => LEGEND_NODE_HEIGHT.to_s
+      "y" => y.to_s
+      #"width" => LEGEND_NODE_WIDTH.to_s,
+      #"height" => LEGEND_NODE_HEIGHT.to_s
       
       CONCEPT_APPEARANCE_LIST_PATH.apply(@xml)[0].add_child concept_appearance
     end
