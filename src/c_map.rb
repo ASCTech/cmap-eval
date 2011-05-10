@@ -119,10 +119,10 @@ module CMap
     end
     
     #TODO: This probably needs fixed
-    def generate_problem_statement
+    def generate_problem_statement_map
       vocab = self.node_vocabulary
       problem_map = CMap.new Nokogiri::XML::Document.new
-      x = 5
+      x = 10
       y = 0
       
       #add each node to the problem statement map

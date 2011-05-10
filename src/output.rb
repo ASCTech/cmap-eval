@@ -1,4 +1,10 @@
 module Output
+  def Output.bad_args_exit
+    Output.wrong_args_error
+    Output.help_message
+    Output.exit
+  end
+  
   def Output.wrong_args_error
     Output.error "malformed arguments."
   end
@@ -19,6 +25,14 @@ module Output
   
   def Output.unreadable_file_error file_name
     Output.error %{File "#{file_name}" could not be read.}
+  end
+  
+  def Output.unwritable_file_error file_name
+    Output.error %{File "#{file_name}" could not be written."}
+  end
+  
+  def Output.unwriteable_folder_error folder_name
+    output.error %{Folder "#{folder_name}" could not be written."}
   end
 
   def Output.exception except
