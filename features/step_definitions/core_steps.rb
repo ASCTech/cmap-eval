@@ -91,17 +91,36 @@ Then /^the marked up file should look like "([^"]*)"$/ do |correct_file_name|
   end
 end
 
+# TODO: change this so there isn't identical code structure 
 Then /^the problem statement cmap file should look like "([^"]*)"$/ do |correct_file_name|
   correct_file_name = INPUT_PATH + correct_file_name
   if !File.readable? correct_file_name
     raise "File #{correct_file_name} does not exist!"
   else
-    pending "Check file #{SANDBOX_PATH + "problem_statement/problem_statement.cxl"}."
+    problem_statement_file = "problem_statement/problem_statement.cxl"
+    pending "Check file #{SANDBOX_PATH + problem_statement_file}."
+  end
+end
+
+Then /^the problem statement text file should look like "([^"]*)"$/ do |correct_file_name|
+  correct_file_name = INPUT_PATH + correct_file_name
+  if !File.readable? correct_file_name
+    raise "File #{correct_file_name} does not exist!"
+  else
+    problem_statement_file = "problem_statement/problem_statement.txt"
+    pending "Check file #{SANDBOX_PATH + problem_statement_file}."
   end
 end
 
 Then /^the problem statement cmap file should exist$/ do
   expected_file_name = @problem_statement_path + "/problem_statement.cxl"
+  if !File.readable? expected_file_name
+    raise "File #{expected_file_name} does not exist!"
+  end
+end
+
+Then /^the problem statement text file should exist$/ do
+  expected_file_name = @problem_statement_path + "/problem_statement.txt"
   if !File.readable? expected_file_name
     raise "File #{expected_file_name} does not exist!"
   end
