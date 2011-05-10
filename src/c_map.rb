@@ -174,9 +174,9 @@ module CMap
     def generate_problem_statement_text
       vocab = self.vocabulary
       vocab.sort!
-      vocab_string = "Possible connections include:\n"
+      vocab_string = "Possible connections include:"
       vocab.each do |label|
-        vocab_string << label << "\n"
+        vocab_string << "\n" << label 
       end
       return vocab_string
     end
