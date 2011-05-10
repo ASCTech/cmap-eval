@@ -449,6 +449,13 @@ module CMap
       edge_ids = edge_ids_between(concept1_id, concept2_id)
       edge_ids << edge_ids_between(concept2_id, concept1_id)
       
+      # Determine which direction we should be adding nodes.
+      concepts_horizontal = false
+      if ((endx - startx).abs > (endy-starty).abs)
+        # The nodes are oriented "mostly" horizontally.
+        concepts_horizontal = true
+      end
+      
       # Find the safe position for the top-left of the new edge.
       # If there are no edges, we'll place the top-left such that the missing will be centered.
       left = (startx + endx - LEGEND_NODE_WIDTH) / 2
@@ -458,11 +465,11 @@ module CMap
         new_left = x + width/2
         new_bottom = y + height/2
         
-        if (new_left > left)
+        if (new_left > left and !concepts_horizontal)
           left = new_left
         end
         
-        if (new_bottom > bottom)
+        if (new_bottom > bottom and concepts_horizontal)
           bottom = new_bottom
         end
       end
