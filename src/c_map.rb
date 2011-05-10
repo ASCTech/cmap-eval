@@ -113,27 +113,26 @@ module CMap
     end
     
     def write_to_file file_name
+      # Create the directory, if it doesn't already exist.
+      
+      if file_name.include? "\\" or file_name.include? "/"
+        directory_part = file_name[/.*(?=[\/\\][^\/\\]*)/]
+        
+        if !File.exist? directory_part
+          Dir.mkdir directory_part
+        end
+      end
+      
       File.open file_name, "w" do |file|
         file.print @xml.to_xml
       end
     end
     
     #TODO: This probably needs fixed
-    def generate_problem_statement_map
-      vocab = self.node_vocabulary
-      problem_map = CMap.new Nokogiri::XML::Document.new
-      x = 10
-      y = 0
+    def transform_into_problem_statement_map
+      # Clear connections, connection appearances, linking_phrases, linking phrase appearance
       
-      #add each node to the problem statement map
-      vocab.each do |node_label|
-        id = create_unique_id
-        problem_map.add_concept id, node_label
-        problem_map.add_concept_appearance id, x, y
-        y = y + 10
-      end
-      # TODO: add a model name_block
-      return problem_map
+      
     end
     
     protected

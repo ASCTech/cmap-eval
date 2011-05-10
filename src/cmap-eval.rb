@@ -69,13 +69,6 @@ def validate_writable file_name
   end
 end
 
-def validate_folder folder_name
-  if !File.exist? folder_name
-    Output.unwriteable_folder_error folder_name
-    Output.exit
-  end
-end
-
 def get_normal_file_names args
   return args[-2], args[-1]
 end
@@ -90,11 +83,10 @@ mode = get_mode ARGV
 if mode == :problem_statement_mode
   key_file_name, output_path = get_problem_statement_names ARGV
   validate_readable key_file_name
-  validate_folder output_path
   
-  key_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
-  problem_map = key_map.generate_problem_statement_map
-  #TODO: Need problem_map.write_to_file file_name (what should file_name be?)  
+  problem_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
+  problem_map.transform_into_problem_statement_map
+  problem_map.write_to_file output_path + "/problem_statement.cxl"
 else
   if mode == :debug_mode
     Debug.enable_debug
