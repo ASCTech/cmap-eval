@@ -32,7 +32,7 @@ module Output
   end
   
   def Output.unwriteable_folder_error folder_name
-    output.error %{Folder "#{folder_name}" could not be written."}
+    Output.error %{Folder "#{folder_name}" could not be written."}
   end
 
   def Output.exception except

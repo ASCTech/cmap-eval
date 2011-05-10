@@ -70,7 +70,7 @@ def validate_writable file_name
 end
 
 def validate_folder folder_name
-  if !Dir.exists? folder_name
+  if !File.exist? folder_name
     Output.unwriteable_folder_error folder_name
     Output.exit
   end
