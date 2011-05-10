@@ -33,7 +33,7 @@ def validate_arguments args
       Output.bad_args_exit
     end
   end
-
+  
   # Check that we have exactly enough arguments.
   if args.size != 2 and args.size != 3
     Output.bad_args_exit
@@ -77,6 +77,22 @@ def get_problem_statement_names args
   return args[-2], args[-1]
 end
 
+def write_text_to_text_file file_name, text
+  # Create the directory, if it doesn't already exist.
+  
+  if file_name.include? "\\" or file_name.include? "/"
+    directory_part = file_name[/.*(?=[\/\\][^\/\\]*)/]
+    
+    if !File.exist? directory_part
+      Dir.mkdir directory_part
+    end
+  end
+  
+  File.open file_name, "w" do |file|
+    file.print text
+  end
+end
+
 validate_arguments ARGV
 mode = get_mode ARGV
 
@@ -85,8 +101,14 @@ if mode == :problem_statement_mode
   validate_readable key_file_name
   
   problem_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
+  # generate problem statement edge list in text file
+  text = problem_map.generate_problem_statement_text
+  write_text_to_text_file output_path + "/problem_statement.txt", text
+  
+  # create the problem statement CMap with nodes
   problem_map.transform_into_problem_statement_map
   problem_map.write_to_file output_path + "/problem_statement.cxl"
+  
 else
   if mode == :debug_mode
     Debug.enable_debug

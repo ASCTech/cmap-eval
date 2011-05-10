@@ -171,6 +171,16 @@ module CMap
       add_concept_appearance name_id, 37, (y - max_height/2 + 27)
     end
     
+    def generate_problem_statement_text
+      vocab = self.vocabulary
+      vocab.sort!
+      vocab_string = "Possible connections include:\n"
+      vocab.each do |label|
+        vocab_string << label << "\n"
+      end
+      return vocab_string
+    end
+    
     protected
     
     def get_max_node_width
