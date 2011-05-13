@@ -107,9 +107,15 @@ module CMap
     end
     
     def grade_using key
+      distinct_connections = key.number_of_distinct_connections
+      
       mark_misplaced_and_extra_edges key
-      mark_missing_edges key
+      missing_edges = mark_missing_edges key
       generate_legend
+      
+      correct = distinct_connections - missing_edges
+      grade = (correct.to_f/distinct_connections.to_f) * 100
+      return grade.round.to_i
     end
     
     def write_to_file file_name
@@ -218,8 +224,22 @@ module CMap
       end
     end
     
+    # This will return the number of connections in a map with distinct end points
+    # TODO: Will this break if there is an edge concept1->concept2 and an edge concept2->concept1?
+    def number_of_distinct_connections
+      unique_pairs = 0
+      each_unique_pair do |concept1, concept2|
+        edges = self.edges_between(concept1, concept2)
+        if edges.size > 0
+          unique_pairs = unique_pairs + 1
+        end
+      end  
+      return unique_pairs
+    end
+    
     def mark_missing_edges key
       missing_found = false
+      number_missing = 0
       
       key.each_unique_pair do |concept1, concept2|
         good_edges = key.edges_between(concept1, concept2)
@@ -227,12 +247,14 @@ module CMap
         
         if !good_edges.empty? and (good_edges & local_edges).empty?
           make_missing_edge concept1, concept2
+          number_missing = number_missing + 1
           Debug.missing_edge_between concept1, concept2
           missing_found = true
         end
       end
       
       Debug.no_missing_edges unless missing_found
+      return number_missing
     end
     
     def create_unique_id

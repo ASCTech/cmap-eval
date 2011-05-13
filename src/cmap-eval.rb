@@ -129,6 +129,8 @@ else
   end
   
   
-  input_map.grade_using key_map
+  grade = input_map.grade_using key_map
   input_map.write_to_file input_file_name
+  # Output the grade to the console
+  puts "Grade: " + grade.to_s + "%"
 end
