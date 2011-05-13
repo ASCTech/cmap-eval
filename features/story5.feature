@@ -34,8 +34,3 @@ Feature: Story 5: "assign a naive grade"
 		When cmap-eval is executed in debug mode
 		Then the notification should contain:
 			| The grade is 0% |
-	Scenario: all edges misplaced or missing
-		Given key "naive_grading_key.cxl" and input "naive_all_missing_or_misplaced.cxl"
-		When cmap-eval is executed in debug mode
-		Then the notification should contain:
-			| The grade is 0% |
