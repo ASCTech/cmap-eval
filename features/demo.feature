@@ -1,3 +1,4 @@
+@test
 Feature: Midterm Demo
 	Scenario: Overview Graphics
 		Given key "overview_key.cxl" and input "overview_input.cxl"
