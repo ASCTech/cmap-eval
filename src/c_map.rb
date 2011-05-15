@@ -114,7 +114,16 @@ module CMap
       generate_legend
       
       correct = distinct_connections - missing_edges
-      grade = (correct.to_f/distinct_connections.to_f) * 100
+      # TODO: This should be changed. Choppy fix.
+      if !(distinct_connections == 0)
+        grade = (correct.to_f/distinct_connections.to_f) * 100
+      else 
+        if correct < 0 
+          grade = 0
+        else
+          grade = 100
+        end
+      end
       return grade.round.to_i
     end
     

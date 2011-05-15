@@ -1,4 +1,3 @@
-@jake
 Feature: Story 5: "assign a naive grade"
 	Scenario: all connections present
 		Given key "naive_grading_key.cxl" and input "correct_naive_grading.cxl"
