@@ -1,12 +1,13 @@
 require "test/unit"
 require "src/c_map"
+require "src/cxl_helper"
 require "rubygems"
 require "nokogiri"
 require "pp"
 
 include Nokogiri::XML
 
-class CMapTest < Test::Unit::TestCase
+class NameBlockTest < Test::Unit::TestCase
   def test_missing_name_block_in_empty_map
     test = Builder.new do |xml|
       xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
