@@ -1,29 +1,25 @@
 require "test/unit"
 require "src/c_map"
-require "src/cxl_helper"
 require "rubygems"
 require "nokogiri"
 require "pp"
 
 include Nokogiri::XML
-
-class NameBlockTest < Test::Unit::TestCase
-  def test_missing_name_block_in_empty_map
-    test = Builder.new do |xml|
-      xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
-        # Fix the namespace.  Necessary because the root is in the namespace.
-        xml.parent.namespace = xml.parent.namespace_definitions.first
-        
-        xml.map {
-          xml.send(:"concept-list")
+  class NameBlockTest < Test::Unit::TestCase
+    def test_missing_name_block_in_empty_map
+      test = Builder.new do |xml|
+        xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") { 
+          xml.parent.namespace = xml.parent.namespace_definitions.first
+          xml.map {
+            xml.send(:"concept-list")
+          }
         }
-      }
-    end
-    
-    c_map = CMap::CMap.new(test.doc)
+      end
+      
+    cmap = CMap::CMap.new(test.doc)
     
     assert_raise(CMap::Error) {
-      puts c_map.name_block.class
+      puts cmap.name_block.class
     }
     
     begin
@@ -41,7 +37,7 @@ class NameBlockTest < Test::Unit::TestCase
         
         xml.map {
           xml.send(:"concept-list") {
-            xml.concept("label" => "Node1")
+            xml.concept("label" => "Node1", "id" => "idnode1")
           }
         }
       }
@@ -68,7 +64,7 @@ class NameBlockTest < Test::Unit::TestCase
         
         xml.map {
           xml.send(:"concept-list") {
-            xml.concept("label" => "Names:\n")
+            xml.concept("label" => "Names:\n", "id" => "idname")
           }
         }
       }
@@ -95,7 +91,7 @@ class NameBlockTest < Test::Unit::TestCase
         
         xml.map {
           xml.send(:"concept-list") {
-            xml.concept("label" => "Names:\nname1")
+            xml.concept("label" => "Names:\nname1", "id" => "idname")
           }
         }
       }
@@ -114,7 +110,7 @@ class NameBlockTest < Test::Unit::TestCase
         
         xml.map {
           xml.send(:"concept-list") {
-            xml.concept("label" => "Names:\nname1\nname2")
+            xml.concept("label" => "Names:\nname1\nname2", "id" => "idname")
           }
         }
       }
@@ -134,7 +130,7 @@ class NameBlockTest < Test::Unit::TestCase
         xml.map {
           xml.send(:"concept-list") {
             xml.concept("label" => "Node1")
-            xml.concept("label" => "Names:\nname1")
+            xml.concept("label" => "Names:\nname1", "id" => "idname")
           }
         }
       }

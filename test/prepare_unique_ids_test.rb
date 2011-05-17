@@ -1,5 +1,4 @@
-# This is not working currently. I would need to make another class 
-# in c_map to test it so I can get the prepare_unique_ids var
+
 
 require "test/unit"
 require "src/c_map"

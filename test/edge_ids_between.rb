@@ -19,8 +19,8 @@ include Nokogiri::XML
           }
         }
       end   
-        cmap = CMap::CMap.new(test.doc)
-        assert_equal([],cmap.edge_ids_between("1JCK0VTLG-1FT6YS1-FV","1JCK0VTLG-1FT6YS3-FV"))
+      cmap = CMap::CMap.new(test.doc)
+      assert_equal([],cmap.edge_ids_between("1JCK0VTLG-1FT6YS1-FV","1JCK0VTLG-1FT6YS3-FV"))
     end
     
     def test_1_edge_between

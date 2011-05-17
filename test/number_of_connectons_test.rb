@@ -5,6 +5,7 @@ require "nokogiri"
 require "pp"
 
 include Nokogiri::XML
+class CMapTest < CMap::CMap
   class NumberOfConnectionsTest < Test::Unit::TestCase
     def test_no_edges
       test = Builder.new do |xml|
@@ -101,3 +102,4 @@ include Nokogiri::XML
       assert_equal(2,cmap.number_of_distinct_connections, "Circular edges break the method.")
     end
   end
+end
