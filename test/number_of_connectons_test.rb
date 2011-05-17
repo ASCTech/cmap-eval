@@ -21,7 +21,7 @@ class CMapTest < CMap::CMap
         }
       end   
         cmap = CMap::CMap.new(test.doc)
-        assert_equal(0, cmap.number_of_distinct_connections)
+        assert_equal(0, cmap.send(:number_of_distinct_connections))
     end
     
     def test_1_edge
@@ -45,7 +45,7 @@ class CMapTest < CMap::CMap
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(1, cmap.number_of_distinct_connections)
+      assert_equal(1, cmap.send(:number_of_distinct_connections))
     end
     
     def test_mult_edge
@@ -72,7 +72,7 @@ class CMapTest < CMap::CMap
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(2, cmap.number_of_distinct_connections)
+      assert_equal(2, cmap.send(:number_of_distinct_connections))
     end
     
     def test_circular_edges
@@ -99,7 +99,7 @@ class CMapTest < CMap::CMap
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(2,cmap.number_of_distinct_connections, "Circular edges break the method.")
+      assert_equal(2,cmap.send(:number_of_distinct_connections), "Circular edges break the method.")
     end
   end
 end
