@@ -130,7 +130,8 @@ module CMap
         # Move the incorrect edges into the remaining space.
         incorrect_edges.each do |edge|
           id_to_move = edge_id_of edge, start, finish
-          move_position = new_edge_position(start, finish).map { |elem|
+          move_position = new_edge_position(id_of_concept(start), id_of_concept(finish))
+          move_position = move_position.map { |elem|
             elem.to_s
           }
           set_position id_to_move, *move_position
@@ -633,6 +634,7 @@ module CMap
       # If there are no edges, we'll place the top-left such that the missing will be centered.
       left = (startx + endx - LEGEND_NODE_WIDTH) / 2
       bottom = (starty + endy - LEGEND_NODE_WIDTH) / 2
+      
       edge_ids.each do |edge_id|
         x, y, width, height = location_info edge_id
         new_left = x + width/2
