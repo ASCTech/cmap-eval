@@ -101,10 +101,7 @@ if mode == :problem_statement_mode
   validate_readable key_file_name
   
   problem_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
-  # generate problem statement edge list in text file
-  text = problem_map.generate_problem_statement_text
-  write_text_to_text_file output_path + "/problem_statement.txt", text
-  
+
   # create the problem statement CMap with nodes
   problem_map.transform_into_problem_statement_map
   problem_map.write_to_file output_path + "/problem_statement.cxl"

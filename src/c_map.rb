@@ -222,6 +222,9 @@ module CMap
 
     #TODO: Keys should not have name blocks, inputs need fixed, and this needs refactored
     def transform_into_problem_statement_map
+      # get the edge list before the edges are removed
+      propositions = self.proposition_list      
+
       # Clear connections, connection appearances, linking_phrases, linking phrase appearance
       CONNECTION_LIST_PATH.apply(@xml)[0].remove
       PHRASE_LIST_PATH.apply(@xml)[0].remove
@@ -261,12 +264,18 @@ module CMap
       name_id = create_unique_id
       add_concept name_id, "Names:\nname1\nname2"
       add_concept_appearance name_id, 37, (y - max_height/2 + 27)
+      
+      # Add the propositions block
+      #TODO: fix this placement
+      proposition_id = create_unique_id
+      add_concept proposition_id, propositions
+      add_concept_appearance name_id, 37, (y - max_height/2 + 27)
     end
 
-    def generate_problem_statement_text
+    def proposition_list
       vocab = self.vocabulary
-      vocab.sort!
-      vocab_string = "Possible connections include:\n"
+      vocab = vocab.uniq.sort
+      vocab_string = "Propositions:\n"
       vocab_string << vocab.join("\n")
       return vocab_string
     end
