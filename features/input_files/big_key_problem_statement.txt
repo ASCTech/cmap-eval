@@ -1,5 +1,0 @@
-Possible connections include:
-edge1
-edge2
-edge3
-edge4

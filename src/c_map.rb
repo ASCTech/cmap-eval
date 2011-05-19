@@ -76,6 +76,7 @@ module CMap
       # Parse out the labels, ignoring the Names block.
       CONCEPT_PATH.apply(@xml).each do |concept|
         label = concept["label"]
+        # TODO: proposition prefix
         concepts << label unless label.start_with? NAME_BLOCK_PREFIX
       end
       
@@ -220,29 +221,36 @@ module CMap
       end
     end
     
-    #TODO: Keys should not have name blocks, inputs need fixed, and this needs refactored
-    #TODO: This is ugly, fix it
-    def transform_into_problem_statement_map
-      # get an array which holds [edge_list, proposistion_height] before the edges are removed
-      propositions = self.proposition_list      
-      # get the maximum width and height in key
-      max_width = self.get_max_node_width
-
+    def remove_edges
       # Clear connections, connection appearances, linking_phrases, linking phrase appearance
       CONNECTION_LIST_PATH.apply(@xml)[0].remove
       PHRASE_LIST_PATH.apply(@xml)[0].remove
       CONNECTION_APPEARANCE_LIST_PATH.apply(@xml)[0].remove
       PHRASE_APPEARANCE_LIST_PATH.apply(@xml)[0].remove
-
-      # get max height of the nodes
+    end
+    
+    #TODO: Keys should not have name blocks, inputs need fixed, and this needs refactored.
+    #TODO: This is ugly, fix it.
+    def transform_into_problem_statement_map
+      # Get an array which holds [edge_list, proposistion_height] before the edges are removed.
+      propositions = self.proposition_list      
+      # Get the maximum width and height in key.
+      # TODO: Fix this so it only checks edges not both edges and nodes. See proposition block at end of method.       
+      max_width = self.get_max_node_width
+      
+      self.remove_edges
+      
+      # Get max height of the nodes.
       max_height = self.get_max_node_height
       
-      # change the x and y positions of each node
+      # Set initial x and y.
       x = max_width/2 + 5
       y = max_height/2 + 5
-      CxlHelper.builder.anything.with("x", "y", "width", "height").apply(@xml).each do |concept_appearance|
-        concept_appearance["x"] = x.to_s
-        concept_appearance["y"] = y.to_s
+      
+      # Change the x and y positions of each node.
+      concepts_in_map.sort.each do |concept|
+        set_concept_position concept, x.to_s, y.to_s
+        # Move the y position to reflect the added nodes.
         y = y + max_height + 10
       end
       
@@ -256,13 +264,12 @@ module CMap
       proposition_id = create_unique_id
       add_concept proposition_id, propositions[0]
       # The phrase "Propositions:" creates a node with width 95
-      proposition_x = 60
+      proposition_x = 52
       # if one of the propositions is potentially wider than "Propositions:" take that width
-      # TODO: Fix this so it only checks edges not both edges and nodes
       if x > proposition_x
         proposition_x = x
       end
-      add_concept_appearance proposition_id, 2*x + proposition_x, propositions[1]/2
+      add_concept_appearance proposition_id, proposition_x, y + 10 + propositions[1]/2
     end
     
     def proposition_list
