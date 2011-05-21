@@ -18,7 +18,7 @@ module CxlHelper
   end
   
   def CxlHelper.value nodeset
-    return CxlHelper.normalize_attributes(nodeset)[0] 
+    return CxlHelper.normalize(nodeset)[0] 
   end
 
   # Append the nodes to the already-created xpath.
@@ -62,7 +62,7 @@ module CxlHelper
     return node
   end
 
-  def CxlHelper.normalize_attributes nodes
+  def CxlHelper.normalize nodes
     return nodes.to_a.map{|elem| elem.to_s}
   end
   

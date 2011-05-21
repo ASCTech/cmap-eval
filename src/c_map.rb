@@ -97,11 +97,11 @@ module CMap
     def edge_ids_between node1_id, node2_id
       # Find the connections that start with node1.
       beginnings = CONNECTION_PATH.with_values("from-id" => node1_id).value("to-id").apply(@xml)
-      beginnings = CxlHelper.normalize_attributes beginnings
+      beginnings = CxlHelper.normalize beginnings
       
       # Find the connections that end with node2.
       endings = CONNECTION_PATH.with_values("to-id" => node2_id).value("from-id").apply(@xml)
-      endings = CxlHelper.normalize_attributes endings
+      endings = CxlHelper.normalize endings
       
       # Their intersections are the ids of the nodes that we want.
       return beginnings & endings
@@ -506,10 +506,10 @@ module CMap
       end_id = CxlHelper.value CONCEPT_PATH.with_values("label" => concept2).value("id").apply(@xml)
       
       # Find the connections that start with node1.
-      beginnings = CxlHelper.normalize_attributes CONNECTION_PATH.with_values("from-id" => start_id).value("to-id").apply @xml
+      beginnings = CxlHelper.normalize CONNECTION_PATH.with_values("from-id" => start_id).value("to-id").apply @xml
       
       # Find the connections that end with node2.
-      endings = CxlHelper.normalize_attributes CONNECTION_PATH.with_values("to-id" => end_id).value("from-id").apply @xml
+      endings = CxlHelper.normalize CONNECTION_PATH.with_values("to-id" => end_id).value("from-id").apply @xml
       
       # Their intersections are the ids of the nodes that we want.
       possible_ids = beginnings & endings
@@ -531,7 +531,7 @@ module CMap
     
     def vocabulary
       # Find all of the edge labels.
-      return CxlHelper.normalize_attributes PHRASE_PATH.value("label").apply(@xml)
+      return CxlHelper.normalize PHRASE_PATH.value("label").apply(@xml)
     end
     
     def proposition_list_height vocab
@@ -540,7 +540,7 @@ module CMap
     
     def node_vocabulary
       # Find all of the node labels
-      return CxlHelper.normalize_attributes CONCEPT_PATH.value("label").apply(@xml)
+      return CxlHelper.normalize CONCEPT_PATH.value("label").apply(@xml)
     end
     
     def find_right_of_map
