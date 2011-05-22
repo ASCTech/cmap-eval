@@ -13,10 +13,12 @@ module CMap
   EXTRA_EDGE_COLOR = "128,0,128,255"
   
   NAME_BLOCK_PREFIX = "Names:"
+  SPECIAL_PREFIXES = [NAME_BLOCK_PREFIX]
+  
   class CMap
     def prepare_unique_ids
       # Find the first free id.
-      ids = CxlHelper.value CxlHelper.builder.anything.with("id").value("id").apply(@xml)
+      ids = CxlHelper.normalize CxlHelper.builder.anything.with("id").value("id").apply(@xml)
       if ids.empty?
         @previous_safe_id = "0"
       else
@@ -77,10 +79,20 @@ module CMap
       CONCEPT_PATH.apply(@xml).each do |concept|
         label = concept["label"]
         # TODO: proposition prefix
-        concepts << label unless label.start_with? NAME_BLOCK_PREFIX
+        concepts << label unless is_special_node label
       end
       
       return concepts
+    end
+    
+    def is_special_node label
+      SPECIAL_PREFIXES.each do |prefix|
+        if label.start_with? prefix
+          return true
+        end
+      end
+      
+      return false
     end
     
     def edges_between node1, node2
@@ -319,7 +331,6 @@ module CMap
     end
     
     # This will return the number of connections in a map with distinct end points
-    # TODO: Will this break if there is an edge concept1->concept2 and an edge concept2->concept1?
     def number_of_distinct_connections
       unique_pairs = 0
       each_unique_pair do |concept1, concept2|
