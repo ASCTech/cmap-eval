@@ -1,6 +1,10 @@
 require "src/cxl_helper"
 
+require "rubygems"
+require "text/levenshtein"
+
 include CxlHelper
+include Text
 
 module CMap
   LEGEND_NODE_WIDTH = 60
@@ -9,6 +13,7 @@ module CMap
   LEGEND_LABEL_HEIGHT = 13
   
   MISSING_EDGE_COLOR = "0,0,255,255"
+  MISSPELLED_EDGE_COLOR = "0,255,0,255"
   MISPLACED_EDGE_COLOR = "255,0,0,255"
   EXTRA_EDGE_COLOR = "128,0,128,255"
   
@@ -347,14 +352,16 @@ module CMap
       number_missing = 0
       
       key.each_unique_pair do |concept1, concept2|
-        good_edges = key.edges_between(concept1, concept2)
-        local_edges = self.edges_between(concept1, concept2)
-        
-        if !good_edges.empty? and (good_edges & local_edges).empty?
-          make_missing_edge concept1, concept2
-          number_missing = number_missing + 1
-          Debug.missing_edge_between concept1, concept2
-          missing_found = true
+        if !@misspellings_list.index [concept1, concept2]
+          good_edges = key.edges_between(concept1, concept2)
+          local_edges = self.edges_between(concept1, concept2)
+          
+          if !good_edges.empty? and (good_edges & local_edges).empty?
+            make_missing_edge concept1, concept2
+            number_missing = number_missing + 1
+            Debug.missing_edge_between concept1, concept2
+            missing_found = true
+          end
         end
       end
       
@@ -473,8 +480,11 @@ module CMap
     end
     
     def mark_misplaced_and_extra_edges key
+      @misspellings_list = []
+      
       vocab = key.vocabulary
       
+      misspelled_found = false
       misplaced_found = false
       extra_found = false
       
@@ -491,6 +501,11 @@ module CMap
             mark_edge_misplaced concept1, concept2, candidate
             Debug.misplaced_edge_between concept1, concept2, candidate
             misplaced_found = true
+          elsif could_be_misspelled candidate, key_edges
+            @misspellings_list << [concept1, concept2]
+            mark_edge_misspelled concept1, concept2, candidate
+            Debug.misspelled_edge_between concept1, concept2, candidate
+            misspelled_found = true
           else
             mark_edge_extra concept1, concept2, candidate
             Debug.extra_edge_between concept1, concept2, candidate
@@ -499,8 +514,23 @@ module CMap
         end
       end
       
+      Debug.no_misspelled_edges unless misspelled_found
       Debug.no_misplaced_edges unless misplaced_found
       Debug.no_extra_edges unless extra_found
+    end
+    
+    def could_be_misspelled word, words_to_check
+      words_to_check.each do |vocab_word|
+        if lev_distance_at_most word, vocab_word, 3
+          return true
+        end
+      end
+      
+      return false
+    end
+    
+    def lev_distance_at_most word1, word2, distance
+      return Levenshtein.distance(word1, word2) <= distance
     end
     
     def mark_edge_extra concept1, concept2, edge
@@ -509,6 +539,10 @@ module CMap
     
     def mark_edge_misplaced concept1, concept2, edge
       mark_edge concept1, concept2, edge, MISPLACED_EDGE_COLOR
+    end
+    
+    def mark_edge_misspelled concept1, concept2, edge
+      mark_edge concept1, concept2, edge, MISSPELLED_EDGE_COLOR
     end
     
     def mark_edge concept1, concept2, edge, color

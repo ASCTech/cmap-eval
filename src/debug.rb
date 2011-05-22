@@ -2,9 +2,17 @@ module Debug
   def Debug.enable_debug
     @enabled = true
   end
+  
+  def Debug.no_misspelled_edges
+    debug "There are no misspelled edges."
+  end
 
   def Debug.no_missing_edges
     debug "There are no missing edges."
+  end
+  
+  def Debug.misspelled_edge_between node1, node2, edge
+    debug %{Misspelled edge "#{edge}" between: "#{node1}" and "#{node2}"}
   end
   
   def Debug.missing_edge_between node1, node2
