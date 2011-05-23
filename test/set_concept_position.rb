@@ -5,7 +5,7 @@ require "nokogiri"
 require "pp"
 
 include Nokogiri::XML
-  class SetPositionTest < Test::Unit::TestCase
+  class SetConceptPositionTest < Test::Unit::TestCase
     def test_1_edge_between
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {

@@ -1,5 +1,3 @@
-
-
 require "test/unit"
 require "src/c_map"
 require "rubygems"
@@ -22,7 +20,7 @@ class UniqueIdsTest < Test::Unit::TestCase
     end
     c_map = CMap::CMap.new(test.doc)
     
-    assert_equal([], c_map.previous_safe_id)
+    assert_equal("0", c_map.instance_variable_get(:@previous_safe_id))
   end
   
   def test_single_id
@@ -39,7 +37,7 @@ class UniqueIdsTest < Test::Unit::TestCase
     end
     c_map = CMap::CMap.new(test.doc)
     
-    assert_equal(["1JCK0VTLG-1FT6YS1-FV"], c_map.previous_safe_id)
+    assert_equal("1JCK0VTLG-1FT6YS1-FV", c_map.instance_variable_get(:@previous_safe_id))
   end
   
   def test_mult_id
@@ -59,6 +57,6 @@ class UniqueIdsTest < Test::Unit::TestCase
     end
     c_map = CMap::CMap.new(test.doc)
     
-    assert_equal "1JCK12PWV-103W7MZ-H2", c_map::previous_safe_id
+    assert_equal ("1JCK12PWV-103W7MZ-H2", c_map.instance_variable_get(:@previous_safe_id))
   end
 end

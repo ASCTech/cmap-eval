@@ -8,8 +8,9 @@ require "pp"
 # If you're looking at this test, I think this could be a bug.
 # I was under the impression that edges were one way (ie from and then to)
 # Which would make this an error in the code, not a broken test
+# if not then text me and I'll fix it.
 include Nokogiri::XML
-  class EdgeIDsBetweenTest < Test::Unit::TestCase
+  class GetIDOfTest < Test::Unit::TestCase
     def test_1_edge_between
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {

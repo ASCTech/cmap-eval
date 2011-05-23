@@ -19,7 +19,7 @@ include Nokogiri::XML
       c_map = CMap::CMap.new(test.doc)
       key = CMap::CMap.new(test.doc)
     
-      c_map.mark_missing_edges(key)
+      c_map.send(:mark_missing_edges, key)
       #There should be no changes to the map, so these should be the same
       assert_equal(key, c_map)
     end

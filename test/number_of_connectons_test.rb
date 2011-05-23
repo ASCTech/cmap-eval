@@ -99,7 +99,9 @@ class CMapTest < CMap::CMap
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(2,cmap.send(:number_of_distinct_connections), "Circular edges break the method.")
+      #This tests that 2 edges going between a set of nodes is counted
+      #as a single unique connection.
+      assert_equal(1,cmap.send(:number_of_distinct_connections))
     end
   end
 end

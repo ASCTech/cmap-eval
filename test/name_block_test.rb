@@ -23,7 +23,7 @@ include Nokogiri::XML
     }
     
     begin
-      c_map.name_block
+      cmap.name_block
     rescue CMap::Error => error
       assert_equal "Provided file is missing a name block.", error.message
     end
