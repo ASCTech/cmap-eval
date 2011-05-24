@@ -11,6 +11,8 @@ module CMap
   LEGEND_NODE_HEIGHT = 28
   LEGEND_LABEL_WIDTH = 46
   LEGEND_LABEL_HEIGHT = 13
+  LEGEND_BUFFER = 50
+  LEGEND_HEIGHT = 100
   
   MISSING_EDGE_COLOR = "0,0,255,255"
   MISSPELLED_EDGE_COLOR = "0,255,0,255"
@@ -219,7 +221,30 @@ module CMap
           grade = 100
         end
       end
-      return grade.round.to_i
+      
+      grade = grade.round
+      # Put the grade in a node on the map.
+      add_grade_node grade.to_s
+      # TODO: Remove
+      # Put the grade to the console.
+      return grade.to_i
+    end
+    
+    def add_grade_node grade
+      # Find the bottom of the map after the legend has been added.
+      max_x = find_right_of_map
+      max_y = find_bottom_of_map
+      
+      grade_id = create_unique_id
+      
+      # X position is same as the legend's X position so the grade will appear aligned with the legend.
+      grade_x = max_x + LEGEND_NODE_WIDTH/2 + LEGEND_BUFFER
+      # Y position adds the LEGEND_HEIGHT and another LEGEND_BUFFER to the legend's Y so the grade will appear directly beneath the legend.  
+      grade_y = max_y + LEGEND_NODE_HEIGHT/2 + LEGEND_HEIGHT + 2*LEGEND_BUFFER
+      
+      # Add the grade node.
+      add_concept grade_id, "Grade: " + grade + "%"
+      add_concept_appearance grade_id, grade_x, grade_y
     end
     
     def write_to_file file_name
