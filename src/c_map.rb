@@ -178,8 +178,8 @@ module CMap
       candidates = PHRASE_PATH.with_values("label" => edge).apply(@xml).to_a
       
       candidates = candidates.select do |candidate|
-        does_begin = CONNECTION_PATH.with_values("from-id" => start_id, "to-id" => candidate["id"]).apply(@xml)
-        does_end = CONNECTION_PATH.with_values("from-id" => candidate["id"], "to-id" => finish_id).apply(@xml)
+        does_begin = CONNECTION_PATH.with_values("from-id" => start_id, "to-id" => candidate["id"]).apply(@xml)[0]
+        does_end = CONNECTION_PATH.with_values("from-id" => candidate["id"], "to-id" => finish_id).apply(@xml)[0]
         !does_begin.nil? and !does_end.nil?
       end
       
