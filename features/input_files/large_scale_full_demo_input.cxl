@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmap xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://cmap.ihmc.us/xml/cmap/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <res-meta>
+        <dc:title>large_scale_input</dc:title>
+        <dc:creator>
+            <vcard:FN>Jake Householder</vcard:FN>
+        </dc:creator>
+        <dcterms:rightsHolder>
+            <vcard:FN>Jake Householder</vcard:FN>
+        </dcterms:rightsHolder>
+        <dcterms:created>2011-05-24T02:15:19-04:00</dcterms:created>
+        <dcterms:modified>2011-05-15T08:06:55-04:00</dcterms:modified>
+        <dc:language>en</dc:language>
+        <dc:format>x-cmap/x-storable</dc:format>
+        <dc:publisher>FIHMC CmapTools 5.04.02</dc:publisher>
+        <dc:extent>7486 bytes</dc:extent>
+        <dc:source>cmap:1JG51MBDK-JG1QQF-1:1JG51MDCZ-1FDVDYC-Y:1JGSFPY5B-3QB1S9-12W</dc:source>
+    </res-meta>
+    <map width="1223" height="671">
+        <concept-list>
+            <concept id="1JDQJTV8H-K4YCQJ-BV" label="Parasitism"/>
+            <concept id="1JDQK27WC-2B5MYVZ-NT" label="Fig wasps"/>
+            <concept id="1JDQJZJ1L-1YZCXQG-KX" label="Parasitic Wasps"/>
+            <concept id="1JDQJZW6P-1R558CC-LK" label="Nematode Worms"/>
+            <concept id="1JDQK63SB-2DLWH87-T8" label="African Grey Hornbills"/>
+            <concept id="1JDQJP8JC-BWM1YS-65" label="The sycamore fig (Ficus sycomorus) ecosystem"/>
+            <concept id="1JDQJV6B6-2CC4BX0-CB" label="Commensalism"/>
+            <concept id="1JDQKBP4N-9GMQLK-14C" label="Hilda Nymphs"/>
+            <concept id="1JDQKC8JQ-18D16PN-15H" label="Parasites"/>
+            <concept id="1JDQJTJ3N-1SN103-B7" label="Mutualism"/>
+            <concept id="1JDQK6LY0-178X0MJ-V7" label="Sycamore Fig"/>
+            <concept id="1JDQK932V-11466V-111" label="Ants"/>
+            <concept id="1JDQKQ6JM-TK4RGD-1HR" label="Names:&#xa;Trebor Shankle&#xa;Jake Householder&#xa;Kyle Callicoat"/>
+        </concept-list>
+        <linking-phrase-list>
+            <linking-phrase id="1JDQKD2SR-PBR4SJ-16J" label="are eaten by"/>
+            <linking-phrase id="1JDQK9B89-1VB22CX-11G" label="attack"/>
+            <linking-phrase id="1JDQKND01-1SS6ZBZ-1F3" label="are eaten by"/>
+            <linking-phrase id="1JDQK7DP0-KV2DLF-WX" label="nest within"/>
+            <linking-phrase id="1JDQK12Q9-8JRRS2-MK" label="includes"/>
+            <linking-phrase id="1JDQK8Q95-2CW40RC-106" label="polinate"/>
+            <linking-phrase id="1JDQKP8KH-1KVJT8Z-1G8" label="wear pants made from"/>
+            <linking-phrase id="1JDQJXWWP-3SJW23-HP" label="Displays"/>
+            <linking-phrase id="1JDQKDKH7-1JYPZDT-17Q" label="protect Sycamore Fig from"/>
+            <linking-phrase id="1JDQK8B8S-2D96VH3-Z1" label="mature within"/>
+            <linking-phrase id="1JDQK3ZQT-1HJCHLK-S4" label="are parasites of"/>
+            <linking-phrase id="1JDQJVJSV-W3F29F-D1" label="incorporates many symbiotic relationships such as"/>
+            <linking-phrase id="1JDQK71YC-18JG16-VX" label="invovles"/>
+            <linking-phrase id="1JDQKBDZ7-3HM1K-13G" label="includes"/>
+            <linking-phrase id="1JDQK33NK-242X5FW-QX" label="are parasites of"/>
+            <linking-phrase id="1JDQK2SBP-8ZKBLH-PR" label="plant eggs on"/>
+            <linking-phrase id="1JDQK7S1J-HRRMY7-Y2" label="inhabit"/>
+            <linking-phrase id="1JDQK9L78-RG47X6-12D" label="prey on"/>
+        </linking-phrase-list>
+        <connection-list>
+            <connection id="1JDQK12QH-16Q16WK-MV" from-id="1JDQK12Q9-8JRRS2-MK" to-id="1JDQJZJ1L-1YZCXQG-KX"/>
+            <connection id="1JDQJXWWV-KQ7XFQ-HS" from-id="1JDQJP8JC-BWM1YS-65" to-id="1JDQJXWWP-3SJW23-HP"/>
+            <connection id="1JDQK12QF-FTL6ZB-MN" from-id="1JDQJTV8H-K4YCQJ-BV" to-id="1JDQK12Q9-8JRRS2-MK"/>
+            <connection id="1JDQK7S1N-23Y7L0G-YB" from-id="1JDQK7S1J-HRRMY7-Y2" to-id="1JDQK6LY0-178X0MJ-V7"/>
+            <connection id="1JDQK71YG-1B6DL5-W6" from-id="1JDQK71YC-18JG16-VX" to-id="1JDQK63SB-2DLWH87-T8"/>
+            <connection id="1JDQKBDZC-28LTC44-13K" from-id="1JDQJTJ3N-1SN103-B7" to-id="1JDQKBDZ7-3HM1K-13G"/>
+            <connection id="1JDQK1BJC-13FSG8P-NK" from-id="1JDQK12Q9-8JRRS2-MK" to-id="1JDQJZW6P-1R558CC-LK"/>
+            <connection id="1JDQK33NS-9J7W3G-R6" from-id="1JDQK33NK-242X5FW-QX" to-id="1JDQK27WC-2B5MYVZ-NT"/>
+            <connection id="1JDQJXWWY-2CR0WRD-HY" from-id="1JDQJXWWP-3SJW23-HP" to-id="1JDQJTJ3N-1SN103-B7"/>
+            <connection id="1JDQKP8KQ-18WXKGZ-1GJ" from-id="1JDQKP8KH-1KVJT8Z-1G8" to-id="1JDQK6LY0-178X0MJ-V7"/>
+            <connection id="1JDQK9B8D-1TP5J1T-11K" from-id="1JDQK932V-11466V-111" to-id="1JDQK9B89-1VB22CX-11G"/>
+            <connection id="1JDQK8Q98-1TP6C6R-109" from-id="1JDQK27WC-2B5MYVZ-NT" to-id="1JDQK8Q95-2CW40RC-106"/>
+            <connection id="1JDQKBDZF-16SDTHX-13R" from-id="1JDQKBDZ7-3HM1K-13G" to-id="1JDQK932V-11466V-111"/>
+            <connection id="1JDQK8Q9B-205YCTG-10G" from-id="1JDQK8Q95-2CW40RC-106" to-id="1JDQK6LY0-178X0MJ-V7"/>
+            <connection id="1JDQK9B8G-GXDBBZ-11R" from-id="1JDQK9B89-1VB22CX-11G" to-id="1JDQJZJ1L-1YZCXQG-KX"/>
+            <connection id="1JDQKND04-1J8L7BX-1F6" from-id="1JDQK63SB-2DLWH87-T8" to-id="1JDQKND01-1SS6ZBZ-1F3"/>
+            <connection id="1JDQJW9N7-ZV9DS5-GW" from-id="1JDQJVJSV-W3F29F-D1" to-id="1JDQJV6B6-2CC4BX0-CB"/>
+            <connection id="1JDQKDKHD-1TB646-17Z" from-id="1JDQKDKH7-1JYPZDT-17Q" to-id="1JDQKC8JQ-18D16PN-15H"/>
+            <connection id="1JDQKG030-MN9YYF-1BJ" from-id="1JDQKBDZ7-3HM1K-13G" to-id="1JDQKBP4N-9GMQLK-14C"/>
+            <connection id="1JDQK71YF-VYN5D7-W0" from-id="1JDQJV6B6-2CC4BX0-CB" to-id="1JDQK71YC-18JG16-VX"/>
+            <connection id="1JDQKD2SW-1RRS0NV-16M" from-id="1JDQKBP4N-9GMQLK-14C" to-id="1JDQKD2SR-PBR4SJ-16J"/>
+            <connection id="1JDQK2SBT-1CX4S1V-PV" from-id="1JDQJZJ1L-1YZCXQG-KX" to-id="1JDQK2SBP-8ZKBLH-PR"/>
+            <connection id="1JDQK3ZQX-2B4MGTX-S7" from-id="1JDQJZJ1L-1YZCXQG-KX" to-id="1JDQK3ZQT-1HJCHLK-S4"/>
+            <connection id="1JDQK7S1M-56ZLM-Y5" from-id="1JDQK63SB-2DLWH87-T8" to-id="1JDQK7S1J-HRRMY7-Y2"/>
+            <connection id="1JDQK33NP-1XZDFWR-R0" from-id="1JDQJZW6P-1R558CC-LK" to-id="1JDQK33NK-242X5FW-QX"/>
+            <connection id="1JDQK7DP4-1FNWRTD-X0" from-id="1JDQK63SB-2DLWH87-T8" to-id="1JDQK7DP0-KV2DLF-WX"/>
+            <connection id="1JDQKDKHB-1Z4SK3H-17T" from-id="1JDQK932V-11466V-111" to-id="1JDQKDKH7-1JYPZDT-17Q"/>
+            <connection id="1JDQK2SBW-1751C6Q-Q1" from-id="1JDQK2SBP-8ZKBLH-PR" to-id="1JDQK27WC-2B5MYVZ-NT"/>
+            <connection id="1JDQKP8KM-Z3PXVM-1GC" from-id="1JDQKBP4N-9GMQLK-14C" to-id="1JDQKP8KH-1KVJT8Z-1G8"/>
+            <connection id="1JDQKG54W-10BZLPT-1BW" from-id="1JDQKBDZ7-3HM1K-13G" to-id="1JDQK27WC-2B5MYVZ-NT"/>
+            <connection id="1JDQK9L7G-159K9X4-12N" from-id="1JDQK9L78-RG47X6-12D" to-id="1JDQJZJ1L-1YZCXQG-KX"/>
+            <connection id="1JDQK7DP6-RDS7FC-X6" from-id="1JDQK7DP0-KV2DLF-WX" to-id="1JDQK6LY0-178X0MJ-V7"/>
+            <connection id="1JDQK8B8W-1PZC90B-ZB" from-id="1JDQK8B8S-2D96VH3-Z1" to-id="1JDQK6LY0-178X0MJ-V7"/>
+            <connection id="1JDQKND06-1R90VQ-1FC" from-id="1JDQKND01-1SS6ZBZ-1F3" to-id="1JDQJZW6P-1R558CC-LK"/>
+            <connection id="1JDQJVJSZ-15T004Q-D5" from-id="1JDQJP8JC-BWM1YS-65" to-id="1JDQJVJSV-W3F29F-D1"/>
+            <connection id="1JDQK9L7D-1D7X8FX-12H" from-id="1JDQK932V-11466V-111" to-id="1JDQK9L78-RG47X6-12D"/>
+            <connection id="1JDQK8B8W-CK8WM1-Z4" from-id="1JDQK27WC-2B5MYVZ-NT" to-id="1JDQK8B8S-2D96VH3-Z1"/>
+            <connection id="1JDQKD2SX-1KTPPVZ-16T" from-id="1JDQKD2SR-PBR4SJ-16J" to-id="1JDQKC8JQ-18D16PN-15H"/>
+            <connection id="1JDQK3ZQZ-QZFC5F-SD" from-id="1JDQK3ZQT-1HJCHLK-S4" to-id="1JDQK27WC-2B5MYVZ-NT"/>
+        </connection-list>
+        <concept-appearance-list>
+            <concept-appearance id="1JDQJTV8H-K4YCQJ-BV" x="432" y="228" width="78" height="25"/>
+            <concept-appearance id="1JDQK27WC-2B5MYVZ-NT" x="625" y="503" width="75" height="27"/>
+            <concept-appearance id="1JDQJZJ1L-1YZCXQG-KX" x="622" y="333" width="110" height="27"/>
+            <concept-appearance id="1JDQJZW6P-1R558CC-LK" x="764" y="337" width="124" height="25"/>
+            <concept-appearance id="1JDQK63SB-2DLWH87-T8" x="1164" y="452" width="148" height="28"/>
+            <concept-appearance id="1JDQJP8JC-BWM1YS-65" x="647" y="52" width="302" height="28"/>
+            <concept-appearance id="1JDQJV6B6-2CC4BX0-CB" x="903" y="208" width="108" height="25"/>
+            <concept-appearance id="1JDQKBP4N-9GMQLK-14C" x="281" y="454" width="100" height="28"/>
+            <concept-appearance id="1JDQKC8JQ-18D16PN-15H" x="172" y="641" width="70" height="25"/>
+            <concept-appearance id="1JDQJTJ3N-1SN103-B7" x="183" y="175" width="78" height="25"/>
+            <concept-appearance id="1JDQK6LY0-178X0MJ-V7" x="614" y="667" width="98" height="27"/>
+            <concept-appearance id="1JDQK932V-11466V-111" x="117" y="329" width="43" height="25"/>
+            <concept-appearance id="1JDQKQ6JM-TK4RGD-1HR" x="81" y="75" width="122" height="71"/>
+        </concept-appearance-list>
+        <linking-phrase-appearance-list>
+            <linking-phrase-appearance id="1JDQKD2SR-PBR4SJ-16J" x="234" y="554" width="78" height="14"/>
+            <linking-phrase-appearance id="1JDQK9B89-1VB22CX-11G" x="391" y="421" width="39" height="11"/>
+            <linking-phrase-appearance id="1JDQKND01-1SS6ZBZ-1F3" x="1000" y="451" width="78" height="14"/>
+            <linking-phrase-appearance id="1JDQK7DP0-KV2DLF-WX" x="946" y="570" width="68" height="11"/>
+            <linking-phrase-appearance id="1JDQK12Q9-8JRRS2-MK" x="622" y="257" width="51" height="11"/>
+            <linking-phrase-appearance id="1JDQK8Q95-2CW40RC-106" x="575" y="588" width="50" height="14"/>
+            <linking-phrase-appearance id="1JDQKP8KH-1KVJT8Z-1G8" x="466" y="700" width="139" height="14"/>
+            <linking-phrase-appearance id="1JDQJXWWP-3SJW23-HP" x="380" y="163" width="52" height="14"/>
+            <linking-phrase-appearance id="1JDQKDKH7-1JYPZDT-17Q" x="99" y="485" width="163" height="14"/>
+            <linking-phrase-appearance id="1JDQK8B8S-2D96VH3-Z1" x="684" y="579" width="86" height="11"/>
+            <linking-phrase-appearance id="1JDQK3ZQT-1HJCHLK-S4" x="650" y="420" width="96" height="14"/>
+            <linking-phrase-appearance id="1JDQJVJSV-W3F29F-D1" x="710" y="129" width="306" height="14"/>
+            <linking-phrase-appearance id="1JDQK71YC-18JG16-VX" x="953" y="367" width="51" height="11"/>
+            <linking-phrase-appearance id="1JDQKBDZ7-3HM1K-13G" x="202" y="270" width="51" height="11"/>
+            <linking-phrase-appearance id="1JDQK33NK-242X5FW-QX" x="765" y="421" width="96" height="14"/>
+            <linking-phrase-appearance id="1JDQK2SBP-8ZKBLH-PR" x="532" y="413" width="84" height="14"/>
+            <linking-phrase-appearance id="1JDQK7S1J-HRRMY7-Y2" x="1023" y="616" width="43" height="11"/>
+            <linking-phrase-appearance id="1JDQK9L78-RG47X6-12D" x="328" y="379" width="48" height="11"/>
+        </linking-phrase-appearance-list>
+        <connection-appearance-list>
+            <connection-appearance id="1JDQK12QH-16Q16WK-MV" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQJXWWV-KQ7XFQ-HS" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK12QF-FTL6ZB-MN" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK7S1N-23Y7L0G-YB" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK71YG-1B6DL5-W6" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKBDZC-28LTC44-13K" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK1BJC-13FSG8P-NK" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK33NS-9J7W3G-R6" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQJXWWY-2CR0WRD-HY" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKP8KQ-18WXKGZ-1GJ" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK9B8D-1TP5J1T-11K" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK8Q98-1TP6C6R-109" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKBDZF-16SDTHX-13R" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK8Q9B-205YCTG-10G" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK9B8G-GXDBBZ-11R" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKND04-1J8L7BX-1F6" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQJW9N7-ZV9DS5-GW" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKDKHD-1TB646-17Z" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKG030-MN9YYF-1BJ" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK71YF-VYN5D7-W0" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKD2SW-1RRS0NV-16M" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK2SBT-1CX4S1V-PV" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK3ZQX-2B4MGTX-S7" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK7S1M-56ZLM-Y5" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK33NP-1XZDFWR-R0" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK7DP4-1FNWRTD-X0" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKDKHB-1Z4SK3H-17T" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK2SBW-1751C6Q-Q1" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKP8KM-Z3PXVM-1GC" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKG54W-10BZLPT-1BW" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK9L7G-159K9X4-12N" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK7DP6-RDS7FC-X6" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK8B8W-1PZC90B-ZB" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKND06-1R90VQ-1FC" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQJVJSZ-15T004Q-D5" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK9L7D-1D7X8FX-12H" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK8B8W-CK8WM1-Z4" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQKD2SX-1KTPPVZ-16T" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JDQK3ZQZ-QZFC5F-SD" from-pos="center" to-pos="center"/>
+        </connection-appearance-list>
+        <style-sheet-list>
+            <style-sheet id="_Default_">
+                <map-style background-color="255,255,255,0" image-style="full" image-top-left="0,0"/>
+                <concept-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="4" background-color="237,244,246,255" background-image-style="full" border-color="0,0,0,255" border-style="solid" border-thickness="1"
+                    border-shape="rounded-rectangle" text-alignment="center" shadow-color="none"/>
+                <linking-phrase-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="1" background-color="0,0,255,0" background-image-style="full" border-color="0,0,0,0" border-style="solid" border-thickness="1"
+                    border-shape="rectangle" text-alignment="center" shadow-color="none"/>
+                <connection-style color="0,0,0,255" style="solid" thickness="1" type="straight" arrowhead="if-to-concept-and-slopes-up"/>
+                <resource-style font-name="SanSerif" font-size="12" font-style="plain" font-color="0,0,0,255" background-color="192,192,192,255"/>
+            </style-sheet>
+        </style-sheet-list>
+        <extra-graphical-properties-list>
+            <properties-list id="1JGSFPY5B-3QB1S9-12W">
+                <property key="StyleSheetGroup_0" value="//*@!#$%%^&amp;*()() No Grouped StyleSheets @"/>
+            </properties-list>
+        </extra-graphical-properties-list>
+    </map>
+</cmap>
