@@ -67,9 +67,9 @@ module CxlHelper
   end
   
   def CxlHelper.create_if_missing xml, path, name, id, *values
-    if !path.at(name).with_values("id" => id).apply(xml)
+    if !path.at(name).with_values("id" => id).apply(xml)[0]
       node = CxlHelper.create_node xml, name, "id" => id, *values
-      path.apply(xml).add_child node
+      path.apply(xml)[0].add_child node
     end
   end
   
