@@ -98,7 +98,7 @@ class MoveNodesTest < Test::Unit::TestCase
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
   end
   
-  #This trys to move test nodes with no defined location into the key location
+  
   def test_no_pos_mult_node
     test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -138,6 +138,7 @@ class MoveNodesTest < Test::Unit::TestCase
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
   end
   
+  #This trys to move test nodes with no defined location into the key location
   def test_no_appear_mult_node
     test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
