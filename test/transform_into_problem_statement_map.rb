@@ -52,7 +52,7 @@ include Nokogiri::XML
       
       #all nodes remain, plus two added nodes
       node_out = ["node1","node2","node3","node4","Names:\nname1\nname2","Propositions:\nedge1\nedge2"]
-      assert_equal(node_out.sort, cmap.instance_variable_get(:@xml).xpath("//concept-list/concept/@label").sort)
+      assert_equal(node_out.sort, cmap.instance_variable_get(:@xml).xpath("//xmlns:concept-list/xmlns:concept/@label").sort)
       
       
     end
