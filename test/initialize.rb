@@ -19,7 +19,7 @@ include Nokogiri::XML
     
     #I can't get this to run for the life of me, if you can figure it out go for it.
     def test_full_map
-      @test = Nokogiri::XML(File.read("../features/input_files/complex_edge_key.cxl"))
+      test = Nokogiri::XML(File.read("../features/input_files/complex_edge_key.cxl"))
       
       cmap = CMap::CMap.new(test.doc)
       assert_equal(test.doc, cmap.instance_variable_get(:@xml))
