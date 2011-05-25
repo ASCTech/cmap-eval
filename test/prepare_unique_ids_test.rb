@@ -48,8 +48,6 @@ class UniqueIdsTest < Test::Unit::TestCase
         xml.map {
           xml.send(:"concept-list") {
             xml.concept("id" => "1JCK0VTLG-1FT6YS1-FV")
-          }
-          xml.send(:"concept-list") {
             xml.concept("id" => "1JCK12PWV-103W7MZ-H2")
           }
         }

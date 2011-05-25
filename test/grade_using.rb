@@ -6,10 +6,6 @@ require "pp"
 
 include Nokogiri::XML
 
-#If this test is throwing errors: Debug not initialized
-# add the following lines to c_map
-# require "src/debug"
-# include Debug
   class GradeUsingTest < Test::Unit::TestCase
     def test_perfect
        test = Builder.new do |xml|
