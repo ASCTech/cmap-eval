@@ -6,7 +6,7 @@ require "pp"
 
 
 include Nokogiri::XML
-  class TrasnformProbStateTest < Test::Unit::TestCase
+  class TransformProbStateTest < Test::Unit::TestCase
     def test_stardard_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -50,10 +50,39 @@ include Nokogiri::XML
       cmap = CMap::CMap.new(test.doc)
       cmap.transform_into_problem_statement_map
       
+      correct = Builder.new do |xml|
+        xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
+          xml.parent.namespace = xml.parent.namespace_definitions.first
+          xml.map {
+            xml.send(:"concept-list") {
+              xml.concept("label" => "node1", "id" => "idnode1")
+              xml.concept("label" => "node2", "id" => "idnode2")
+              xml.concept("label" => "node3", "id" => "idnode3")
+              xml.concept("label" => "node4", "id" => "idnode4")
+              xml.concept("label" => "Names:\nname1\nname2")
+              xml.concept("label" => "Propositions:\nedge1\nedge2")
+            }
+          }
+        }
+      end
+      
       #all nodes remain, plus two added nodes
-      node_out = ["node1","node2","node3","node4","Names:\nname1\nname2","Propositions:\nedge1\nedge2"]
-      assert_equal(node_out.sort, cmap.instance_variable_get(:@xml).xpath("//xmlns:concept-list/xmlns:concept/@label").sort)
+      xml = correct.doc
+      correct_label = []
+      test_label = []
       
+      xml.xpath("//xmlns:concept-list/xmlns:concept").sort.each do |label|
+        correct_label = correct_label + [label.attr('label')]
+      end
+        
+      xml.xpath("//xmlns:concept-list/xmlns:concept").sort.each do |atrib|
+        test_label = test_label + [label.attr('label')]
+      end
+      assert_equal(correct_label, test_label)
       
+      #edges removed
+      assert_equal(xml.xpath("//xmlns:linking-phrase-list/xmlns:linking-phrase"), cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-list/xmlns:linking-phrase"))
+      assert_equal(xml.xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance"), cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance"))
+      assert_equal(xml.xpath("//xmlns:connection-appearance-list/xmlns:connection-appearance"), cmap.instance_variable_get(:@xml).xpath("//xmlns:connection-appearance-list/xmlns:connection-appearance"))
     end
   end
