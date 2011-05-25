@@ -2,9 +2,11 @@ require "src/cxl_helper"
 
 require "rubygems"
 require "text/levenshtein"
+require "src/Debug"
 
 include CxlHelper
 include Text
+include Debug
 
 module CMap
   LEGEND_NODE_WIDTH = 60
