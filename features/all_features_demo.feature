@@ -7,3 +7,6 @@ Feature: All features Demo
 	Scenario: Manual check problem statement
 		Given key "large_scale_key.cxl" and problem statement path "problem_statement"
 		When cmap-eval is executed in problem statement mode
+	Scenario: Generate acceptance test problem statement
+		Given key "acceptance_test_key.cxl" and problem statement path "acceptance_statement"
+		When cmap-eval is executed in problem statement mode
