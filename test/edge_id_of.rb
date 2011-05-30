@@ -33,9 +33,6 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       assert_equal("idedge1",cmap.edge_id_of("edge1","node1", "node2"))
-      
-      #test to make sure they don't work in reverse (edges are one way)
-      assert_not_equal("idedge1",cmap.edge_id_of("edge1","node2", "node1"))
     end
     
     def test_mult_edge_between
@@ -64,10 +61,6 @@ include Nokogiri::XML
       cmap = CMap::CMap.new(test.doc)
       assert_equal("idedge1",cmap.edge_id_of("edge1","node1", "node2"))
       assert_equal("idedge2",cmap.edge_id_of("edge2","node1", "node2"))
-      
-      #test to make sure they don't work in reverse (edges are one way)
-      assert_not_equal("idedge1",cmap.edge_id_of("edge1","node2", "node1"))
-      assert_not_equal("idedge2",cmap.edge_id_of("edge2","node2", "node1"))
     end
     
     def test_circular_nodes
@@ -96,9 +89,5 @@ include Nokogiri::XML
       cmap = CMap::CMap.new(test.doc)
       assert_equal("idedge1",cmap.edge_id_of("edge1","node1", "node2"))
       assert_equal("idedge2",cmap.edge_id_of("edge2","node2", "node1"))
-      
-      #test to make sure they don't work in reverse (edges are one way)
-      assert_not_equal("idedge1",cmap.edge_id_of("edge1","node2", "node1"))
-      assert_not_equal("idedge2",cmap.edge_id_of("edge2","node1", "node2"))
     end
   end
