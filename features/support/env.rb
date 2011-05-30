@@ -56,7 +56,7 @@ def prep_sandbox_for_batch batch_path
   sandbox_name = SANDBOX_PATH + batch_path
 
   FileUtils.cp_r relative_input_file_name, sandbox_name
-  $stderr.puts sandbox_name + "/.svn"
+  #$stderr.puts sandbox_name + "/.svn"
   FileUtils.rm_r sandbox_name + "/.svn"
   
 #  d = Dir.new(relative_input_file_name)

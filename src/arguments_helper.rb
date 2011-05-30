@@ -49,7 +49,7 @@ module Arguments
         return :normal_mode
       elsif args[0] == "-p"
         return :problem_statement_mode
-      elsif args[0] == "-p"
+      elsif args[0] == "-b"
         return :batch_mode
       else
         return :debug_mode
@@ -71,6 +71,10 @@ module Arguments
     end
     
     def get_normal_file_names args
+      return args[-2], args[-1]
+    end
+    
+    def get_batch_file_names args
       return args[-2], args[-1]
     end
     
