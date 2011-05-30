@@ -76,7 +76,7 @@ include Nokogiri::XML
       end
         
       xml.xpath("//xmlns:concept-list/xmlns:concept").sort.each do |atrib|
-        test_label = test_label + [label.attr('label')]
+        test_label = test_label + [atrib.attr('label')]
       end
       assert_equal(correct_label, test_label)
       
