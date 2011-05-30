@@ -34,13 +34,15 @@ Given /^key "([^"]*)" and batch path "([^"]*)"$/ do |key, batch_path|
   @key_file_name = INPUT_PATH + key
   @batch_files_path = SANDBOX_PATH + batch_path
   
+  # Check the key. 
   input_check key
-  #$stderr.puts batch_path.class
+  
+  # Check each of the inputs.
   batch = Dir.open(INPUT_PATH + batch_path).entries
   prepare_batch_array batch
   check_batch batch, batch_path
-  
-  $stderr.puts batch
+  prep_sandbox_for_batch batch_path
+
 end
 
 Given /^the input file is "([^"]*)"$/ do |input|
@@ -76,7 +78,7 @@ end
 #TODO: FINISH
 When /^cmap-eval is executed in batch mode$/ do
   # Get a string containing the output of cmap-eval
-  @output = output_from_execution "-p", @key_file_name, @batch_path
+  @output = output_from_execution "-b", @key_file_name, @batch_files_path
 end
 
 Then /^it will display "([^"]*)"$/ do |expected_output|
@@ -110,7 +112,6 @@ Then /^the marked up file should look like "([^"]*)"$/ do |correct_file_name|
   end
 end
 
-# TODO: change this so there isn't identical code structure 
 Then /^the problem statement cmap file should look like "([^"]*)"$/ do |correct_file_name|
   correct_file_name = INPUT_PATH + correct_file_name
   if !File.readable? correct_file_name
@@ -123,13 +124,6 @@ end
 
 Then /^the problem statement cmap file should exist$/ do
   expected_file_name = @problem_statement_path + "/problem_statement.cxl"
-  if !File.readable? expected_file_name
-    raise "File #{expected_file_name} does not exist!"
-  end
-end
-
-Then /^the problem statement text file should exist$/ do
-  expected_file_name = @problem_statement_path + "/problem_statement.txt"
   if !File.readable? expected_file_name
     raise "File #{expected_file_name} does not exist!"
   end

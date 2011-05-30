@@ -28,7 +28,7 @@ module Arguments
       
       # Check that, if we have an option, it is valid.
       if args[0].start_with? "-"
-        if !["-h", "-d", "-p"].index args[0]
+        if !["-h", "-d", "-p", "-b"].index args[0]
           Output.bad_args_exit
         end
       end
@@ -49,6 +49,8 @@ module Arguments
         return :normal_mode
       elsif args[0] == "-p"
         return :problem_statement_mode
+      elsif args[0] == "-p"
+        return :batch_mode
       else
         return :debug_mode
       end

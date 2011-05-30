@@ -20,25 +20,28 @@ else
   if mode == :debug_mode
     Debug.enable_debug
   end
-  
-  key_file_name, input_file_name = arg_helper.get_normal_file_names ARGV
-  arg_helper.validate_readable key_file_name
-  arg_helper.validate_readable input_file_name
-  arg_helper.validate_writable input_file_name
-  
-  key_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
-  input_map = CMap::CMap.new Nokogiri::XML File.read input_file_name
-  
-  begin
-    Output.names_block input_map.name_block
-  rescue CMap::Error => error
-    Output.exception error
+  if mode == :batch_mode
+    # TODO: Actually handle doing the batch...
+  else
+    key_file_name, input_file_name = arg_helper.get_normal_file_names ARGV
+    arg_helper.validate_readable key_file_name
+    arg_helper.validate_readable input_file_name
+    arg_helper.validate_writable input_file_name
+    
+    key_map = CMap::CMap.new Nokogiri::XML File.read key_file_name
+    input_map = CMap::CMap.new Nokogiri::XML File.read input_file_name
+    
+    begin
+      Output.names_block input_map.name_block
+    rescue CMap::Error => error
+      Output.exception error
+    end
+    
+    
+    input_map.move_nodes key_map
+    grade = input_map.grade_using key_map
+    input_map.write_to_file input_file_name
+    # Output the grade to the console
+    puts "Grade: " + grade.to_s + "%"
   end
-  
-  
-  input_map.move_nodes key_map
-  grade = input_map.grade_using key_map
-  input_map.write_to_file input_file_name
-  # Output the grade to the console
-  puts "Grade: " + grade.to_s + "%"
 end
