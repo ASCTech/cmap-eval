@@ -30,6 +30,19 @@ Given /^key "([^"]*)" and problem statement path "([^"]*)"$/ do |key, problem_st
   end
 end
 
+Given /^key "([^"]*)" and batch path "([^"]*)"$/ do |key, batch_path|
+  @key_file_name = INPUT_PATH + key
+  @batch_files_path = SANDBOX_PATH + batch_path
+  
+  input_check key
+  #$stderr.puts batch_path.class
+  batch = Dir.open(INPUT_PATH + batch_path).entries
+  prepare_batch_array batch
+  check_batch batch, batch_path
+  
+  $stderr.puts batch
+end
+
 Given /^the input file is "([^"]*)"$/ do |input|
   # We don't actually care what the key is, so assign it.
   Given %{key "#{input}" and input "#{input}"}
@@ -58,6 +71,12 @@ end
 When /^cmap-eval is executed in problem statement mode$/ do
   # Get a string containing the output of cmap-eval
   @output = output_from_execution "-p", @key_file_name, @problem_statement_path
+end
+
+#TODO: FINISH
+When /^cmap-eval is executed in batch mode$/ do
+  # Get a string containing the output of cmap-eval
+  @output = output_from_execution "-p", @key_file_name, @batch_path
 end
 
 Then /^it will display "([^"]*)"$/ do |expected_output|

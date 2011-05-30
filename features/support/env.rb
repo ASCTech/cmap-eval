@@ -14,7 +14,26 @@ def file_check full_file_name
     pending "File #{full_file_name} does not exist!"
   end
 end
-  
+
+def prepare_batch_array batch
+  if batch.include? "."
+    batch.delete "."
+  end
+  if batch.include? ".."
+    batch.delete ".."
+  end
+end
+
+def check_batch batch, batch_path
+  batch.each do |input_file|
+    if !input_file.end_with? ".cxl"
+      #TODO: implement recursive check
+    else
+      input_check batch_path + "/" + input_file
+    end
+  end
+end
+
 def prep_sandbox_for input_file_name
   relative_input_file_name = INPUT_PATH + input_file_name
   sandbox_name = SANDBOX_PATH + input_file_name
