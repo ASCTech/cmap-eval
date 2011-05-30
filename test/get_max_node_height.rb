@@ -6,7 +6,7 @@ require "pp"
 
 
 include Nokogiri::XML
-  class GetMaxNodeWidthTest < Test::Unit::TestCase
+  class GetMaxNodeHightTest < Test::Unit::TestCase
     def test_stardard_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -49,7 +49,7 @@ include Nokogiri::XML
       end
       
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(5, cmap.send(:get_max_node_width))
+      assert_equal(90, cmap.send(:get_max_node_height))
     end
     
     def test_blank_input
@@ -62,6 +62,6 @@ include Nokogiri::XML
       end
       
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(0, cmap.send(:get_max_node_width))
+      assert_equal(0, cmap.send(:get_max_node_height))
     end
   end
