@@ -1,4 +1,6 @@
+# Methods that make it easy to display standard debug messages to the console.
 module Debug
+  # Make it globally known that debug is enabled. This has to be true to display the debug messages.
   def Debug.enable_debug
     @enabled = true
   end
@@ -37,6 +39,7 @@ module Debug
   
   private
 
+  # Output the debug message to the console.
   def Debug.debug message
     if @enabled
       puts message

@@ -1,4 +1,6 @@
+# Module to handle console output for cmap-eval.
 module Output
+  # Used to simplify calling all methods when there are bad arguments. 
   def Output.bad_args_exit
     Output.wrong_args_error
     Output.help_message
@@ -16,6 +18,11 @@ module Output
     puts "Options:"
     puts "-h : Display this help message."
     puts "-d : Enable debug mode."
+    puts "-b : Run in batch mode. Here input-file is actually batch-path."
+  end
+  
+  def Output.grade grade
+    puts "Grade: " + grade + "%"  
   end
   
   def Output.names_block names

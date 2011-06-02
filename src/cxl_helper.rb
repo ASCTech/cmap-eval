@@ -130,6 +130,7 @@ module CxlHelper
     end
   end
 
+  # Constants for common xpaths used in a cmap.
   ROOT_PATH = PathBuilder.new().at "cmap", "map"
   CONCEPT_LIST_PATH = ROOT_PATH.at "concept-list"
   CONNECTION_LIST_PATH = ROOT_PATH.at "connection-list"
