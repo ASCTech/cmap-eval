@@ -1,4 +1,7 @@
-#TODO: figure out a sane build mechanism.
+
+# Fix the search path so that all of our relative includes work.
+$: << File.expand_path(File.dirname(__FILE__) + "/..")
+
 require "src/arguments_helper"
 
 def normal_mode key_file_name, input_file_name
@@ -27,10 +30,9 @@ def batch_mode key_file_name, batch_path
   arg_helper = Arguments::Arguments_Helper.new
   arg_helper.validate_readable key_file_name
   d = Dir.new(batch_path)
-
+  
   d.entries.each do |file_name|
-    #TODO: remove the or eql? sql once that is fixed in the sanbox copy?
-    next if file_name.eql?(".") or file_name.eql?("..") or file_name.eql?(".svn")
+    next if file_name.eql?(".") or file_name.eql?("..")
     if file_name.end_with? ".cxl"
       normal_mode key_file_name, batch_path + "/" + file_name
     elsif File.directory? batch_path + "/" + file_name
@@ -40,7 +42,6 @@ def batch_mode key_file_name, batch_path
   end
 end
 
-# TODO: this needs cleanup.
 arg_helper = Arguments::Arguments_Helper.new
 arg_helper.validate_arguments ARGV
 mode = arg_helper.get_mode ARGV
@@ -60,7 +61,6 @@ else
     Debug.enable_debug
   end
   if mode == :batch_mode
-    # TODO: Actually handle doing the batch...
     key_file_name, batch_path = arg_helper.get_batch_file_names ARGV
     batch_mode key_file_name, batch_path
   else

@@ -22,19 +22,8 @@ def prepare_batch_array batch
   if batch.include? ".."
     batch.delete ".."
   end
-  #TODO: .svn?
   if batch.include? ".svn"
-    batch.delete ".svn"    
-  end
-end
-
-def check_batch batch, batch_path
-  batch.each do |input_file|
-    if !input_file.end_with? ".cxl"
-      #TODO: implement recursive check
-    else
-      input_check batch_path + "/" + input_file
-    end
+    batch.delete ".svn"
   end
 end
 
