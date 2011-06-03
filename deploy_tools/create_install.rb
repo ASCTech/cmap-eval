@@ -16,7 +16,7 @@ end
 
 # Destroy the deploy directory, so we can start fresh.
 if File.exist? rel DEPLOY
-  FileUtils.rm_r rel DEPLOY
+  FileUtils.rm_rf rel DEPLOY
 end
 
 # Create the new deploy folder.
