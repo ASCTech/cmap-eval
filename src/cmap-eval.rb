@@ -61,6 +61,10 @@ end
 Arguments_Helper.validate_arguments ARGV
 mode = Arguments_Helper.get_mode ARGV
 
+if mode == :debug_mode
+  Debug.enable_debug
+end
+
 # Check the mode and react accordingly.
 if mode == :problem_statement_mode
   key_file_name, output_path = Arguments_Helper.get_problem_statement_names ARGV
@@ -71,17 +75,11 @@ if mode == :problem_statement_mode
   # create the problem statement CMap with nodes
   problem_map.transform_into_problem_statement_map
   problem_map.write_to_file output_path + "/problem_statement.cxl"
-  
+elsif mode == :batch_mode
+  is_batch_mode
+  key_file_name, batch_path = Arguments_Helper.get_batch_file_names ARGV
+  batch_mode key_file_name, batch_path
 else
-  if mode == :debug_mode
-    Debug.enable_debug
-  end
-  if mode == :batch_mode
-    is_batch_mode
-    key_file_name, batch_path = Arguments_Helper.get_batch_file_names ARGV
-    batch_mode key_file_name, batch_path
-  else
-    key_file_name, input_file_name = Arguments_Helper.get_normal_file_names ARGV
-    normal_mode key_file_name, input_file_name
-  end
+  key_file_name, input_file_name = Arguments_Helper.get_normal_file_names ARGV
+  normal_mode key_file_name, input_file_name
 end
