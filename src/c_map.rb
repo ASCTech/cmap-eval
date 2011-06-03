@@ -272,7 +272,6 @@ module CMap
       # Put the grade in a node on the map.
       add_grade_node grade.to_s
 
-      # TODO: Remove before integration (removing this will break test cases).
       # Put the grade to the console.
       return grade.to_i
     end
@@ -323,13 +322,10 @@ module CMap
       PHRASE_APPEARANCE_LIST_PATH.apply(@xml)[0].remove
     end
     
-    #TODO: Keys should not have name blocks, inputs need fixed, and this needs refactored.
-    #TODO: This is ugly, fix it.
     def transform_into_problem_statement_map
       # Get an array which holds [edge_list, proposistion_height] before the edges are removed.
       propositions = self.proposition_list
       # Get the maximum width and height in key.
-      # TODO: Fix this so it only checks edges not both edges and nodes. See proposition block at end of method.
       max_width = self.get_max_node_width
       
       self.remove_edges
@@ -378,6 +374,7 @@ module CMap
     
     protected
     
+    # Return the width of the widest node or edge label.
     def get_max_node_width
       max_width = 0
       CxlHelper.builder.anything.with("x", "width").apply(@xml).each do |node|
@@ -390,6 +387,7 @@ module CMap
       return max_width
     end
     
+    # Return the height of the tallest node or edge label.
     def get_max_node_height
       max_height = 0
       CxlHelper.builder.anything.with("y", "height").apply(@xml).each do |node|
