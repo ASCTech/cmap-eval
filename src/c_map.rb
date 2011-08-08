@@ -155,13 +155,21 @@ module CMap
     # Move all nodes (concepts and propositions) to their position within the key (allowing
     # greater readability), or, if they have no such position, moves them to a "best guess" position.
     def move_nodes key
+      node_vocab = key.node_vocabulary
+      
       # Move the concepts.
       concepts_in_map.each do |concept|
-        set_concept_position concept, *key.concept_position(concept)
+        if node_vocab.include? concept
+          set_concept_position concept, *key.concept_position(concept)
+        end
       end
       
       # Move linking phrases.
       each_unique_pair do |start, finish|
+        if !node_vocab.include? start or !node_vocab.include? finish
+          next
+        end
+        
         local_edges = edges_between start, finish
         key_edges = key.edges_between start, finish
         
@@ -576,6 +584,26 @@ module CMap
       add_connection_edge legend1_id, typo_id, legend2_id, MISSPELLED_EDGE_COLOR
     end
     
+    def mark_all_extra concept1, concept2, node_vocab
+      if !node_vocab.include? concept1
+        mark_concept_extra concept1
+      end
+      
+      if !node_vocab.include? concept2
+        mark_concept_extra concept2
+      end
+      
+      local_edges = edges_between concept1, concept2
+      local_edges.each do |edge|
+        mark_edge_extra concept1, concept2, edge
+      end
+    end
+    
+    def mark_concept_extra concept
+      id =  id_of_concept concept
+      CONCEPT_APPEARANCE_PATH.with_values("id" => id).apply(@xml)[0]["font-color"] = EXTRA_EDGE_COLOR
+    end
+    
     # Mark misplaced, extra, and misspelled edges.  Misspelled edges are also saved off to
     # @misspellings_list so that mark_missing_edges has knowledge of them.
     def mark_misplaced_and_extra_edges key
@@ -583,11 +611,18 @@ module CMap
       
       vocab = key.vocabulary
       
+      node_vocab = key.node_vocabulary
+      
       misspelled_found = false
       misplaced_found = false
       extra_found = false
       
       each_unique_pair do |concept1, concept2|
+        if !node_vocab.include? concept1 or !node_vocab.include? concept2
+          mark_all_extra concept1, concept2, node_vocab
+          next
+        end
+        
         local_edges = edges_between(concept1, concept2)
         key_edges = key.edges_between(concept1, concept2)
         

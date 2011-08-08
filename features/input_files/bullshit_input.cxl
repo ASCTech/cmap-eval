@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmap xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://cmap.ihmc.us/xml/cmap/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <res-meta>
+        <dc:title>problem_statement</dc:title>
+        <dcterms:created>2011-08-05T11:53:30-04:00</dcterms:created>
+        <dcterms:modified>2011-08-05T09:44:11-04:00</dcterms:modified>
+        <dc:language>en</dc:language>
+        <dc:format>x-cmap/x-storable</dc:format>
+        <dc:publisher>FIHMC CmapTools 5.04  </dc:publisher>
+        <dc:extent>3154 bytes</dc:extent>
+        <dc:source>cmap:1HNQ3P8M9-1H0F9NN-1:1HNQ3PBQ6-L0R7WY-Y:1JPXYTTZN-1WBWBVP-RW</dc:source>
+    </res-meta>
+    <map width="1188" height="1187">
+        <concept-list>
+            <concept id="1JPXZ5MTQ-1XB0H29-1JV" label="Blood Supply"/>
+            <concept id="1JPVBHF09-V8PRMF-PY" label="DNA"/>
+            <concept id="_LatestChanget_" label="Names:&#xa;Cori meleana&#xa;Gal gupha"/>
+            <concept id="1JPXZ0WSZ-2636GLZ-16R" label="Oncogene"/>
+            <concept id="1JPV9WBJQ-1DL7V21-9N" label="Lethal"/>
+            <concept id="1JPV9V78F-ZD9T8W-83" label="Cells"/>
+            <concept id="1JPXZ1WK3-1SD0VGX-195" label="RAS"/>
+            <concept id="1JPXYZ83X-JZCZVK-13L" label="Ultraviolet radiation"/>
+            <concept id="1JPV9VNPL-GNCS2B-8T" label="Benign"/>
+            <concept id="1JPV9VGWF-1Y8WPMQ-8G" label="Tumors"/>
+            <concept id="1JPV9TQSV-27DHZJS-7C" label="Cancer"/>
+            <concept id="1JPV9VTFJ-239S47L-95" label="Malignant"/>
+            <concept id="1JPVCWZHR-63VCH1-123" label="Metastases"/>
+            <concept id="1JPVBHRMX-13N4BJF-Q7" label="Mutation"/>
+            <concept id="1JPXZ4MFG-44MFW0-1GL" label="Angiogenesis"/>
+            <concept id="1JPVBC1MW-1JZ8F3Z-L8" label="Defective Proteins"/>
+        </concept-list>
+        <linking-phrase-list>
+            <linking-phrase id="1JPXZ15FQ-14KMXN4-17B" label="Becomes an"/>
+            <linking-phrase id="1JPXYXPSK-1350SMN-11B" label="manifests as"/>
+            <linking-phrase id="1JPXZ79L7-WJ9S8W-1MP" label="invade other tissue becoming"/>
+            <linking-phrase id="1JPXZ09DB-19TT0HM-15W" label="Alters code of"/>
+            <linking-phrase id="1JPXZ5VSL-10045DT-1KJ" label="Results in new"/>
+            <linking-phrase id="1JPXZ2L1M-NFPDXP-1BM" label="affect regulation of"/>
+            <linking-phrase id="1JPXZ53LH-C1XP4K-1HL" label="Growths induce"/>
+            <linking-phrase id="1JPXZ414L-119RS0G-1F5" label="Forms can be"/>
+            <linking-phrase id="1JPXZ22D8-1Q5QZQ0-19K" label="Such as"/>
+            <linking-phrase id="1JPXZ3CXK-16HFDSP-1D7" label="Forms can "/>
+            <linking-phrase id="1JPXYZYJN-1NQJPWM-14T" label="Can cause"/>
+            <linking-phrase id="1JPXZ6XHV-NBSJSG-1LW" label="translocate"/>
+            <linking-phrase id="1JPXYY0ZV-22B9HCG-126" label="Can occur as"/>
+            <linking-phrase id="1JPXZ2YYH-2CHJS74-1CH" label="Accumulate and form"/>
+            <linking-phrase id="1JPXZ4CF4-1GYYRJ4-1G1" label="consists of abnormal"/>
+            <linking-phrase id="1JPXZ1RR3-3MSLZZ-18K" label="Transcribes"/>
+        </linking-phrase-list>
+        <connection-list>
+            <connection id="1JPXYZYK5-742XRX-14X" from-id="1JPXYZ83X-JZCZVK-13L" to-id="1JPXYZYJN-1NQJPWM-14T"/>
+            <connection id="1JPXZ22D8-T736Y6-19N" from-id="1JPVBC1MW-1JZ8F3Z-L8" to-id="1JPXZ22D8-1Q5QZQ0-19K"/>
+            <connection id="1JPXZ53LZ-21FTWJY-1HV" from-id="1JPXZ53LH-C1XP4K-1HL" to-id="1JPXZ4MFG-44MFW0-1GL"/>
+            <connection id="1JPXZ6XHV-1DTR61L-1M5" from-id="1JPXZ6XHV-NBSJSG-1LW" to-id="1JPV9V78F-ZD9T8W-83"/>
+            <connection id="1JPXZ6XHV-1Q58LZ3-1LZ" from-id="1JPXZ5MTQ-1XB0H29-1JV" to-id="1JPXZ6XHV-NBSJSG-1LW"/>
+            <connection id="1JPXZ3CXK-14JY0F7-1DB" from-id="1JPV9VTFJ-239S47L-95" to-id="1JPXZ3CXK-16HFDSP-1D7"/>
+            <connection id="1JPXZ09DB-1261NW4-165" from-id="1JPXZ09DB-19TT0HM-15W" to-id="1JPVBHF09-V8PRMF-PY"/>
+            <connection id="1JPXYY0ZV-K2FZ3K-12H" from-id="1JPXYY0ZV-22B9HCG-126" to-id="1JPV9VTFJ-239S47L-95"/>
+            <connection id="1JPXZ3CXK-19LB7DS-1DJ" from-id="1JPXZ3CXK-16HFDSP-1D7" to-id="1JPVCWZHR-63VCH1-123"/>
+            <connection id="1JPXYYH03-1QBMDHX-135" from-id="1JPXYY0ZV-22B9HCG-126" to-id="1JPV9VNPL-GNCS2B-8T"/>
+            <connection id="1JPXZ4152-1YRR61M-1F8" from-id="1JPV9VTFJ-239S47L-95" to-id="1JPXZ414L-119RS0G-1F5"/>
+            <connection id="1JPXZ5VSL-13V6V0J-1KM" from-id="1JPXZ4MFG-44MFW0-1GL" to-id="1JPXZ5VSL-10045DT-1KJ"/>
+            <connection id="1JPXYY0ZV-12QXX7M-129" from-id="1JPV9VGWF-1Y8WPMQ-8G" to-id="1JPXYY0ZV-22B9HCG-126"/>
+            <connection id="1JPXZ2L24-W1ZNYB-1BX" from-id="1JPXZ2L1M-NFPDXP-1BM" to-id="1JPV9V78F-ZD9T8W-83"/>
+            <connection id="1JPXZ4CF4-RPKQQG-1G9" from-id="1JPXZ4CF4-1GYYRJ4-1G1" to-id="1JPV9V78F-ZD9T8W-83"/>
+            <connection id="1JPXZ22D8-216JZYY-19V" from-id="1JPXZ22D8-1Q5QZQ0-19K" to-id="1JPXZ1WK3-1SD0VGX-195"/>
+            <connection id="1JPXYZYK5-219248-153" from-id="1JPXYZYJN-1NQJPWM-14T" to-id="1JPVBHRMX-13N4BJF-Q7"/>
+            <connection id="1JPXZ4CF4-3NDBKB-1G4" from-id="1JPV9TQSV-27DHZJS-7C" to-id="1JPXZ4CF4-1GYYRJ4-1G1"/>
+            <connection id="1JPXZ1RRL-2DP7YMD-18N" from-id="1JPXZ0WSZ-2636GLZ-16R" to-id="1JPXZ1RR3-3MSLZZ-18K"/>
+            <connection id="1JPXZ2L24-23X9G4V-1BQ" from-id="1JPXZ1WK3-1SD0VGX-195" to-id="1JPXZ2L1M-NFPDXP-1BM"/>
+            <connection id="1JPXZ4152-27CLL2H-1FF" from-id="1JPXZ414L-119RS0G-1F5" to-id="1JPV9WBJQ-1DL7V21-9N"/>
+            <connection id="1JPXZ15G6-JLJ3B5-17M" from-id="1JPXZ15FQ-14KMXN4-17B" to-id="1JPXZ0WSZ-2636GLZ-16R"/>
+            <connection id="1JPXZ2YYH-47JKBC-1CS" from-id="1JPXZ2YYH-2CHJS74-1CH" to-id="1JPV9VGWF-1Y8WPMQ-8G"/>
+            <connection id="1JPXZ09DB-1PCVK68-15Z" from-id="1JPVBHRMX-13N4BJF-Q7" to-id="1JPXZ09DB-19TT0HM-15W"/>
+            <connection id="1JPXZ2YYH-273QKF-1CL" from-id="1JPV9V78F-ZD9T8W-83" to-id="1JPXZ2YYH-2CHJS74-1CH"/>
+            <connection id="1JPXZ15FQ-1BQ67XR-17F" from-id="1JPVBHF09-V8PRMF-PY" to-id="1JPXZ15FQ-14KMXN4-17B"/>
+            <connection id="1JPXZ1RRL-1XSXDPF-18V" from-id="1JPXZ1RR3-3MSLZZ-18K" to-id="1JPVBC1MW-1JZ8F3Z-L8"/>
+            <connection id="1JPXZ5VSL-1QH9Y8Q-1KT" from-id="1JPXZ5VSL-10045DT-1KJ" to-id="1JPXZ5MTQ-1XB0H29-1JV"/>
+            <connection id="1JPXZ79L7-DVVYT4-1MZ" from-id="1JPXZ79L7-WJ9S8W-1MP" to-id="1JPV9WBJQ-1DL7V21-9N"/>
+            <connection id="1JPXYXPSK-2441W0B-11N" from-id="1JPXYXPSK-1350SMN-11B" to-id="1JPV9VGWF-1Y8WPMQ-8G"/>
+            <connection id="1JPXZ53LZ-14C3M02-1HP" from-id="1JPV9VTFJ-239S47L-95" to-id="1JPXZ53LH-C1XP4K-1HL"/>
+            <connection id="1JPXZ79L7-1R552W4-1MS" from-id="1JPVCWZHR-63VCH1-123" to-id="1JPXZ79L7-WJ9S8W-1MP"/>
+            <connection id="1JPXYXPSK-123N8B3-11G" from-id="1JPV9TQSV-27DHZJS-7C" to-id="1JPXYXPSK-1350SMN-11B"/>
+        </connection-list>
+        <concept-appearance-list>
+            <concept-appearance id="1JPXZ5MTQ-1XB0H29-1JV" x="498" y="529" width="95" height="28"/>
+            <concept-appearance id="1JPVBHF09-V8PRMF-PY" x="847" y="357" width="42" height="25"/>
+            <concept-appearance id="_LatestChanget_" x="57" y="54" width="96" height="56"/>
+            <concept-appearance id="1JPXZ0WSZ-2636GLZ-16R" x="809" y="483" width="76" height="27"/>
+            <concept-appearance id="1JPV9WBJQ-1DL7V21-9N" x="444" y="473" width="53" height="25"/>
+            <concept-appearance id="1JPV9V78F-ZD9T8W-83" x="609" y="202" width="44" height="25"/>
+            <concept-appearance id="1JPXZ1WK3-1SD0VGX-195" x="707" y="365" width="41" height="25"/>
+            <concept-appearance id="1JPXYZ83X-JZCZVK-13L" x="798" y="119" width="135" height="25"/>
+            <concept-appearance id="1JPV9VNPL-GNCS2B-8T" x="224" y="321" width="57" height="27"/>
+            <concept-appearance id="1JPV9VGWF-1Y8WPMQ-8G" x="311" y="200" width="61" height="25"/>
+            <concept-appearance id="1JPV9TQSV-27DHZJS-7C" x="428" y="79" width="58" height="25"/>
+            <concept-appearance id="1JPV9VTFJ-239S47L-95" x="322" y="311" width="75" height="28"/>
+            <concept-appearance id="1JPVCWZHR-63VCH1-123" x="516" y="304" width="83" height="25"/>
+            <concept-appearance id="1JPVBHRMX-13N4BJF-Q7" x="823" y="227" width="69" height="25"/>
+            <concept-appearance id="1JPXZ4MFG-44MFW0-1GL" x="266" y="484" width="95" height="27"/>
+            <concept-appearance id="1JPVBC1MW-1JZ8F3Z-L8" x="676" y="479" width="125" height="25"/>
+        </concept-appearance-list>
+        <linking-phrase-appearance-list>
+            <linking-phrase-appearance id="1JPXZ15FQ-14KMXN4-17B" x="828" y="420" width="75" height="11"/>
+            <linking-phrase-appearance id="1JPXYXPSK-1350SMN-11B" x="347" y="124" width="78" height="11"/>
+            <linking-phrase-appearance id="1JPXZ79L7-WJ9S8W-1MP" x="469" y="389" width="180" height="14"/>
+            <linking-phrase-appearance id="1JPXZ09DB-19TT0HM-15W" x="834" y="292" width="85" height="11"/>
+            <linking-phrase-appearance id="1JPXZ5VSL-10045DT-1KJ" x="304" y="551" width="89" height="11"/>
+            <linking-phrase-appearance id="1JPXZ2L1M-NFPDXP-1BM" x="691" y="288" width="116" height="14"/>
+            <linking-phrase-appearance id="1JPXZ53LH-C1XP4K-1HL" x="233" y="401" width="96" height="11"/>
+            <linking-phrase-appearance id="1JPXZ414L-119RS0G-1F5" x="344" y="414" width="83" height="11"/>
+            <linking-phrase-appearance id="1JPXZ22D8-1Q5QZQ0-19K" x="694" y="423" width="49" height="11"/>
+            <linking-phrase-appearance id="1JPXZ3CXK-16HFDSP-1D7" x="422" y="345" width="69" height="11"/>
+            <linking-phrase-appearance id="1JPXYZYJN-1NQJPWM-14T" x="810" y="173" width="64" height="11"/>
+            <linking-phrase-appearance id="1JPXZ6XHV-NBSJSG-1LW" x="565" y="446" width="69" height="11"/>
+            <linking-phrase-appearance id="1JPXYY0ZV-22B9HCG-126" x="288" y="250" width="80" height="11"/>
+            <linking-phrase-appearance id="1JPXZ2YYH-2CHJS74-1CH" x="460" y="201" width="131" height="11"/>
+            <linking-phrase-appearance id="1JPXZ4CF4-1GYYRJ4-1G1" x="529" y="133" width="127" height="11"/>
+            <linking-phrase-appearance id="1JPXZ1RR3-3MSLZZ-18K" x="727" y="553" width="71" height="11"/>
+        </linking-phrase-appearance-list>
+        <connection-appearance-list>
+            <connection-appearance id="1JPXYZYK5-742XRX-14X" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ22D8-T736Y6-19N" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ53LZ-21FTWJY-1HV" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ6XHV-1DTR61L-1M5" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ6XHV-1Q58LZ3-1LZ" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ3CXK-14JY0F7-1DB" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ09DB-1261NW4-165" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXYY0ZV-K2FZ3K-12H" from-pos="center" to-pos="top" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ3CXK-19LB7DS-1DJ" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXYYH03-1QBMDHX-135" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ4152-1YRR61M-1F8" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ5VSL-13V6V0J-1KM" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXYY0ZV-12QXX7M-129" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ2L24-W1ZNYB-1BX" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ4CF4-RPKQQG-1G9" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ22D8-216JZYY-19V" from-pos="center" to-pos="bottom" arrowhead="yes"/>
+            <connection-appearance id="1JPXYZYK5-219248-153" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ4CF4-3NDBKB-1G4" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ1RRL-2DP7YMD-18N" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ2L24-23X9G4V-1BQ" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ4152-27CLL2H-1FF" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ15G6-JLJ3B5-17M" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ2YYH-47JKBC-1CS" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ09DB-1PCVK68-15Z" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ2YYH-273QKF-1CL" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ15FQ-1BQ67XR-17F" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ1RRL-1XSXDPF-18V" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ5VSL-1QH9Y8Q-1KT" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ79L7-DVVYT4-1MZ" from-pos="center" to-pos="top" arrowhead="yes"/>
+            <connection-appearance id="1JPXYXPSK-2441W0B-11N" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ53LZ-14C3M02-1HP" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXZ79L7-1R552W4-1MS" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPXYXPSK-123N8B3-11G" from-pos="center" to-pos="center" arrowhead="yes"/>
+        </connection-appearance-list>
+        <style-sheet-list>
+            <style-sheet id="_Default_">
+                <map-style background-color="255,255,255,0" image-style="full" image-top-left="0,0"/>
+                <concept-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="4" background-color="237,244,246,255" background-image-style="full" border-color="0,0,0,255" border-style="solid" border-thickness="1"
+                    border-shape="rounded-rectangle" text-alignment="center" shadow-color="none"/>
+                <linking-phrase-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="1" background-color="0,0,255,0" background-image-style="full" border-color="0,0,0,0" border-style="solid" border-thickness="1"
+                    border-shape="rectangle" text-alignment="center" shadow-color="none"/>
+                <connection-style color="0,0,0,255" style="solid" thickness="1" type="straight" arrowhead="if-to-concept-and-slopes-up"/>
+                <resource-style font-name="SanSerif" font-size="12" font-style="plain" font-color="0,0,0,255" background-color="192,192,192,255"/>
+            </style-sheet>
+            <style-sheet id="_LatestChanges_">
+                <connection-style arrowhead="yes"/>
+            </style-sheet>
+        </style-sheet-list>
+        <extra-graphical-properties-list>
+            <properties-list id="1JPXYTTZN-1WBWBVP-RW">
+                <property key="StyleSheetGroup_0" value="//*@!#$%%^&amp;*()() No Grouped StyleSheets @"/>
+            </properties-list>
+        </extra-graphical-properties-list>
+    </map>
+</cmap>

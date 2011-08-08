@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmap xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://cmap.ihmc.us/xml/cmap/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <res-meta>
+        <dc:title>key</dc:title>
+        <dcterms:created>2011-08-05T08:30:32-04:00</dcterms:created>
+        <dcterms:modified>2011-08-04T15:32:59-04:00</dcterms:modified>
+        <dc:language>en</dc:language>
+        <dc:format>x-cmap/x-storable</dc:format>
+        <dc:publisher>FIHMC CmapTools 5.04  </dc:publisher>
+        <dc:extent>5585 bytes</dc:extent>
+        <dc:source>cmap:1HNQ3P8M9-1H0F9NN-1:1HNQ3PBQ6-L0R7WY-Y:1JPXJN0H8-2DLK7QC-7B</dc:source>
+    </res-meta>
+    <map width="680" height="623">
+        <concept-list>
+            <concept id="1JPVBHF09-V8PRMF-PY" label="DNA"/>
+            <concept id="1JPV9VGWF-1Y8WPMQ-8G" label="Tumors"/>
+            <concept id="1JPV9TQSV-27DHZJS-7C" label="Cancer"/>
+            <concept id="1JPV9WBJQ-1DL7V21-9N" label="Lethal"/>
+            <concept id="1JPV9V78F-ZD9T8W-83" label="Cells"/>
+            <concept id="1JPVCWZHR-63VCH1-123" label="Metastases"/>
+            <concept id="1JPVBC1MW-1JZ8F3Z-L8" label="Defective Proteins"/>
+            <concept id="1JPV9VTFJ-239S47L-95" label="Malignant"/>
+            <concept id="1JPV9VNPL-GNCS2B-8T" label="Benign"/>
+            <concept id="1JPVBHRMX-13N4BJF-Q7" label="Mutation"/>
+        </concept-list>
+        <linking-phrase-list>
+            <linking-phrase id="1JPVD5NYS-2BDZLDJ-145" label="translocate"/>
+            <linking-phrase id="1JPVB52N3-2568QS1-K6" label="manifests as"/>
+            <linking-phrase id="1JPVB1X61-XKWCX6-G9" label="Can occur as"/>
+            <linking-phrase id="1JPVCTQZF-2B8HNM4-117" label="Forms can "/>
+            <linking-phrase id="1JPVB340K-21J3K1P-HY" label="Forms can be"/>
+            <linking-phrase id="1JPVB0Z6S-3C3V4X-D3" label="Accumulate and form"/>
+            <linking-phrase id="1JPVBJ32Z-WYRZF4-QV" label="Transcribes"/>
+            <linking-phrase id="1JPVBD2JQ-1322H21-MW" label="affect regulation of"/>
+            <linking-phrase id="1JPV9XNDC-X6LPTT-BD" label="consists of abnormal"/>
+            <linking-phrase id="1JPVD9B18-3HKD12-15L" label="invade other tissue becoming"/>
+            <linking-phrase id="1JPVBK3P8-CKF7VR-SQ" label="Alters code of"/>
+        </linking-phrase-list>
+        <connection-list>
+            <connection id="1JPVD5NZ9-12NJQ3H-14G" from-id="1JPVD5NYS-2BDZLDJ-145" to-id="1JPV9V78F-ZD9T8W-83"/>
+            <connection id="1JPVCTQZF-X72M9M-11B" from-id="1JPV9VTFJ-239S47L-95" to-id="1JPVCTQZF-2B8HNM4-117"/>
+            <connection id="1JPVB340K-2CGGGFX-J7" from-id="1JPVB340K-21J3K1P-HY" to-id="1JPV9WBJQ-1DL7V21-9N"/>
+            <connection id="1JPVB0Z6S-2BCX66K-DD" from-id="1JPV9V78F-ZD9T8W-83" to-id="1JPVB0Z6S-3C3V4X-D3"/>
+            <connection id="1JPVBD2JQ-RJGXYB-MZ" from-id="1JPVBC1MW-1JZ8F3Z-L8" to-id="1JPVBD2JQ-1322H21-MW"/>
+            <connection id="1JPV9XNDC-2C6HWNG-BQ" from-id="1JPV9XNDC-X6LPTT-BD" to-id="1JPV9V78F-ZD9T8W-83"/>
+            <connection id="1JPVBJ32Z-1H76ZC1-QY" from-id="1JPVBHF09-V8PRMF-PY" to-id="1JPVBJ32Z-WYRZF4-QV"/>
+            <connection id="1JPVB1X61-27LQPPT-GK" from-id="1JPVB1X61-XKWCX6-G9" to-id="1JPV9VTFJ-239S47L-95"/>
+            <connection id="1JPVB1X61-1ZVTZY1-GD" from-id="1JPV9VGWF-1Y8WPMQ-8G" to-id="1JPVB1X61-XKWCX6-G9"/>
+            <connection id="1JPVD9B18-14PWC7N-15P" from-id="1JPVCWZHR-63VCH1-123" to-id="1JPVD9B18-3HKD12-15L"/>
+            <connection id="1JPVBD2JQ-LTC90-N5" from-id="1JPVBD2JQ-1322H21-MW" to-id="1JPV9V78F-ZD9T8W-83"/>
+            <connection id="1JPVB52NM-HMLHVT-K9" from-id="1JPV9TQSV-27DHZJS-7C" to-id="1JPVB52N3-2568QS1-K6"/>
+            <connection id="1JPVB0Z6S-5L6WY9-D6" from-id="1JPVB0Z6S-3C3V4X-D3" to-id="1JPV9VGWF-1Y8WPMQ-8G"/>
+            <connection id="1JPVB52NM-293MDWG-KG" from-id="1JPVB52N3-2568QS1-K6" to-id="1JPV9VGWF-1Y8WPMQ-8G"/>
+            <connection id="1JPVD5NZ9-1RJ96VS-148" from-id="1JPVCWZHR-63VCH1-123" to-id="1JPVD5NYS-2BDZLDJ-145"/>
+            <connection id="1JPVBK3P8-1C620VM-T0" from-id="1JPVBK3P8-CKF7VR-SQ" to-id="1JPVBHF09-V8PRMF-PY"/>
+            <connection id="1JPVBJ32Z-1HXT277-R4" from-id="1JPVBJ32Z-WYRZF4-QV" to-id="1JPVBC1MW-1JZ8F3Z-L8"/>
+            <connection id="1JPVB340K-1RPS060-J1" from-id="1JPV9VTFJ-239S47L-95" to-id="1JPVB340K-21J3K1P-HY"/>
+            <connection id="1JPV9XNDC-NQSB1V-BJ" from-id="1JPV9TQSV-27DHZJS-7C" to-id="1JPV9XNDC-X6LPTT-BD"/>
+            <connection id="1JPVDHZ4H-3102Q1-18J" from-id="1JPVB1X61-XKWCX6-G9" to-id="1JPV9VNPL-GNCS2B-8T"/>
+            <connection id="1JPVBK3P8-1DRSBCQ-ST" from-id="1JPVBHRMX-13N4BJF-Q7" to-id="1JPVBK3P8-CKF7VR-SQ"/>
+            <connection id="1JPVCWZHR-1D35YK6-126" from-id="1JPVCTQZF-2B8HNM4-117" to-id="1JPVCWZHR-63VCH1-123"/>
+            <connection id="1JPVD9B18-31Q1P4-15V" from-id="1JPVD9B18-3HKD12-15L" to-id="1JPV9WBJQ-1DL7V21-9N"/>
+        </connection-list>
+        <concept-appearance-list>
+            <concept-appearance id="1JPVBHF09-V8PRMF-PY" x="596" y="447" width="42" height="25"/>
+            <concept-appearance id="1JPV9VGWF-1Y8WPMQ-8G" x="151" y="376" width="61" height="25"/>
+            <concept-appearance id="1JPV9TQSV-27DHZJS-7C" x="267" y="185" width="58" height="25"/>
+            <concept-appearance id="1JPV9WBJQ-1DL7V21-9N" x="333" y="564" width="53" height="25"/>
+            <concept-appearance id="1JPV9V78F-ZD9T8W-83" x="421" y="319" width="44" height="25"/>
+            <concept-appearance id="1JPVCWZHR-63VCH1-123" x="327" y="421" width="83" height="25"/>
+            <concept-appearance id="1JPVBC1MW-1JZ8F3Z-L8" x="496" y="561" width="125" height="25"/>
+            <concept-appearance id="1JPV9VTFJ-239S47L-95" x="187" y="492" width="75" height="28"/>
+            <concept-appearance id="1JPV9VNPL-GNCS2B-8T" x="95" y="493" width="57" height="27"/>
+            <concept-appearance id="1JPVBHRMX-13N4BJF-Q7" x="587" y="321" width="69" height="25"/>
+        </concept-appearance-list>
+        <linking-phrase-appearance-list>
+            <linking-phrase-appearance id="1JPVD5NYS-2BDZLDJ-145" x="380" y="374" width="69" height="11"/>
+            <linking-phrase-appearance id="1JPVB52N3-2568QS1-K6" x="181" y="259" width="78" height="11"/>
+            <linking-phrase-appearance id="1JPVB1X61-XKWCX6-G9" x="148" y="429" width="80" height="11"/>
+            <linking-phrase-appearance id="1JPVCTQZF-2B8HNM4-117" x="301" y="486" width="69" height="11"/>
+            <linking-phrase-appearance id="1JPVB340K-21J3K1P-HY" x="191" y="565" width="83" height="11"/>
+            <linking-phrase-appearance id="1JPVB0Z6S-3C3V4X-D3" x="290" y="350" width="131" height="11"/>
+            <linking-phrase-appearance id="1JPVBJ32Z-WYRZF4-QV" x="591" y="506" width="71" height="11"/>
+            <linking-phrase-appearance id="1JPVBD2JQ-1322H21-MW" x="489" y="433" width="116" height="14"/>
+            <linking-phrase-appearance id="1JPV9XNDC-X6LPTT-BD" x="354" y="248" width="127" height="11"/>
+            <linking-phrase-appearance id="1JPVD9B18-3HKD12-15L" x="405" y="499" width="180" height="14"/>
+            <linking-phrase-appearance id="1JPVBK3P8-CKF7VR-SQ" x="592" y="382" width="85" height="11"/>
+        </linking-phrase-appearance-list>
+        <connection-appearance-list>
+            <connection-appearance id="1JPVD5NZ9-12NJQ3H-14G" from-pos="center" to-pos="bottom" arrowhead="yes"/>
+            <connection-appearance id="1JPVCTQZF-X72M9M-11B" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVB340K-2CGGGFX-J7" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JPVB0Z6S-2BCX66K-DD" from-pos="left" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVBD2JQ-RJGXYB-MZ" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPV9XNDC-2C6HWNG-BQ" from-pos="center" to-pos="top-right" arrowhead="yes"/>
+            <connection-appearance id="1JPVBJ32Z-1H76ZC1-QY" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVB1X61-27LQPPT-GK" from-pos="center" to-pos="top" arrowhead="yes"/>
+            <connection-appearance id="1JPVB1X61-1ZVTZY1-GD" from-pos="center" to-pos="center"/>
+            <connection-appearance id="1JPVD9B18-14PWC7N-15P" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVBD2JQ-LTC90-N5" from-pos="center" to-pos="right" arrowhead="yes"/>
+            <connection-appearance id="1JPVB52NM-HMLHVT-K9" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVB0Z6S-5L6WY9-D6" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVB52NM-293MDWG-KG" from-pos="center" to-pos="top" arrowhead="yes"/>
+            <connection-appearance id="1JPVD5NZ9-1RJ96VS-148" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVBK3P8-1C620VM-T0" from-pos="center" to-pos="bottom" arrowhead="yes"/>
+            <connection-appearance id="1JPVBJ32Z-1HXT277-R4" from-pos="center" to-pos="bottom" arrowhead="yes"/>
+            <connection-appearance id="1JPVB340K-1RPS060-J1" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPV9XNDC-NQSB1V-BJ" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVDHZ4H-3102Q1-18J" from-pos="center" to-pos="top" arrowhead="yes"/>
+            <connection-appearance id="1JPVBK3P8-1DRSBCQ-ST" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVCWZHR-1D35YK6-126" from-pos="center" to-pos="center" arrowhead="yes"/>
+            <connection-appearance id="1JPVD9B18-31Q1P4-15V" from-pos="center" to-pos="center" arrowhead="yes"/>
+        </connection-appearance-list>
+        <style-sheet-list>
+            <style-sheet id="_Default_">
+                <map-style background-color="255,255,255,0" image-style="full" image-top-left="0,0"/>
+                <concept-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="4" background-color="237,244,246,255" background-image-style="full" border-color="0,0,0,255" border-style="solid" border-thickness="1"
+                    border-shape="rounded-rectangle" text-alignment="center" shadow-color="none"/>
+                <linking-phrase-style font-name="Verdana" font-size="12" font-style="plain" font-color="0,0,0,255" text-margin="1" background-color="0,0,255,0" background-image-style="full" border-color="0,0,0,0" border-style="solid" border-thickness="1"
+                    border-shape="rectangle" text-alignment="center" shadow-color="none"/>
+                <connection-style color="0,0,0,255" style="solid" thickness="1" type="straight" arrowhead="if-to-concept-and-slopes-up"/>
+                <resource-style font-name="SanSerif" font-size="12" font-style="plain" font-color="0,0,0,255" background-color="192,192,192,255"/>
+            </style-sheet>
+            <style-sheet id="_LatestChanges_">
+                <connection-style arrowhead="yes"/>
+            </style-sheet>
+        </style-sheet-list>
+        <extra-graphical-properties-list>
+            <properties-list id="1JPXJN0H8-2DLK7QC-7B">
+                <property key="StyleSheetGroup_0" value="//*@!#$%%^&amp;*()() No Grouped StyleSheets @"/>
+            </properties-list>
+        </extra-graphical-properties-list>
+    </map>
+</cmap>
