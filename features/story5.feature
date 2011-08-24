@@ -5,7 +5,7 @@ Feature: Story 5: "assign a naive grade"
 		Then the notification should contain:
 			| Grade: 100% |
 	Scenario: one missing edge
-        Given key "naive_grading_key.cxl" and input "naive_one_missing.cxl"
+		Given key "naive_grading_key.cxl" and input "naive_one_missing.cxl"
 		When cmap-eval is executed
 		Then the notification should contain:
 			| Grade: 86% |

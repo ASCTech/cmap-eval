@@ -1,171 +1,171 @@
 # CxlHelper maintains a collection of facilities for dealing with the complexity of the cxl format.
 module CxlHelper
-  NAMESPACE = "xmlns"
-  NODE_PREFIX = "/#{NAMESPACE}:"
-  # Manufacture the full xpath from the nodes.  Any arguments that are not already a valid xpath are correctly-prefixed.
-  def CxlHelper.create_path *arguments
-    path = ""
+	NAMESPACE = "xmlns"
+	NODE_PREFIX = "/#{NAMESPACE}:"
+	# Manufacture the full xpath from the nodes.  Any arguments that are not already a valid xpath are correctly-prefixed.
+	def CxlHelper.create_path *arguments
+		path = ""
 
-    arguments.each do |item|
-      if item.start_with? "/"
-      path = path + item
-      else
-      path = path + NODE_PREFIX + item
-      end
-    end
-
-    return path
-  end
-
-  def CxlHelper.value nodeset
-    return CxlHelper.normalize(nodeset)[0]
-  end
-
-  # Append the nodes to the already-created xpath.
-  def CxlHelper.append_xpath xpath, nodes
-    return xpath + CxlHelper.create_path(nodes)
-  end
-
-  # Find all of the nodes with the given attributes.
-  def CxlHelper.any_node_with_attrs xml, *attrs
-    predicate = "@" + attrs.join(" and @")
-
-    return xml.xpath "//*[#{predicate}]"
-  end
-
-  def CxlHelper.fill_paths xml
-    fill_doc_path xml, CONCEPT_LIST_XPATH
-    fill_doc_path xml, CONNECTION_LIST_XPATH
-    fill_doc_path xml, LINKING_PHRASE_LIST_XPATH
-
-    fill_doc_path xml, CONCEPT_APPEARANCE_LIST_XPATH
-    fill_doc_path xml, CONNECTION_APPEARANCE_LIST_XPATH
-    fill_doc_path xml, LINKING_PHRASE_APPEARANCE_LIST_XPATH
-  end
-
-  def CxlHelper.fill_doc_path doc, path
-    if doc.xpath(path).size == 0
-      CxlHelper.fill_doc_path doc, path[/.*(?=\/.*)/]
-      fill_node = Nokogiri::XML::Node.new((path[/(?!.*:.*).*/]), doc)
-      doc.at_xpath(path[/.*(?=\/.*)/]).add_child fill_node
-    end
-  end
-
-  # Generate a node with the attributes as a hash.
-  def CxlHelper.create_node xml, name, attributes
-    node = Nokogiri::XML::Node.new name, xml
-    attributes.each do |key, value|
-			begin
-      node[key] = value
-		rescue NoMethodError => e
-			pp xml
-			pp node
-			raise e
-			exit
+		arguments.each do |item|
+			if item.start_with? "/"
+				path = path + item
+			else
+				path = path + NODE_PREFIX + item
+			end
 		end
-    end
 
-    return node
-  end
+		return path
+	end
 
-  def CxlHelper.normalize nodes
-    return nodes.to_a.map{|elem| elem.to_s}
-  end
+	def CxlHelper.value nodeset
+		return CxlHelper.normalize(nodeset)[0]
+	end
 
-  def CxlHelper.create_if_missing xml, path, name, id
-    if !path.at(name).with_values("id" => id).apply(xml)[0]
-      node = CxlHelper.create_node xml, name, "id" => id
-      path.apply(xml)[0].add_child node
-    end
-  end
+	# Append the nodes to the already-created xpath.
+	def CxlHelper.append_xpath xpath, nodes
+		return xpath + CxlHelper.create_path(nodes)
+	end
 
-  def CxlHelper.builder
-    return PathBuilder.new
-  end
+	# Find all of the nodes with the given attributes.
+	def CxlHelper.any_node_with_attrs xml, *attrs
+		predicate = "@" + attrs.join(" and @")
 
-  # PathBuilder is an immutable that aids in the construction of XPaths.
-  class PathBuilder
-    def initialize *args
-      if args.empty?
-        @path = ""
-      else
-      @path = args[0]
-      end
-    end
+		return xml.xpath "//*[#{predicate}]"
+	end
 
-    def to_s
-      return @path
-    end
+	def CxlHelper.fill_paths xml
+		fill_doc_path xml, CONCEPT_LIST_XPATH
+		fill_doc_path xml, CONNECTION_LIST_XPATH
+		fill_doc_path xml, LINKING_PHRASE_LIST_XPATH
 
-    def anywhere node
-      return PathBuilder.new @path + "//#{node}"
-    end
+		fill_doc_path xml, CONCEPT_APPEARANCE_LIST_XPATH
+		fill_doc_path xml, CONNECTION_APPEARANCE_LIST_XPATH
+		fill_doc_path xml, LINKING_PHRASE_APPEARANCE_LIST_XPATH
+	end
 
-    def anything
-      return PathBuilder.new @path + "//*"
-    end
+	def CxlHelper.fill_doc_path doc, path
+		if doc.xpath(path).size == 0
+			CxlHelper.fill_doc_path doc, path[/.*(?=\/.*)/]
+			fill_node = Nokogiri::XML::Node.new((path[/(?!.*:.*).*/]), doc)
+			doc.at_xpath(path[/.*(?=\/.*)/]).add_child fill_node
+		end
+	end
 
-    def at node, *other_nodes
-      result = @path + NODE_PREFIX + node
-      other_nodes.each do |other_node|
-        result << NODE_PREFIX + other_node
-      end
+	# Generate a node with the attributes as a hash.
+	def CxlHelper.create_node xml, name, attributes
+		node = Nokogiri::XML::Node.new name, xml
+		attributes.each do |key, value|
+			begin
+				node[key] = value
+			rescue NoMethodError => e
+				pp xml
+				pp node
+				raise e
+				exit
+			end
+		end
 
-      return PathBuilder.new result
-    end
+		return node
+	end
 
-    def with *attributes
-      return PathBuilder.new @path + "[@" + attributes.join(" and @") + "]"
-    end
+	def CxlHelper.normalize nodes
+		return nodes.to_a.map{|elem| elem.to_s}
+	end
 
-    def with_values attributes
-      predicates = []
-      attributes.each do |key, value|
-        predicates << %{@#{key}='#{value}'}
-      end
+	def CxlHelper.create_if_missing xml, path, name, id
+		if !path.at(name).with_values("id" => id).apply(xml)[0]
+			node = CxlHelper.create_node xml, name, "id" => id
+			path.apply(xml)[0].add_child node
+		end
+	end
 
-      return PathBuilder.new @path + "[" + predicates.join(" and ") + "]"
-    end
+	def CxlHelper.builder
+		return PathBuilder.new
+	end
 
-    def value attribute
-      return PathBuilder.new @path + "/@#{attribute}"
-    end
+	# PathBuilder is an immutable that aids in the construction of XPaths.
+	class PathBuilder
+		def initialize *args
+			if args.empty?
+				@path = ""
+			else
+				@path = args[0]
+			end
+		end
 
-    def apply xml
-      return xml.xpath @path
-    end
-  end
+		def to_s
+			return @path
+		end
 
-  # Constants for common xpaths used in a cmap.
-  ROOT_PATH = PathBuilder.new().at "cmap", "map"
-  CONCEPT_LIST_PATH = ROOT_PATH.at "concept-list"
-  CONNECTION_LIST_PATH = ROOT_PATH.at "connection-list"
-  PHRASE_LIST_PATH = ROOT_PATH.at "linking-phrase-list"
+		def anywhere node
+			return PathBuilder.new @path + "//#{node}"
+		end
 
-  CONCEPT_PATH = CONCEPT_LIST_PATH.at "concept"
-  CONNECTION_PATH = CONNECTION_LIST_PATH.at "connection"
-  PHRASE_PATH = PHRASE_LIST_PATH.at "linking-phrase"
+		def anything
+			return PathBuilder.new @path + "//*"
+		end
 
-  CONCEPT_APPEARANCE_LIST_PATH = ROOT_PATH.at "concept-appearance-list"
-  CONNECTION_APPEARANCE_LIST_PATH = ROOT_PATH.at "connection-appearance-list"
-  PHRASE_APPEARANCE_LIST_PATH = ROOT_PATH.at "linking-phrase-appearance-list"
+		def at node, *other_nodes
+			result = @path + NODE_PREFIX + node
+			other_nodes.each do |other_node|
+				result << NODE_PREFIX + other_node
+			end
 
-  CONCEPT_APPEARANCE_PATH = CONCEPT_APPEARANCE_LIST_PATH.at "concept-appearance"
-  CONNECTION_APPEARANCE_PATH = CONNECTION_APPEARANCE_LIST_PATH.at "connection-appearance"
-  PHRASE_APPEARANCE_PATH = PHRASE_APPEARANCE_LIST_PATH.at "linking-phrase-appearance"
+			return PathBuilder.new result
+		end
 
-  ROOT_XPATH = CxlHelper.create_path "cmap", "map"
-  CONCEPT_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-list"
-  CONNECTION_LIST_XPATH = CxlHelper.create_path  ROOT_XPATH, "connection-list"
-  LINKING_PHRASE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-list"
+		def with *attributes
+			return PathBuilder.new @path + "[@" + attributes.join(" and @") + "]"
+		end
 
-  CONCEPT_XPATH = CxlHelper.append_xpath CONCEPT_LIST_XPATH, "concept"
-  CONNECTION_XPATH = CxlHelper.create_path CONNECTION_LIST_XPATH, "connection"
-  LINKING_PHRASE_XPATH = CxlHelper.create_path LINKING_PHRASE_LIST_XPATH, "linking-phrase"
+		def with_values attributes
+			predicates = []
+			attributes.each do |key, value|
+				predicates << %{@#{key}='#{value}'}
+			end
 
-  CONCEPT_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-appearance-list"
-  CONNECTION_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "connection-appearance-list"
-  LINKING_PHRASE_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-appearance-list"
+			return PathBuilder.new @path + "[" + predicates.join(" and ") + "]"
+		end
 
-  CONNECTION_APPEARANCE_XPATH = CxlHelper.create_path CONNECTION_APPEARANCE_LIST_XPATH, "connection-appearance"
+		def value attribute
+			return PathBuilder.new @path + "/@#{attribute}"
+		end
+
+		def apply xml
+			return xml.xpath @path
+		end
+	end
+
+	# Constants for common xpaths used in a cmap.
+	ROOT_PATH = PathBuilder.new().at "cmap", "map"
+	CONCEPT_LIST_PATH = ROOT_PATH.at "concept-list"
+	CONNECTION_LIST_PATH = ROOT_PATH.at "connection-list"
+	PHRASE_LIST_PATH = ROOT_PATH.at "linking-phrase-list"
+
+	CONCEPT_PATH = CONCEPT_LIST_PATH.at "concept"
+	CONNECTION_PATH = CONNECTION_LIST_PATH.at "connection"
+	PHRASE_PATH = PHRASE_LIST_PATH.at "linking-phrase"
+
+	CONCEPT_APPEARANCE_LIST_PATH = ROOT_PATH.at "concept-appearance-list"
+	CONNECTION_APPEARANCE_LIST_PATH = ROOT_PATH.at "connection-appearance-list"
+	PHRASE_APPEARANCE_LIST_PATH = ROOT_PATH.at "linking-phrase-appearance-list"
+
+	CONCEPT_APPEARANCE_PATH = CONCEPT_APPEARANCE_LIST_PATH.at "concept-appearance"
+	CONNECTION_APPEARANCE_PATH = CONNECTION_APPEARANCE_LIST_PATH.at "connection-appearance"
+	PHRASE_APPEARANCE_PATH = PHRASE_APPEARANCE_LIST_PATH.at "linking-phrase-appearance"
+
+	ROOT_XPATH = CxlHelper.create_path "cmap", "map"
+	CONCEPT_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-list"
+	CONNECTION_LIST_XPATH = CxlHelper.create_path  ROOT_XPATH, "connection-list"
+	LINKING_PHRASE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-list"
+
+	CONCEPT_XPATH = CxlHelper.append_xpath CONCEPT_LIST_XPATH, "concept"
+	CONNECTION_XPATH = CxlHelper.create_path CONNECTION_LIST_XPATH, "connection"
+	LINKING_PHRASE_XPATH = CxlHelper.create_path LINKING_PHRASE_LIST_XPATH, "linking-phrase"
+
+	CONCEPT_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-appearance-list"
+	CONNECTION_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "connection-appearance-list"
+	LINKING_PHRASE_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-appearance-list"
+
+	CONNECTION_APPEARANCE_XPATH = CxlHelper.create_path CONNECTION_APPEARANCE_LIST_XPATH, "connection-appearance"
 end
