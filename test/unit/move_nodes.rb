@@ -1,28 +1,22 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
-
-include Nokogiri::XML
+require File.expand_path('../../test_helper', __FILE__)
 
 class MoveNodesTest < Test::Unit::TestCase
   def test_no_nodes
     test = Builder.new do |xml|
       xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/")
     end
-    
+
     correct = Builder.new do |xml|
       xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/")
     end
     cmap = CMap::CMap.new(test.doc)
     key = CMap::CMap.new(correct.doc)
     cmap.move_nodes key
-    
+
     xml = correct.doc
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
   end
-  
+
   def test_1_node
     test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -36,7 +30,7 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.map {
@@ -49,16 +43,16 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
      end
-    
+
     cmap = CMap::CMap.new(test.doc)
     key = CMap::CMap.new(correct.doc)
     cmap.move_nodes key
-    
+
     xml = correct.doc
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
-    
+
   end
-  
+
   def test_mult_node
     test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -74,7 +68,7 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.map {
@@ -89,16 +83,16 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     cmap = CMap::CMap.new(test.doc)
     key = CMap::CMap.new(correct.doc)
     cmap.move_nodes key
-    
+
     xml = correct.doc
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
   end
-  
-  
+
+
   def test_no_pos_mult_node
     test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -114,7 +108,7 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.map {
@@ -129,15 +123,15 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     cmap = CMap::CMap.new(test.doc)
     key = CMap::CMap.new(correct.doc)
     cmap.move_nodes key
-    
+
     xml = correct.doc
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
   end
-  
+
   def test_no_appear_mult_node
     test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -151,7 +145,7 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.map {
@@ -166,11 +160,11 @@ class MoveNodesTest < Test::Unit::TestCase
           }
         }
     end
-    
+
     cmap = CMap::CMap.new(test.doc)
     key = CMap::CMap.new(correct.doc)
     cmap.move_nodes key
-    
+
     xml = correct.doc
     assert_equal(xml.xpath("//concept-appearance-list/concept-appearance"), cmap.instance_variable_get(:@xml).xpath("//concept-appearance-list/concept-appearance"))
   end

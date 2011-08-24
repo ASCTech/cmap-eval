@@ -1,15 +1,21 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
+#I could probably test this a thousand ways, but that would take forever
+  class InitializeTest < Test::Unit::TestCase
+    def test_empty_map
+      test = Builder.new do |xml|
+        xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/")
+      end
 
-include Nokogiri::XML
-  class PropositionListTest < Test::Unit::TestCase
-    def test_stardard_map
+      cmap = CMap::CMap.new(test.doc)
+
+      assert_equal(test.doc, cmap.instance_variable_get(:@xml))
+    end
+
+    def test_full_map
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
+          xml.parent.namespace = xml.parent.namespace_definitions.first
           xml.map {
             xml.send(:"concept-list") {
               xml.concept("label" => "node1", "id" => "idnode1")
@@ -38,18 +44,15 @@ include Nokogiri::XML
               xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "10", "hight" => "10")
             }
             xml.send(:"connection-appearance-list") {
-              xml.send(:"connection-appearance", "id" => "idconnection1", "width" => "1", "hight" => "20")
-              xml.send(:"connection-appearance", "id" => "idconnection2", "width" => "15", "hight" => "20")
-              xml.send(:"connection-appearance", "id" => "idconnection3", "width" => "97", "hight" => "20")
-              xml.send(:"connection-appearance", "id" => "idconnection4", "width" => "225600", "hight" => "20")
+              xml.send(:"connection-appearance", "id" => "idconnection1")
+              xml.send(:"connection-appearance", "id" => "idconnection2")
+              xml.send(:"connection-appearance", "id" => "idconnection3")
+              xml.send(:"connection-appearance", "id" => "idconnection4")
             }
           }
         }
       end
-      
       cmap = CMap::CMap.new(test.doc)
-      correct = "Propositions:\nedge1\nedge2", 84
-      assert_equal(correct, cmap.proposition_list)
+      assert_equal(test.doc, cmap.instance_variable_get(:@xml))
     end
-    
   end

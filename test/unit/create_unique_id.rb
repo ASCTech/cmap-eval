@@ -1,12 +1,8 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-
-include Nokogiri::XML
-  class EachUniquePairTest < Test::Unit::TestCase
+  class TransformProbStateTest < Test::Unit::TestCase
+    #You could probably break this by using every id possible for the string type in ruby
+    #but odds are that's like several million id's so it's safe to assume that's not going to happen
     def test_stardard_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -35,8 +31,8 @@ include Nokogiri::XML
               xml.send(:"concept-appearance", "id" => "idnode4", "x" => "9000", "y" => "8991", "width" => "5", "height" => "104")
             }
             xml.send(:"linking-phrase-appearance-list") {
-              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "hight" => "27")
-              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "hight" => "33")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "height" => "27")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "height" => "33")
             }
             xml.send(:"connection-appearance-list") {
               xml.send(:"connection-appearance", "id" => "idconnection1", "width" => "1", "height" => "10")
@@ -47,17 +43,18 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
-      
-      correct = [["node1", "node2"], ["node1", "node3"], ["node1", "node4"], ["node2", "node1"], ["node2", "node3"], ["node2", "node4"], ["node3", "node1"], ["node3", "node2"], ["node3", "node4"], ["node4", "node1"], ["node4", "node2"], ["node4", "node2"], ["node4", "node3"]]
-      cmap.send(:each_unique_pair) do |concept1, concept2|
-        node_subset = [concept1, concept2]
-        assert(correct.include?(node_subset))
+      xml = test.doc
+      id = []
+      xml.xpath("//@id").each do |attrib|
+        id = id + [attrib.attr('id')]
       end
-  end
-  
-  def test_blank_input
+
+      assert_equal(false, id.include?(cmap.send(:create_unique_id)))
+    end
+
+    def test_blank_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -65,11 +62,14 @@ include Nokogiri::XML
           }
         }
       end
+
       cmap = CMap::CMap.new(test.doc)
-      correct = []
-      cmap.send(:each_unique_pair) do |concept1, concept2|
-        node_subset = [concept1, concept2]
-        assert(correct.include?(node_subset))
+      xml = test.doc
+      id = []
+      xml.xpath("//@id").each do |attrib|
+        id = id + [attrib.attr('id')]
       end
-    end
+
+      assert_equal(false, id.include?(cmap.send(:create_unique_id)))
+      end
   end

@@ -16,9 +16,9 @@ module CxlHelper
 
     return path
   end
-  
+
   def CxlHelper.value nodeset
-    return CxlHelper.normalize(nodeset)[0] 
+    return CxlHelper.normalize(nodeset)[0]
   end
 
   # Append the nodes to the already-created xpath.
@@ -54,9 +54,15 @@ module CxlHelper
   # Generate a node with the attributes as a hash.
   def CxlHelper.create_node xml, name, attributes
     node = Nokogiri::XML::Node.new name, xml
-    
     attributes.each do |key, value|
+			begin
       node[key] = value
+		rescue NoMethodError => e
+			pp xml
+			pp node
+			raise e
+			exit
+		end
     end
 
     return node
@@ -65,14 +71,14 @@ module CxlHelper
   def CxlHelper.normalize nodes
     return nodes.to_a.map{|elem| elem.to_s}
   end
-  
-  def CxlHelper.create_if_missing xml, path, name, id, *values
+
+  def CxlHelper.create_if_missing xml, path, name, id
     if !path.at(name).with_values("id" => id).apply(xml)[0]
-      node = CxlHelper.create_node xml, name, "id" => id, *values
+      node = CxlHelper.create_node xml, name, "id" => id
       path.apply(xml)[0].add_child node
     end
   end
-  
+
   def CxlHelper.builder
     return PathBuilder.new
   end
@@ -86,15 +92,15 @@ module CxlHelper
       @path = args[0]
       end
     end
-    
+
     def to_s
       return @path
     end
-    
+
     def anywhere node
       return PathBuilder.new @path + "//#{node}"
     end
-    
+
     def anything
       return PathBuilder.new @path + "//*"
     end
@@ -135,11 +141,11 @@ module CxlHelper
   CONCEPT_LIST_PATH = ROOT_PATH.at "concept-list"
   CONNECTION_LIST_PATH = ROOT_PATH.at "connection-list"
   PHRASE_LIST_PATH = ROOT_PATH.at "linking-phrase-list"
-  
+
   CONCEPT_PATH = CONCEPT_LIST_PATH.at "concept"
   CONNECTION_PATH = CONNECTION_LIST_PATH.at "connection"
   PHRASE_PATH = PHRASE_LIST_PATH.at "linking-phrase"
-  
+
   CONCEPT_APPEARANCE_LIST_PATH = ROOT_PATH.at "concept-appearance-list"
   CONNECTION_APPEARANCE_LIST_PATH = ROOT_PATH.at "connection-appearance-list"
   PHRASE_APPEARANCE_LIST_PATH = ROOT_PATH.at "linking-phrase-appearance-list"
@@ -160,6 +166,6 @@ module CxlHelper
   CONCEPT_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "concept-appearance-list"
   CONNECTION_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "connection-appearance-list"
   LINKING_PHRASE_APPEARANCE_LIST_XPATH = CxlHelper.create_path ROOT_XPATH, "linking-phrase-appearance-list"
-  
+
   CONNECTION_APPEARANCE_XPATH = CxlHelper.create_path CONNECTION_APPEARANCE_LIST_XPATH, "connection-appearance"
 end

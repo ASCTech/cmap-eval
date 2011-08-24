@@ -1,13 +1,7 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-
-include Nokogiri::XML
-  class GetMaxNodeHightTest < Test::Unit::TestCase
-    def test_concept_max
+  class NumberofDistinctConnectionsTest < Test::Unit::TestCase
+    def test_stardard_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -35,8 +29,8 @@ include Nokogiri::XML
               xml.send(:"concept-appearance", "id" => "idnode4", "x" => "9000", "y" => "8991", "width" => "5", "height" => "104")
             }
             xml.send(:"linking-phrase-appearance-list") {
-              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "height" => "27")
-              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "height" => "33")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "hight" => "27")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "hight" => "33")
             }
             xml.send(:"connection-appearance-list") {
               xml.send(:"connection-appearance", "id" => "idconnection1", "width" => "1", "height" => "10")
@@ -47,12 +41,13 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(104, cmap.send(:get_max_node_height))
-    end
-    
-    def test_edge_max
+      assert_equal(2, cmap.send(:number_of_distinct_connections))
+
+  end
+
+  def test_cyclic_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -70,8 +65,8 @@ include Nokogiri::XML
             xml.send(:"connection-list") {
               xml.connection("id" => "idconnection1", "from-id" => "idnode1", "to-id" => "idedge1")
               xml.connection("id" => "idconnection2", "from-id" => "idedge1", "to-id" => "idnode2")
-              xml.connection("id" => "idconnection3", "from-id" => "idnode3", "to-id" => "idedge2")
-              xml.connection("id" => "idconnection4", "from-id" => "idedge2", "to-id" => "idnode4")
+              xml.connection("id" => "idconnection3", "from-id" => "idnode2", "to-id" => "idedge2")
+              xml.connection("id" => "idconnection4", "from-id" => "idedge2", "to-id" => "idnode1")
             }
             xml.send(:"concept-appearance-list") {
               xml.send(:"concept-appearance", "id" => "idnode1", "x" => "45", "y" => "70", "width" => "2", "height" => "101")
@@ -80,8 +75,8 @@ include Nokogiri::XML
               xml.send(:"concept-appearance", "id" => "idnode4", "x" => "9000", "y" => "8991", "width" => "5", "height" => "104")
             }
             xml.send(:"linking-phrase-appearance-list") {
-              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "height" => "27")
-              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "height" => "165")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "hight" => "27")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "hight" => "33")
             }
             xml.send(:"connection-appearance-list") {
               xml.send(:"connection-appearance", "id" => "idconnection1", "width" => "1", "height" => "10")
@@ -92,12 +87,13 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(165, cmap.send(:get_max_node_height))
-    end
-    
-    def test_blank_input
+      assert_equal(2, cmap.send(:number_of_distinct_connections))
+
+  end
+
+  def test_blank_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -105,8 +101,7 @@ include Nokogiri::XML
           }
         }
       end
-      
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(0, cmap.send(:get_max_node_height))
+      assert_equal(0, cmap.send(:number_of_distinct_connections))
     end
   end

@@ -1,11 +1,5 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-
-include Nokogiri::XML
   class TransformProbStateTest < Test::Unit::TestCase
     def test_stardard_input
       test = Builder.new do |xml|
@@ -49,7 +43,7 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.transform_into_problem_statement_map
-      
+
       correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -65,21 +59,21 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       #all nodes remain, plus two added nodes
       xml = correct.doc
       correct_label = []
       test_label = []
-      
+
       xml.xpath("//xmlns:concept-list/xmlns:concept").sort.each do |label|
         correct_label = correct_label + [label.attr('label')]
       end
-        
+
       xml.xpath("//xmlns:concept-list/xmlns:concept").sort.each do |atrib|
         test_label = test_label + [atrib.attr('label')]
       end
       assert_equal(correct_label, test_label)
-      
+
       #edges removed
       assert_equal(xml.xpath("//xmlns:linking-phrase-list/xmlns:linking-phrase"), cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-list/xmlns:linking-phrase"))
       assert_equal(xml.xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance"), cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance"))

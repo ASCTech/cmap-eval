@@ -1,12 +1,6 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-
-include Nokogiri::XML
-  class GetMaxNodeWidthTest < Test::Unit::TestCase
+  class GetMaxNodeHightTest < Test::Unit::TestCase
     def test_concept_max
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -32,11 +26,11 @@ include Nokogiri::XML
               xml.send(:"concept-appearance", "id" => "idnode1", "x" => "45", "y" => "70", "width" => "2", "height" => "101")
               xml.send(:"concept-appearance", "id" => "idnode2", "x" => "21", "y" => "900", "width" => "3", "height" => "102")
               xml.send(:"concept-appearance", "id" => "idnode3", "x" => "225600", "y" => "50", "width" => "4", "height" => "103")
-              xml.send(:"concept-appearance", "id" => "idnode4", "x" => "9000", "y" => "8991", "width" => "99", "height" => "104")
+              xml.send(:"concept-appearance", "id" => "idnode4", "x" => "9000", "y" => "8991", "width" => "5", "height" => "104")
             }
             xml.send(:"linking-phrase-appearance-list") {
-              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "hight" => "27")
-              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "hight" => "33")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "height" => "27")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "height" => "33")
             }
             xml.send(:"connection-appearance-list") {
               xml.send(:"connection-appearance", "id" => "idconnection1", "width" => "1", "height" => "10")
@@ -47,11 +41,11 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(99, cmap.send(:get_max_node_width))
+      assert_equal(104, cmap.send(:get_max_node_height))
     end
-    
+
     def test_edge_max
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -80,8 +74,8 @@ include Nokogiri::XML
               xml.send(:"concept-appearance", "id" => "idnode4", "x" => "9000", "y" => "8991", "width" => "5", "height" => "104")
             }
             xml.send(:"linking-phrase-appearance-list") {
-              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "hight" => "27")
-              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "hight" => "33")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge1", "x" => "1", "y" => "1", "width" => "93", "height" => "27")
+              xml.send(:"linking-phrase-appearance", "id" => "idedge2", "x" => "20", "y" => "20", "width" => "42", "height" => "165")
             }
             xml.send(:"connection-appearance-list") {
               xml.send(:"connection-appearance", "id" => "idconnection1", "width" => "1", "height" => "10")
@@ -92,11 +86,11 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(93, cmap.send(:get_max_node_width))
+      assert_equal(165, cmap.send(:get_max_node_height))
     end
-    
+
     def test_blank_input
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -105,8 +99,8 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
-      assert_equal(0, cmap.send(:get_max_node_width))
+      assert_equal(0, cmap.send(:get_max_node_height))
     end
   end

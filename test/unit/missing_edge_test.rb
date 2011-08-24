@@ -1,10 +1,5 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-include Nokogiri::XML
   class MarkMissingEdgeTest < Test::Unit::TestCase
     def test_blank_input
       test = Builder.new do |xml|
@@ -17,10 +12,10 @@ include Nokogiri::XML
       cmap = CMap::CMap.new(test.doc)
       key = CMap::CMap.new(test.doc)
       correct = test.doc
-        
-      #This is not tested here, it's required to seed the @misspellings_list in the cmap.  
+
+      #This is not tested here, it's required to seed the @misspellings_list in the cmap.
       cmap.send(:mark_misplaced_and_extra_edges, key)
-      
+
       cmap.send(:mark_missing_edges, key)
       #There should be no changes to the map, so these should be the same
       assert_equal(correct.xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@font-color]"), cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@font-color]"))
@@ -69,16 +64,16 @@ include Nokogiri::XML
       cmap = CMap::CMap.new(test.doc)
       key = CMap::CMap.new(test.doc)
       correct = test.doc
-      #This is not tested here, it's required to seed the @misspellings_list in the cmap.  
+      #This is not tested here, it's required to seed the @misspellings_list in the cmap.
       cmap.send(:mark_misplaced_and_extra_edges, key)
-      
+
       cmap.send(:mark_missing_edges, key)
-      
+
       #if there were no changes made, there should be no linking phrases with font color tags
       assert_equal(correct.xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@font-color]"), cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@font-color]"))
-      
+
     end
-    
+
     def test_missing_edge
      test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -113,7 +108,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -153,30 +148,30 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
       key = CMap::CMap.new(correct.doc)
       xml = test.doc
-      #This is not tested here, it's required to seed the @misspellings_list in the cmap.  
+      #This is not tested here, it's required to seed the @misspellings_list in the cmap.
       cmap.send(:mark_misplaced_and_extra_edges, key)
-      
+
       cmap.send(:mark_missing_edges, key)
-      
+
       #Missing edges should have been added
       correct_phrases = xml.xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance")
       test_phrases = cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance")
       assert_equal(correct_phrases.size, test_phrases.size)
-      
+
       test_phrases = cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@font-color]")
       #only one phrase should have been added
       assert_equal(1, test_phrases.size)
-      
+
       #they all should have a blue color
       test_phrases.each do |atrib|
         assert_equal("0,0,255,255", atrib.attr("font-color"))
       end
     end
-    
+
     def test_mult_missing_edge
      test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -205,7 +200,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -245,27 +240,27 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
       key = CMap::CMap.new(correct.doc)
       xml = test.doc
-      #This is not tested here, it's required to seed the @misspellings_list in the cmap.  
+      #This is not tested here, it's required to seed the @misspellings_list in the cmap.
       cmap.send(:mark_misplaced_and_extra_edges, key)
-      
+
       cmap.send(:mark_missing_edges, key)
-      
+
       #Missing edges should have been added
       correct_phrases = xml.xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance")
       test_phrases = cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance")
       assert_equal(correct_phrases.size, test_phrases.size)
-      
+
       test_phrases = cmap.instance_variable_get(:@xml).xpath("//xmlns:linking-phrase-appearance-list/xmlns:linking-phrase-appearance[@font-color]")
       #only one phrase should have been added
       assert_equal(2, test_phrases.size)
-      
+
       #they all should have a blue color
       test_phrases.each do |atrib|
         assert_equal("0,0,255,255", atrib.attr("font-color"))
       end
-    end 
+    end
   end

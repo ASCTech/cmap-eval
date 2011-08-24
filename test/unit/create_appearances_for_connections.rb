@@ -1,10 +1,4 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
-
-include Nokogiri::XML
+require File.expand_path('../../test_helper', __FILE__)
 
   class CreateAppearancesConnectionTest < Test::Unit::TestCase
     def test_no_connections
@@ -23,7 +17,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -41,13 +35,13 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_connections()
-      
+
       connect_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(connect_appear.xpath("//concept-appearance"), xml.xpath("//concept-appearance"))
     end
-    
+
     def test_1_existing_edge
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -71,7 +65,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -96,13 +90,13 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_connections()
-      
+
       connect_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(connect_appear.xpath("//connection-appearance"), xml.xpath("//connection-appearance"))
     end
-    
+
     def test_1_edge
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -122,7 +116,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -147,13 +141,13 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_connections()
-      
+
       connect_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(connect_appear.xpath("//connection-appearance"), xml.xpath("//connection-appearance"))
     end
-    
+
     def test_mult_edges
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -174,7 +168,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -200,10 +194,10 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_connections()
-      
+
       connect_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(connect_appear.xpath("//connection-appearance"), xml.xpath("//connection-appearance"))
     end
   end

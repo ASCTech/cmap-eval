@@ -1,11 +1,6 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-include Nokogiri::XML
-  class SetPositionTest < Test::Unit::TestCase
+  class GetPositionTest < Test::Unit::TestCase
     def test_1_edge_between
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -19,14 +14,12 @@ include Nokogiri::XML
             }
           }
         }
-      end   
+      end
       cmap = CMap::CMap.new(test.doc)
-      cmap.set_position("1JCK0VTLG-1FT6YS1-FV","0","0")
-      
-      
-      assert_equal(["0", "0"],cmap.get_position("1JCK0VTLG-1FT6YS1-FV"))
+
+      assert_equal(["45", "70"], cmap.get_position("1JCK0VTLG-1FT6YS1-FV"))
     end
-    
+
     def test_mult_edge_between
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -42,13 +35,10 @@ include Nokogiri::XML
             }
           }
         }
-      end   
+      end
       cmap = CMap::CMap.new(test.doc)
-      cmap.set_position("1JCK0VTLG-1FT6YS1-FV","0","0")
-      
-      
-      assert_equal(["0", "0"],cmap.get_position("1JCK0VTLG-1FT6YS1-FV"))
-      assert_equal(["21", "42"],cmap.get_position("1JCK0VTLG-1FT6YS1-FC"))
+
+      assert_equal(["45", "70"], cmap.get_position("1JCK0VTLG-1FT6YS1-FV"))
+      assert_equal(["21", "42"], cmap.get_position("1JCK0VTLG-1FT6YS1-FC"))
     end
   end
-  

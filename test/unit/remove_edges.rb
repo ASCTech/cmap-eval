@@ -1,11 +1,5 @@
-require "test/unit"
-require "src/c_map"
-require "src/cxl_helper"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-include Nokogiri::XML
   class ConceptsInMapTest < Test::Unit::TestCase
     def test_no_edges
       test = Builder.new do |xml|
@@ -20,13 +14,13 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
       cmap.remove_edges
-      
+
       assert_equal(test.doc, cmap.instance_variable_get(:@xml))
     end
-    
+
     def test_1_edge
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -53,7 +47,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -73,20 +67,20 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       xml = correct.doc
       cmap = CMap::CMap.new(test.doc)
       cmap.remove_edges
-      
+
       #Make sure the nodes are still there
       assert_equal(xml.xpath("//concept-list/concept"), cmap.instance_variable_get(:@xml).xpath("//concept-list/concept"))
-      
+
       assert_equal(xml.xpath("//linking-phrase-list/linking-phrase"), cmap.instance_variable_get(:@xml).xpath("//linking-phrase-list/linking-phrase"))
       assert_equal(xml.xpath("//connection-list/connection"), cmap.instance_variable_get(:@xml).xpath("//connection-list/connection"))
       assert_equal(xml.xpath("//linking-phrase-appearance-list/linking-phrase-appearance"), cmap.instance_variable_get(:@xml).xpath("//linking-phrase-appearance-list/linking-phrase-appearance"))
       assert_equal(xml.xpath("//connection-appearance-list/connection-appearance"), cmap.instance_variable_get(:@xml).xpath("//connection-appearance-list/connection-appearance"))
     end
-    
+
     def test_mult_edge
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -121,7 +115,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       correct = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -143,14 +137,14 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       xml = correct.doc
       cmap = CMap::CMap.new(test.doc)
       cmap.remove_edges
-      
+
       #Make sure the nodes are still there
       assert_equal(xml.xpath("//concept-list/concept"), cmap.instance_variable_get(:@xml).xpath("//concept-list/concept"))
-      
+
       assert_equal(xml.xpath("//linking-phrase-list/linking-phrase"), cmap.instance_variable_get(:@xml).xpath("//linking-phrase-list/linking-phrase"))
       assert_equal(xml.xpath("//connection-list/connection"), cmap.instance_variable_get(:@xml).xpath("//connection-list/connection"))
       assert_equal(xml.xpath("//linking-phrase-appearance-list/linking-phrase-appearance"), cmap.instance_variable_get(:@xml).xpath("//linking-phrase-appearance-list/linking-phrase-appearance"))

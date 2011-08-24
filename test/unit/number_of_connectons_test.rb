@@ -1,17 +1,25 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
+class CMapTest < CMap::CMap
+  class NumberOfConnectionsTest < Test::Unit::TestCase
+    def test_no_edges
+      test = Builder.new do |xml|
+        xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
+          xml.parent.namespace = xml.parent.namespace_definitions.first
+          xml.map {
+            xml.send(:"concept-list") {
+              xml.concept("label" => "node1", "id" => "idnode1")
+              xml.concept("label" => "node2", "id" => "idnode2")
+              xml.concept("label" => "node3", "id" => "idnode3")
+            }
+          }
+        }
+      end
+        cmap = CMap::CMap.new(test.doc)
+        assert_equal(0, cmap.send(:number_of_distinct_connections))
+    end
 
-# If you're looking at this test, I think this could be a bug.
-# I was under the impression that edges were one way (ie from and then to)
-# Which would make this an error in the code, not a broken test
-# if not then text me and I'll fix it.
-include Nokogiri::XML
-  class EdgeIDOfTest < Test::Unit::TestCase
-    def test_1_edge_between
+    def test_1_edge
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -32,10 +40,10 @@ include Nokogiri::XML
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal("idedge1",cmap.edge_id_of("edge1","node1", "node2"))
+      assert_equal(1, cmap.send(:number_of_distinct_connections))
     end
-    
-    def test_mult_edge_between
+
+    def test_mult_edge
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -59,11 +67,10 @@ include Nokogiri::XML
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal("idedge1",cmap.edge_id_of("edge1","node1", "node2"))
-      assert_equal("idedge2",cmap.edge_id_of("edge2","node1", "node2"))
+      assert_equal(2, cmap.send(:number_of_distinct_connections))
     end
-    
-    def test_circular_nodes
+
+    def test_circular_edges
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -87,7 +94,9 @@ include Nokogiri::XML
         }
       end
       cmap = CMap::CMap.new(test.doc)
-      assert_equal("idedge1",cmap.edge_id_of("edge1","node1", "node2"))
-      assert_equal("idedge2",cmap.edge_id_of("edge2","node2", "node1"))
+      #This tests that 2 edges going between a set of nodes is counted
+      #as a single unique connection.
+      assert_equal(1,cmap.send(:number_of_distinct_connections))
     end
   end
+end

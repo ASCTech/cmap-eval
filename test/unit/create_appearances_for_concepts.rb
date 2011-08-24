@@ -1,10 +1,4 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
-
-include Nokogiri::XML
+require File.expand_path('../../test_helper', __FILE__)
 
   class CreateAppearancesConceptsTest < Test::Unit::TestCase
     def test_no_concepts
@@ -14,7 +8,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           xml.map {
@@ -23,13 +17,13 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_concepts()
-      
+
       concept_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(concept_appear.xpath("//concept-appearance"), xml.xpath("//concept-appearance"))
     end
-    
+
     def test_1_existing_concept_appearance
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -44,7 +38,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -60,13 +54,13 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_concepts()
-      
+
       concept_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(concept_appear.xpath("//concept-appearance"), xml.xpath("//concept-appearance"))
     end
-    
+
     def test_1_concept
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -78,7 +72,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -96,13 +90,13 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_concepts()
-      
+
       concept_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(concept_appear.xpath("//concept-appearance"), xml.xpath("//concept-appearance"))
     end
-    
+
     def test_mult_edges
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -116,7 +110,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       expected = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
           #xml.parent.namespace = xml.parent.namespace_definitions.first
@@ -136,10 +130,10 @@ include Nokogiri::XML
       end
       cmap = CMap::CMap.new(test.doc)
       cmap.create_appearances_for_concepts()
-      
+
       concept_appear = expected.doc
       xml = cmap.instance_variable_get(:@xml)
-      
+
       assert_equal(concept_appear.xpath("//concept-appearance"), xml.xpath("//concept-appearance"))
     end
   end

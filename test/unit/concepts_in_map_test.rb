@@ -1,13 +1,7 @@
-require "test/unit"
-require "src/c_map"
-require "src/cxl_helper"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-include Nokogiri::XML
   class ConceptsInMapTest < Test::Unit::TestCase
-    
+
     def test_no_concepts
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -17,11 +11,11 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
       assert_equal([], cmap.concepts_in_map)
     end
-    
+
     def test_one_concept
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -33,11 +27,11 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
       assert_equal(["node1"], cmap.concepts_in_map)
     end
-    
+
     def test_multiple_concepts
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -51,7 +45,7 @@ include Nokogiri::XML
           }
         }
       end
-      
+
       cmap = CMap::CMap.new(test.doc)
       assert_equal(["node1", "node2", "node3"], cmap.concepts_in_map)
     end

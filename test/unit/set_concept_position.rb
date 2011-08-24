@@ -1,11 +1,6 @@
-require "test/unit"
-require "src/c_map"
-require "rubygems"
-require "nokogiri"
-require "pp"
+require File.expand_path('../../test_helper', __FILE__)
 
-include Nokogiri::XML
-  class ConceptPositionTest < Test::Unit::TestCase
+  class SetConceptPositionTest < Test::Unit::TestCase
     def test_1_edge_between
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -19,12 +14,14 @@ include Nokogiri::XML
             }
           }
         }
-      end   
+      end
       cmap = CMap::CMap.new(test.doc)
-     
-      assert_equal(["45", "70"],cmap.concept_position("node1"))
+      cmap.set_concept_position("node1","0","0")
+
+
+      assert_equal(["0", "0"],cmap.concept_position("node1"))
     end
-    
+
     def test_mult_edge_between
       test = Builder.new do |xml|
         xml.cmap("xmlns" => "http://cmap.ihmc.us/xml/cmap/") {
@@ -40,11 +37,13 @@ include Nokogiri::XML
             }
           }
         }
-      end   
+      end
       cmap = CMap::CMap.new(test.doc)
-      
-      assert_equal(["45", "70"],cmap.concept_position("node1"))
+      cmap.set_concept_position("node1","0","0")
+
+
+      assert_equal(["0", "0"],cmap.concept_position("node1"))
       assert_equal(["21", "42"],cmap.concept_position("node2"))
     end
   end
-  
+

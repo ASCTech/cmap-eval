@@ -1,7 +1,7 @@
-require "src/cxl_helper"
 require "rubygems"
+require File.expand_path('../cxl_helper', __FILE__)
+require File.expand_path('../Debug', __FILE__)
 require "text/levenshtein"
-require "src/Debug"
 
 include CxlHelper
 include Text
