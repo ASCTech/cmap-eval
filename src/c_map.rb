@@ -251,6 +251,9 @@ module CMap
 		# key, there should be at least one of those connections in the input.  All such connections are
 		# weighted the same, a "perfect" map receives 100%, and a map which is missing all such edges receives a 0%.
 		def grade_using key
+			# Put a list of "concept - proposition - concept" triplets on the side
+			generate_listing
+
 			# Count the number of distinct connections in the key for later.
 			distinct_connections = key.number_of_distinct_connections
 
@@ -540,6 +543,19 @@ module CMap
 		end
 
 		# Generate the set of legend nodes and edges on the map.
+		def generate_listing
+			listing = []
+			each_unique_pair do |concept1, concept2|
+				for edge in edges_between(concept1, concept2)
+					listing << "#{concept1} - #{edge} - #{concept2}"
+				end
+			end
+
+			listing_id = create_unique_id
+			add_concept listing_id, listing.sort.join("\n")
+			add_concept_appearance listing_id, 300 + find_right_of_map, LEGEND_NODE_HEIGHT/2 * listing.size
+		end
+
 		def generate_legend
 			max_x = find_right_of_map
 			max_y = find_bottom_of_map
