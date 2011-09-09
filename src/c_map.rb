@@ -26,8 +26,8 @@ module CMap
 	# Constants for the colors for marking up edges.
 	MISSING_EDGE_COLOR = "0,0,255,255"
 	MISSPELLED_EDGE_COLOR = "0,255,0,255"
-	MISPLACED_EDGE_COLOR = "255,0,0,255"
-	EXTRA_EDGE_COLOR = "128,0,128,255"
+	MISPLACED_EDGE_COLOR = "128,0,128,255"
+	EXTRA_EDGE_COLOR = "255,0,0,255"
 
 	# Special nodes which should not be considered when grading or iterating.
 	NAME_BLOCK_PREFIX = "Names:"
