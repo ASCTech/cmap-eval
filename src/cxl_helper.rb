@@ -121,10 +121,19 @@ module CxlHelper
 		def with_values attributes
 			predicates = []
 			attributes.each do |key, value|
+        unless value.is_a?(String)
+          raise TypeError.new("Expecing a String, got: #{value.inspect}")
+        end
 				predicates << %{@#{key}='#{value}'}
 			end
+      PathBuilder.new @path + "[" + predicates.join(" and ") + "]"
+    end
 
-			return PathBuilder.new @path + "[" + predicates.join(" and ") + "]"
+		def with_label label
+      unless label.is_a?(String)
+        raise TypeError.new("Expecing a String, got: #{label.inspect}")
+      end
+			PathBuilder.new(@path + "[@label='#{label.strip}']")
 		end
 
 		def value attribute

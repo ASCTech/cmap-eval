@@ -1,10 +1,10 @@
 require "rubygems"
+require "bundler/setup"
 require File.expand_path('../cxl_helper', __FILE__)
 require File.expand_path('../Debug', __FILE__)
-require "text/levenshtein"
+require "levenshtein"
 
 include CxlHelper
-include Text
 include Debug
 
 # Methods and classes for manipulating and grading concept maps.
@@ -131,6 +131,7 @@ module CMap
 			# Find the unique ids associated with node1 and node2.
 			node1_id = id_of_concept node1
 			node2_id = id_of_concept node2
+      return [] unless node1_id && node2_id
 
 			edge_ids = edge_ids_between node1_id, node2_id
 
@@ -616,7 +617,8 @@ module CMap
 		end
 
 		def mark_concept_extra concept
-			id =  id_of_concept concept
+			id = id_of_concept concept
+      return unless id
 			CONCEPT_APPEARANCE_PATH.with_values("id" => id).apply(@xml)[0]["font-color"] = EXTRA_EDGE_COLOR
 		end
 
@@ -716,7 +718,7 @@ module CMap
 			possible_ids = beginnings & endings
 
 			# Check the name to find the unique id of our candidate.
-			edge_id = possible_ids.select { |id| edge == label_of(id)}
+			edge_id = possible_ids.select{|id| edge == label_of(id)}.first
 
 			# Mark the first connection.
 			connection1_id = CxlHelper.value CONNECTION_PATH.with_values("from-id" => start_id, "to-id" => edge_id).value("id").apply(@xml)
@@ -780,6 +782,8 @@ module CMap
 			middle = create_unique_id
 			connection2_id = create_unique_id
 			end_id = id_of_concept concept2
+
+      return unless start_id && end_id
 
 			# Add the linking-phrase.
 			phrase = CxlHelper.create_node @xml,
@@ -856,7 +860,7 @@ module CMap
 			left = (startx + endx - LEGEND_NODE_WIDTH) / 2
 			bottom = (starty + endy - LEGEND_NODE_WIDTH) / 2
 
-			edge_ids.each do |edge_id|
+			edge_ids.flatten.each do |edge_id|
 				x, y, width, height = location_info edge_id
 				new_left = x + width/2
 				new_bottom = y + height/2
@@ -885,7 +889,9 @@ module CMap
 
 		# The id of the given concept.
 		def id_of_concept node
-			CONCEPT_PATH.with_values("label" => node).apply(@xml)[0]["id"]
+      CONCEPT_PATH.with_label(node).apply(@xml)[0]['id']
+    rescue
+      nil
 		end
 
 		# The label of the concept or proposition with the given id.
