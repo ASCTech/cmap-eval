@@ -1,5 +1,4 @@
 require "rubygems"
-require "bundler/setup"
 require File.expand_path('../cxl_helper', __FILE__)
 require File.expand_path('../Debug', __FILE__)
 require "text/levenshtein"
