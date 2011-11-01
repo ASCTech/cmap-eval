@@ -1,4 +1,5 @@
 @echo off
 echo Installing ruby gems.
-call bundle install
+call gem install nokogiri
+call gem install Text
 pause
